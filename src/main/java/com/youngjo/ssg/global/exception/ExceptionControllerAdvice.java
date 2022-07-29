@@ -12,6 +12,7 @@ public class ExceptionControllerAdvice {
     public CommonResponse<String> runtimeExHandle(RuntimeException ex) {
         log.error("Exception Name = {}, Message = {}", ex.getClass().getName(), ex.getMessage());
         return new CommonResponse<String>()
-                .setErrorMessage("문제가 발생했습니다. 지속적으로 발생할 시 관리자에게 문의하세요.");
+                .setSuccess(false)
+                .setErrorMessage(ex.getMessage());
     }
 }

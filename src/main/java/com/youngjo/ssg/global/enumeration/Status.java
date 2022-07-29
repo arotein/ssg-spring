@@ -1,4 +1,4 @@
-package com.youngjo.ssg.domain.user.enumeration;
+package com.youngjo.ssg.global.enumeration;
 
 /**
  * ENABLED : 활성됨
@@ -7,7 +7,7 @@ package com.youngjo.ssg.domain.user.enumeration;
  * DELETED : 영구삭제됨
  */
 
-public enum UserStatus {
+public enum Status {
     ENABLED,
     DISABLED,
     BANNED,
