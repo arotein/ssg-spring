@@ -36,6 +36,11 @@ public class UserServiceImpl implements UserService {
         userRepository.saveUser(dto.createUser());
     }
 
+    @Override
+    public void updateLastAccessTime(Long id) {
+        userRepository.findUserById(id).updateLastAccessTime();
+    }
+
     // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ아래부터는 개발용 코드ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     @Override
     public List<User> findAllUser() {

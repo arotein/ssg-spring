@@ -8,5 +8,7 @@ import java.util.List;
 public interface UserService {
     void signUp(SignUpReqDto dto);
 
+    void updateLastAccessTime(Long id);
+
     List<User> findAllUser();
 }

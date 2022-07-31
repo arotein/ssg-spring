@@ -1,8 +1,9 @@
 package com.youngjo.ssg.global.security.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.youngjo.ssg.domain.user.service.UserService;
 import com.youngjo.ssg.global.common.CommonResponse;
-import com.youngjo.ssg.global.security.bean.ClientInfoLoader;
+import com.youngjo.ssg.global.security.auth.UserDetailsImpl;
 import com.youngjo.ssg.global.security.dto.SecurityLoginResDto;
 import com.youngjo.ssg.global.security.token.JwtAuthenticationToken;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
     private final ObjectMapper objectMapper;
-    private final ClientInfoLoader clientInfoLoader;
+    private final UserService userService;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
@@ -29,5 +30,9 @@ public class JwtAuthenticationSuccessHandler implements AuthenticationSuccessHan
         response.setHeader("Authentication", token.getJwt());
         CommonResponse<SecurityLoginResDto> comRes = new CommonResponse<>();
         objectMapper.writeValue(response.getWriter(), comRes);
+
+        // 로그인 시간 갱신
+        UserDetailsImpl userDetails = (UserDetailsImpl) token.getPrincipal();
+        userService.updateLastAccessTime(userDetails.getId());
     }
 }
