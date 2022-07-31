@@ -9,3 +9,8 @@
 ## 🍜 실행 순서
 1. Gradle -> Tasks -> other -> compileQuerydsl 실행
 2. 애플리케이션 실행
+
+## 🍜 사용된 환경변수
+1. ${SSG_DB_USERNAME}
+2. ${SSG_DB_PASSWORD}
+3. ${SSG_JWT_SIGNER}

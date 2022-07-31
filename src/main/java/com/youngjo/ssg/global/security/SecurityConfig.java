@@ -2,9 +2,9 @@ package com.youngjo.ssg.global.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.youngjo.ssg.domain.user.enumeration.Role;
-import com.youngjo.ssg.global.security.handler.JsonAuthenticationFailureHandler;
-import com.youngjo.ssg.global.security.handler.JsonAuthenticationSuccessHandler;
-import com.youngjo.ssg.global.security.handler.JsonLogoutSuccessHandler;
+import com.youngjo.ssg.global.security.filter.JwtRequestProcessingFilter;
+import com.youngjo.ssg.global.security.handler.JwtAuthenticationFailureHandler;
+import com.youngjo.ssg.global.security.handler.JwtAuthenticationSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,66 +20,51 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.security.web.context.SecurityContextPersistenceFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private final String JSON_LOGIN_PROCESSING_URL = "/api/login";
-    private final String JSON_LOGOUT_PROCESSING_URL = "/api/logout";
-
+    private final String LOGIN_PROCESSING_URL = "/api/login";
     private final AuthenticationProvider authenticationProvider;
-    private final JsonAuthenticationSuccessHandler jsonAuthenticationSuccessHandler;
-    private final JsonAuthenticationFailureHandler jsonAuthenticationFailureHandler;
-    private final JsonLogoutSuccessHandler jsonLogoutSuccessHandler;
+    private final JwtAuthenticationSuccessHandler jwtAuthenticationSuccessHandler;
+    private final JwtAuthenticationFailureHandler jwtAuthenticationFailureHandler;
     private final ObjectMapper objectMapper;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
+        http.logout().disable();
         http.httpBasic().disable();
         http.formLogin().disable();
-        http.csrf().disable();
+        http.headers().frameOptions().disable();
+        http.rememberMe().disable();
+        http.sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.authorizeRequests()
                 .anyRequest().permitAll();
 
-        http.logout()
-                .logoutUrl(JSON_LOGOUT_PROCESSING_URL)
-                .deleteCookies("JSESSIONID")
-                .clearAuthentication(true)
-                .logoutSuccessHandler(jsonLogoutSuccessHandler);
+        http.addFilterAfter(new JwtRequestProcessingFilter("/api/*"), SecurityContextPersistenceFilter.class);
 
-        http.sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
-                .maximumSessions(2)
-                .maxSessionsPreventsLogin(false);
-
-        addJsonConfigurer(http);
+        applyJwtConfigurer(http);
     }
 
-    private void addJsonConfigurer(HttpSecurity http) throws Exception {
-        http.apply(new JsonLoginConfigurer<>(JSON_LOGIN_PROCESSING_URL))
-                .addAuthenticationManager(authenticationManager())
-                .loginSuccessHandler(jsonAuthenticationSuccessHandler)
-                .loginFailureHandler(jsonAuthenticationFailureHandler)
-                .objectMapper(objectMapper);
-    }
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(authenticationProvider);
-    }
-
-    @Override
-    protected AuthenticationManager authenticationManager() throws Exception {
-        List<AuthenticationProvider> authProviderList = new ArrayList<>();
-        authProviderList.add(authenticationProvider);
-        ProviderManager providerManager = new ProviderManager(authProviderList);
-        return providerManager;
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.addAllowedOrigin("*");
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/api/**", config);
+        return source;
     }
 
     @Bean
@@ -90,7 +75,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public AccessDecisionVoter<? extends Object> roleVoter() {
+    public AccessDecisionVoter<?> roleVoter() {
         return new RoleHierarchyVoter(roleHierarchy());
+    }
+
+    private void applyJwtConfigurer(HttpSecurity http) throws Exception {
+        http.apply(new JwtLoginConfigurer<>(LOGIN_PROCESSING_URL))
+                .addAuthenticationManager(authenticationManager())
+                .loginSuccessHandler(jwtAuthenticationSuccessHandler)
+                .loginFailureHandler(jwtAuthenticationFailureHandler)
+                .objectMapper(objectMapper);
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) {
+        auth.authenticationProvider(authenticationProvider);
+    }
+
+    @Override
+    protected AuthenticationManager authenticationManager() {
+        return new ProviderManager(authenticationProvider);
     }
 }

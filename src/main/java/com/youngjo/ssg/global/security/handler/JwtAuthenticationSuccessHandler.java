@@ -1,10 +1,10 @@
 package com.youngjo.ssg.global.security.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.youngjo.ssg.domain.user.domain.User;
 import com.youngjo.ssg.global.common.CommonResponse;
-import com.youngjo.ssg.global.security.bean.ClientUserLoader;
+import com.youngjo.ssg.global.security.bean.ClientInfoLoader;
 import com.youngjo.ssg.global.security.dto.SecurityLoginResDto;
+import com.youngjo.ssg.global.security.token.JwtAuthenticationToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
@@ -18,16 +18,16 @@ import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
-public class JsonAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+public class JwtAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
     private final ObjectMapper objectMapper;
-    private final ClientUserLoader clientUserLoader;
+    private final ClientInfoLoader clientInfoLoader;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        User clientUser = clientUserLoader.getClientUser();
-        CommonResponse<SecurityLoginResDto> comRes = new CommonResponse<>();
-        comRes.setData(new SecurityLoginResDto(clientUser.getName(), clientUser.getEmail()));
+        JwtAuthenticationToken token = (JwtAuthenticationToken) authentication;
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setHeader("Authentication", token.getJwt());
+        CommonResponse<SecurityLoginResDto> comRes = new CommonResponse<>();
         objectMapper.writeValue(response.getWriter(), comRes);
     }
 }

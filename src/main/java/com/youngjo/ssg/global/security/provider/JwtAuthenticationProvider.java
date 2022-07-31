@@ -1,7 +1,7 @@
 package com.youngjo.ssg.global.security.provider;
 
 import com.youngjo.ssg.global.security.auth.UserDetailsImpl;
-import com.youngjo.ssg.global.security.token.JsonAuthenticationToken;
+import com.youngjo.ssg.global.security.token.JwtAuthenticationToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -13,25 +13,26 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class JsonAuthenticationProvider implements AuthenticationProvider {
+public class JwtAuthenticationProvider implements AuthenticationProvider {
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        String email = (String) authentication.getPrincipal();
+        String loginId = (String) authentication.getPrincipal();
         String rawPassword = (String) authentication.getCredentials();
 
-        UserDetailsImpl userDetails = (UserDetailsImpl) userDetailsService.loadUserByUsername(email);
+        UserDetailsImpl userDetails = (UserDetailsImpl) userDetailsService.loadUserByUsername(loginId);
 
+        //비밀번호 검증
         if (!passwordEncoder.matches(rawPassword, userDetails.getPassword())) {
             throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
         }
-        return new JsonAuthenticationToken(userDetails);
+        return new JwtAuthenticationToken(userDetails);
     }
 
     @Override
     public boolean supports(Class<?> authentication) {
-        return JsonAuthenticationToken.class.isAssignableFrom(authentication);
+        return JwtAuthenticationToken.class.isAssignableFrom(authentication);
     }
 }
