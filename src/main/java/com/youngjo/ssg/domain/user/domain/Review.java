@@ -1,6 +1,7 @@
 package com.youngjo.ssg.domain.user.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.youngjo.ssg.domain.product.domain.Product;
 import com.youngjo.ssg.global.common.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -19,6 +20,7 @@ public class Review extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_id")
     private Long id;
+    private String title;
 
     private String content;
 
@@ -31,10 +33,13 @@ public class Review extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User writer;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
+    private Product product;
+
     @Builder
-    public Review(String content, List<ReviewImg> reviewImgList, User writer) {
+    public Review(String title, String content) {
+        this.title = title;
         this.content = content;
-        this.reviewImgList = reviewImgList;
-        this.writer = writer;
     }
 }

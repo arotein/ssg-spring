@@ -1,4 +1,4 @@
-package com.youngjo.ssg.domain.user.domain;
+package com.youngjo.ssg.domain.product.domain;
 
 import com.youngjo.ssg.global.common.BaseEntity;
 import lombok.AccessLevel;
@@ -11,26 +11,22 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class ReviewImg extends BaseEntity {
+public class ProductImg extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "review_img_id")
+    @Column(name = "product_img_id")
     private Long id;
-
     private String name;
     private String originPath;
 
+    //==매핑==
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "review_id")
-    private Review review;
+    @JoinColumn(name = "product_id")
+    private Product product;
 
     @Builder
-    public ReviewImg(String name, String originPath, Review review) {
+    public ProductImg(String name, String originPath) {
         this.name = name;
         this.originPath = originPath;
-        this.review = review;
     }
 }
-
-
-

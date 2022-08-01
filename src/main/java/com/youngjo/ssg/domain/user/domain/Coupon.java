@@ -19,31 +19,27 @@ public class Coupon extends BaseEntity {
     private Long id;
 
     private String name; // 쿠폰명
-    private Integer qty; // 수량
     private String info; //쿠폰 설명
+    private Integer qty; // 수량
+    private Integer discountRate; // 할인률
     private Timestamp availableDate; // 사용가능 날짜
     private Timestamp expDate; // 만료날짜
-
-
-    private String productCode; // 적용가능 제품 고유번호
+    // private String productId; // 적용가능 제품
+    // private String productCode; // 적용가능 제품 고유번호
     // private String category; // 적용가능 카테고리
-    private Boolean isPresented; // 선물한 쿠폰인지
-    // 선물받은사람 User와 연결하기
 
     //==매핑==
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user")
     private User user;
 
     @Builder
-    public Coupon(String name, Integer qty, String info, Timestamp availableDate, Timestamp expDate, String productCode, Boolean isPresented, User user) {
+    public Coupon(String name, String info, Integer qty, Integer discountRate, Timestamp availableDate, Timestamp expDate) {
         this.name = name;
-        this.qty = qty;
         this.info = info;
+        this.qty = qty;
+        this.discountRate = discountRate;
         this.availableDate = availableDate;
         this.expDate = expDate;
-        this.productCode = productCode;
-        this.isPresented = isPresented;
-        this.user = user;
     }
 }

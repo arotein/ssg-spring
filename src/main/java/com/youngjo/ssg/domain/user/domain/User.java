@@ -1,6 +1,7 @@
 package com.youngjo.ssg.domain.user.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.youngjo.ssg.domain.buy.domain.Buy;
 import com.youngjo.ssg.domain.user.enumeration.Grade;
 import com.youngjo.ssg.domain.user.enumeration.Role;
 import com.youngjo.ssg.global.common.BaseEntity;
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -50,15 +52,23 @@ public class User extends BaseEntity {
 
     @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Coupon> couponList;
+    private List<Coupon> couponList = new ArrayList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "writer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Review> reviewList;
+    @OneToMany(mappedBy = "writer", fetch = FetchType.LAZY)
+    private List<Review> reviewList = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<PaymentCard> paymentCardList;
+    private List<PaymentCard> paymentCardList = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Delivery> deliveryList = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Buy> buyList = new ArrayList<>();
 
     //==시스템 정보==
     private Timestamp lastAccessTime;
