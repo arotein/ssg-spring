@@ -33,9 +33,9 @@ public class Product extends BaseEntity {
     private Timestamp expDate; // 만료날짜
 
     //==매핑==
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_s_id")
-    private CategoryS categoryS;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_ss_id")
+    private CategorySS categorySS;
 
     @JsonIgnore
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
@@ -58,12 +58,19 @@ public class Product extends BaseEntity {
     private Buy buy;
 
     @Builder
-    public Product(String name, Integer price, Integer qty, Integer discountRate, Timestamp availableDate, Timestamp expDate) {
+
+    public Product(String name, Integer price, Integer qty, Integer discountRate, Timestamp availableDate, Timestamp expDate, CategorySS categorySS, List<ProductImg> productImgList, List<Review> reviewList, NormalCart normalCart, PeriodicCart periodicCart, Buy buy) {
         this.name = name;
         this.price = price;
         this.qty = qty;
         this.discountRate = discountRate;
         this.availableDate = availableDate;
         this.expDate = expDate;
+        this.categorySS = categorySS;
+        this.productImgList = productImgList;
+        this.reviewList = reviewList;
+        this.normalCart = normalCart;
+        this.periodicCart = periodicCart;
+        this.buy = buy;
     }
 }

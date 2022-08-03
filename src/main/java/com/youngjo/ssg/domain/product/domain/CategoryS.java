@@ -1,11 +1,14 @@
 package com.youngjo.ssg.domain.product.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.youngjo.ssg.global.common.BaseEntity;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -24,6 +27,22 @@ public class CategoryS extends BaseEntity {
     @JoinColumn(name = "category_m_id")
     private CategoryM categoryM;
 
-    @OneToOne(mappedBy = "categoryS", fetch = FetchType.LAZY)
-    private Product product;
+    @JsonIgnore
+    @OneToMany(mappedBy = "categoryS", fetch = FetchType.LAZY)
+    private List<CategorySS> categorySSList;
+
+    @Builder
+    public CategoryS(String name, CategoryM categoryM, List<CategorySS> categorySSList) {
+        this.name = name;
+        this.categoryM = categoryM;
+        this.categorySSList = categorySSList;
+    }
+
+    public void linkToCategorySS(CategorySS categorySS) {
+        this.categorySSList.add(categorySS);
+    }
+
+    public void linkToCategoryM(CategoryM categoryM) {
+        this.categoryM = categoryM;
+    }
 }

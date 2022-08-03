@@ -3,6 +3,7 @@ package com.youngjo.ssg.domain.product.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.youngjo.ssg.global.common.BaseEntity;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,4 +26,14 @@ public class Category extends BaseEntity {
     @JsonIgnore
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<CategoryM> categoryMList = new ArrayList<>();
+
+    @Builder
+    public Category(String name, List<CategoryM> categoryMList) {
+        this.name = name;
+        this.categoryMList = categoryMList;
+    }
+
+    public void linkToCategoryM(CategoryM categoryM) {
+        this.categoryMList.add(categoryM);
+    }
 }

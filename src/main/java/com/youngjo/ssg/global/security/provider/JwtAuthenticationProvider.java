@@ -26,7 +26,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 
         //비밀번호 검증
         if (!passwordEncoder.matches(rawPassword, userDetails.getPassword())) {
-            throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
+            throw new BadCredentialsException("아이디 혹은 비밀번호가 일치하지 않습니다.");
         }
         return new JwtAuthenticationToken(userDetails);
     }

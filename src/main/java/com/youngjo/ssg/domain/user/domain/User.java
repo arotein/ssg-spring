@@ -10,6 +10,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -72,11 +73,10 @@ public class User extends BaseEntity {
 
     //==시스템 정보==
     private Timestamp lastAccessTime;
+    @CreationTimestamp
     private Timestamp lastPasswordChangeTime;
-
     @Enumerated(EnumType.STRING)
     private Role role = Role.ROLE_NORMAL;
-
     @Enumerated(EnumType.STRING)
     private Status status = Status.ENABLED;
 
@@ -88,7 +88,6 @@ public class User extends BaseEntity {
         this.email = email;
         this.phone = phone;
         this.address = address;
-        this.lastPasswordChangeTime = new Timestamp(System.currentTimeMillis());
     }
 
     public void updateLastAccessTime() {

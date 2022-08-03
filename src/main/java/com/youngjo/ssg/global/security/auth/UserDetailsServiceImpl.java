@@ -28,7 +28,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = userRepository.findUserByLoginId(loginId);
         // 계정 검증
         if (user == null) {
-            throw new UsernameNotFoundException("존재하지 않는 계정입니다.");
+            throw new UsernameNotFoundException("아이디 혹은 비밀번호가 일치하지 않습니다.");
         }
         if (user.getStatus() == Status.BANNED) {
             throw new LockedException("사용할 수 없는 계정입니다. 관리자에게 문의하세요.");

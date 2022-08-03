@@ -3,6 +3,7 @@ package com.youngjo.ssg.global.security.filter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.youngjo.ssg.global.security.dto.SecurityLoginReqDto;
 import com.youngjo.ssg.global.security.token.JwtAuthenticationToken;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Slf4j
 public class JwtLoginProcessingFilter extends AbstractAuthenticationProcessingFilter {
 
     private ObjectMapper objectMapper;
@@ -25,6 +27,10 @@ public class JwtLoginProcessingFilter extends AbstractAuthenticationProcessingFi
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException {
+        log.info("login요청 왔음. {}", request);
+        log.info("login id = {}", request.getAttribute("loginId"));
+        log.info("password = {}", request.getAttribute("password"));
+
         // request type 검증
         if (!isJson(request) || !request.getMethod().equalsIgnoreCase("POST")) {
             throw new AuthenticationServiceException("JSON과 POST타입만 지원됩니다.");
@@ -33,7 +39,7 @@ public class JwtLoginProcessingFilter extends AbstractAuthenticationProcessingFi
         SecurityLoginReqDto loginReqDto = objectMapper.readValue(request.getReader(), SecurityLoginReqDto.class);
         // request parameter 검증
         if (!StringUtils.hasText(loginReqDto.getLoginId()) || !StringUtils.hasText(loginReqDto.getPassword())) {
-            throw new IllegalArgumentException("email 또는 password가 공백입니다.");
+            throw new IllegalArgumentException("loginId 또는 password가 공백입니다.");
         }
 
         // 임시token 생성
