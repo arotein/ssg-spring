@@ -27,4 +27,6 @@ logging.level:
     SQL: debug
 
 global:
-  jwt-token.signer: ${SSG_JWT_SIGNER}
+  jwt-token:
+    signer: ${SSG_JWT_SIGNER}
+  category-xlsx-dir: excelFile/categoryAll.xlsx

@@ -2,12 +2,10 @@ package com.youngjo.ssg.domain.product.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.youngjo.ssg.global.common.BaseEntity;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -19,23 +17,21 @@ public class CategoryS extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_s_id")
     private Long id;
-    @Column(unique = true)
     private String name;
 
     //==매핑==
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "category_m_id")
     private CategoryM categoryM;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "categoryS", fetch = FetchType.LAZY)
-    private List<CategorySS> categorySSList;
+    @OneToMany(mappedBy = "categoryS", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<CategorySS> categorySSList = new ArrayList<>();
 
     @Builder
-    public CategoryS(String name, CategoryM categoryM, List<CategorySS> categorySSList) {
+    public CategoryS(String name, CategoryM categoryM) {
         this.name = name;
         this.categoryM = categoryM;
-        this.categorySSList = categorySSList;
     }
 
     public void linkToCategorySS(CategorySS categorySS) {
@@ -44,5 +40,6 @@ public class CategoryS extends BaseEntity {
 
     public void linkToCategoryM(CategoryM categoryM) {
         this.categoryM = categoryM;
+        categoryM.linkToCategoryS(this);
     }
 }
