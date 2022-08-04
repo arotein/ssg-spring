@@ -18,8 +18,10 @@ public class CategoryM extends BaseEntity {
     @Column(name = "category_m_id")
     private Long id;
     private String name;
+    private String src;
 
     //==매핑==
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
     private Category category;
@@ -29,10 +31,11 @@ public class CategoryM extends BaseEntity {
     private List<CategoryS> categorySList = new ArrayList<>();
 
     @Builder
-    public CategoryM(String name, Category category) {
+    public CategoryM(String name, String src) {
         this.name = name;
-        this.category = category;
+        this.src = src;
     }
+
 
     public void linkToCategoryS(CategoryS categoryS) {
         this.categorySList.add(categoryS);

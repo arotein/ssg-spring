@@ -18,6 +18,7 @@ public class Category extends BaseEntity {
     private Long id;
     @Column(unique = true)
     private String name;
+    private String src;
 
     //==매핑==
     @JsonIgnore
@@ -25,8 +26,9 @@ public class Category extends BaseEntity {
     private List<CategoryM> categoryMList = new ArrayList<>();
 
     @Builder
-    public Category(String name) {
+    public Category(String name, String src) {
         this.name = name;
+        this.src = src;
     }
 
     public void linkToCategoryM(CategoryM categoryM) {

@@ -20,6 +20,7 @@ public class CategoryS extends BaseEntity {
     private String name;
 
     //==매핑==
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "category_m_id")
     private CategoryM categoryM;

@@ -1,14 +1,14 @@
 package com.youngjo.ssg.global.init;
 
-import com.youngjo.ssg.domain.product.domain.Category;
-import com.youngjo.ssg.domain.product.domain.CategoryM;
-import com.youngjo.ssg.domain.product.domain.CategoryS;
-import com.youngjo.ssg.domain.product.domain.CategorySS;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.youngjo.ssg.domain.product.domain.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbookFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,26 +19,64 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import static com.youngjo.ssg.domain.product.domain.QCategoryM.categoryM;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class CategoryInit {
     private final InitService initService;
+    @Value("${spring.jpa.hibernate.ddl-auto}")
+    private String ddlOption;
 
     @PostConstruct
     public void init() throws IOException {
-        initService.categoryInit();
-        log.info("categoryInit 실행완료");
+        if (ddlOption.equals("create")) {
+            initService.categoryInit();
+            initService.categoryInit2();
+            log.info("categoryInit 실행완료");
+        }
     }
 
     @Component
     @Transactional
-    @RequiredArgsConstructor
     static class InitService {
         private final EntityManager entityManager;
+        private final JPAQueryFactory queryFactory;
+
+        @Autowired
+        public InitService(EntityManager entityManager) {
+            this.entityManager = entityManager;
+            this.queryFactory = new JPAQueryFactory(entityManager);
+        }
+
         @Value("${global.category-xlsx-dir}")
         private String filePath;
 
+        // L2 src add
+        @Modifying(clearAutomatically = true)
+        public void categoryInit2() throws IOException {
+            XSSFWorkbookFactory wb = new XSSFWorkbookFactory();
+            InputStream file = new FileInputStream(filePath);
+            XSSFSheet sheet = wb.create(file).getSheetAt(1);
+            long idx = 0;
+            for (int row = 0; row <= 14; row++) {
+                for (int col = 0; col <= 10; col++) {
+                    String src;
+                    try {
+                        src = sheet.getRow(row).getCell(col).getStringCellValue(); // ctgL2 src
+                        idx++;
+                        queryFactory.update(categoryM)
+                                .set(categoryM.src, src)
+                                .where(categoryM.id.eq(idx))
+                                .execute();
+                    } catch (Exception e) {
+                    }
+                }
+            }
+        }
+
+        // category init, L1 src add
         public void categoryInit() throws IOException {
             String[] cats = {
                     "패션의류",
@@ -55,17 +93,32 @@ public class CategoryInit {
                     "e쿠폰/서비스/여행",
                     "문구/도서/취미"
             };
+            String[] urls = {
+                    "https://simg.ssgcdn.com/trans.ssg?src=/cmpt/banner/202109/2021090117370424472933833393_256.jpg&w=150&h=150&edit=c&t=1563dd18551f16231432da715468c33acc03630e",
+                    "https://simg.ssgcdn.com/trans.ssg?src=/cmpt/banner/202007/2020072917411353521969696196_273.jpg&w=150&h=150&edit=c&t=48614e250da988610b4e7935868e8f1290e7c231",
+                    "https://simg.ssgcdn.com/trans.ssg?src=/cmpt/banner/202007/2020072916174616090674372167_34.jpg&w=150&h=150&edit=c&t=08dd324b76e992bbf3cf69fee132454ef1ae2b2f",
+                    "https://simg.ssgcdn.com/trans.ssg?src=/cmpt/banner/202007/2020072916180739844304103530_576.jpg&w=150&h=150&edit=c&t=24e30ad244143647858f78afb39731d96b5256bc",
+                    "https://simg.ssgcdn.com/trans.ssg?src=/cmpt/banner/202007/2020072916183081222145720314_367.jpg&w=150&h=150&edit=c&t=8791b688cc54899753a9adb2f82dc585c52a8ae0",
+                    "https://simg.ssgcdn.com/trans.ssg?src=/cmpt/banner/202007/2020072917404751786590472759_591.jpg&w=150&h=150&edit=c&t=3a7d4a334ee9337474b984a6ea9867fd36181d57",
+                    "https://simg.ssgcdn.com/trans.ssg?src=/cmpt/banner/202105/2021051315282642621637316163_499.jpg&w=150&h=150&edit=c&t=74b16620d21c0412d55cec8083a145421623a236",
+                    "https://simg.ssgcdn.com/trans.ssg?src=/cmpt/banner/202109/2021091312493245557072867707_591.jpg&w=150&h=150&edit=c&t=b1ff290c681d07b086d3b13334f222294befce91",
+                    "https://simg.ssgcdn.com/trans.ssg?src=/cmpt/banner/202007/2020072916185554662649910364_729.jpg&w=150&h=150&edit=c&t=437f0d41210a78741f89ba827407c26b2e8798ce",
+                    "https://simg.ssgcdn.com/trans.ssg?src=/cmpt/banner/202007/2020072916221442699359630445_591.jpg&w=150&h=150&edit=c&t=5c5d93292562b819f3509eb400fbd9d49d86ad6e",
+                    "https://simg.ssgcdn.com/trans.ssg?src=/cmpt/banner/202007/2020072916192109082788875378_90.jpg&w=150&h=150&edit=c&t=b83371edfebf91bca55682016e958688bc59cb78",
+                    "https://simg.ssgcdn.com/trans.ssg?src=/cmpt/banner/202007/2020072916223916760668536166_464.jpg&w=150&h=150&edit=c&t=82ec94eba3bd7b859529cacae02f3b1287f780b5",
+                    "https://simg.ssgcdn.com/trans.ssg?src=/cmpt/banner/202105/2021051316532756213053205305_963.jpg&w=150&h=150&edit=c&t=292c99e60f69fb8779ef1e40fe7096612bcb0165"
+            };
             List<String> catList = List.of(cats);
 
             XSSFWorkbookFactory wb = new XSSFWorkbookFactory();
             InputStream file = new FileInputStream(filePath);
             XSSFSheet sheet = wb.create(file).getSheetAt(0);
 
-
             Category catL1 = null;
             CategoryM catL2 = null;
             CategoryS catL3 = null;
             String value = null;
+            int idx = 0;
 
 
             for (int row = 0; row < 786; row++) {
@@ -78,8 +131,8 @@ public class CategoryInit {
                     }
                     // L1체크
                     if (catList.contains(value) && col == 0) {
-                        catL1 = Category.builder().name(value).build();
-                        continue;
+                        catL1 = Category.builder().name(value).src(urls[idx]).build();
+                        idx++;
                     } else {
                         // L2체크
                         try {
@@ -87,6 +140,7 @@ public class CategoryInit {
                         } catch (Exception e) {
                             catL2 = CategoryM.builder().name(value).build();
                             catL2.linkToCategory(catL1);
+                            entityManager.persist(catL2);
                             continue;
                         }
                         // L3체크

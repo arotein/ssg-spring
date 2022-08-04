@@ -15,7 +15,8 @@ public class CorsConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.setAllowedOriginPatterns(Arrays.asList("*"));
+//        config.addAllowedOrigin("*"); -> 이게 문제
+        config.addAllowedOriginPattern("*");
         config.setAllowedHeaders(Arrays.asList("*"));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE"));
         source.registerCorsConfiguration("/api/**", config);

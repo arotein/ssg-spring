@@ -27,16 +27,14 @@ public class JwtLoginProcessingFilter extends AbstractAuthenticationProcessingFi
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException {
-        log.info("login요청 왔음. {}", request);
-        log.info("login id = {}", request.getAttribute("loginId"));
-        log.info("password = {}", request.getAttribute("password"));
-
+        log.info("login request.");
         // request type 검증
         if (!isJson(request) || !request.getMethod().equalsIgnoreCase("POST")) {
             throw new AuthenticationServiceException("JSON과 POST타입만 지원됩니다.");
         }
 
         SecurityLoginReqDto loginReqDto = objectMapper.readValue(request.getReader(), SecurityLoginReqDto.class);
+        log.info("login request parameter = {}", loginReqDto);
         // request parameter 검증
         if (!StringUtils.hasText(loginReqDto.getLoginId()) || !StringUtils.hasText(loginReqDto.getPassword())) {
             throw new IllegalArgumentException("loginId 또는 password가 공백입니다.");

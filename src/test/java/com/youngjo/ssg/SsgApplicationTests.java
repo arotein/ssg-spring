@@ -4,7 +4,6 @@ import io.fusionauth.jwt.Verifier;
 import io.fusionauth.jwt.domain.JWT;
 import io.fusionauth.jwt.hmac.HMACSigner;
 import io.fusionauth.jwt.hmac.HMACVerifier;
-import org.junit.jupiter.api.Test;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -12,7 +11,7 @@ import java.time.ZonedDateTime;
 //@SpringBootTest
 class SsgApplicationTests {
 
-    @Test
+//    @Test
     void contextLoads() {
         HMACSigner secretKey = HMACSigner.newSHA256Signer("youngjo");
 

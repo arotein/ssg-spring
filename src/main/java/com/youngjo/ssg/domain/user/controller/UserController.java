@@ -7,6 +7,7 @@ import com.youngjo.ssg.global.common.CommonResponse;
 import com.youngjo.ssg.global.security.bean.ClientInfoLoader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,11 +17,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-//@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
     private final UserService userService;
     private final ClientInfoLoader clientInfoLoader;
 
+    @PreAuthorize("isAnonymous()")
     @PostMapping("/sign-up")
     public CommonResponse<String> signUp(@Validated @RequestBody SignUpReqDto dto) {
         log.info("signUp 요청왔음.");
@@ -39,7 +40,7 @@ public class UserController {
                 .setData(allUser);
     }
 
-//    @PreAuthorize("hasRole('NORMAL')")
+    //    @PreAuthorize("hasRole('NORMAL')")
     @GetMapping("/user-lists")
     public CommonResponse<List<User>> userLists() {
         System.out.println("Controller user-lists 잘 작동됨");
