@@ -6,7 +6,7 @@ import com.youngjo.ssg.domain.product.dto.response.CtgL1L2Dto;
 import java.util.List;
 
 public interface CategoryService {
-    List<Category> findCtgAll();
+    List<Category> getCtgAll();
 
-    List<CtgL1L2Dto> findAllCtgL1L2Dto();
+    List<CtgL1L2Dto> getAllCtgL1L2Dto();
 }

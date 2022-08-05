@@ -1,12 +1,15 @@
 package com.youngjo.ssg.domain.product.controller;
 
+import com.youngjo.ssg.domain.product.domain.HappyLoungeItem;
 import com.youngjo.ssg.domain.product.dto.response.SlideImgDto;
+import com.youngjo.ssg.domain.product.service.ProductService;
 import com.youngjo.ssg.global.security.bean.ClientInfoLoader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -17,6 +20,7 @@ import java.util.List;
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class ProductController {
+    private final ProductService productService;
     private final ClientInfoLoader clientInfoLoader;
 
     @GetMapping("/slide/img")
@@ -64,26 +68,9 @@ public class ProductController {
     }
 
     @GetMapping("/happyLoungeItem")
-    public List<SlideImgDto> imgs3() {
-        log.info("/slide/imgs3 요청들어옴");
-
-        String[] urls = {
-                "https://sui.ssgcdn.com/cmpt/banner/202207/2022072216460396994225724522_92.png",
-                "https://sui.ssgcdn.com/cmpt/banner/202207/2022072216460396994225724522_92.png",
-                "https://sui.ssgcdn.com/cmpt/banner/202207/2022072216431332432781237278_289.png",
-                "https://sui.ssgcdn.com/cmpt/banner/202207/2022072216435453442063698206_435.png"
-        };
-
-        List<SlideImgDto> dtos = new ArrayList<>();
-        System.out.println("urls.length = " + urls.length);
-        for (int k = 0; k < urls.length; k++) {
-            dtos.add(SlideImgDto.builder()
-                    .id((long) k + 1)
-                    .name(RandomStringUtils.randomAlphanumeric(11))
-                    .url(urls[k])
-                    .build());
-        }
-        return dtos;
+    public List<HappyLoungeItem> happyLoungeItem(@RequestParam(name = "qty", defaultValue = "3") Integer qty) {
+        log.info("/api/happyLoungeItem 요청들어옴");
+        return productService.getHappyLoungeItems(qty);
     }
 
     @GetMapping("/img4")

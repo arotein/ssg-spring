@@ -18,12 +18,12 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
 
     @Override
-    public List<Category> findCtgAll() {
+    public List<Category> getCtgAll() {
         return categoryRepository.findCtgAll();
     }
 
     @Override
-    public List<CtgL1L2Dto> findAllCtgL1L2Dto() {
+    public List<CtgL1L2Dto> getAllCtgL1L2Dto() {
         return categoryRepository.findAllCtgL1L2Dto();
     }
 }

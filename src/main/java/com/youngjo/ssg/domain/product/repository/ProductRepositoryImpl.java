@@ -1,19 +1,19 @@
 package com.youngjo.ssg.domain.product.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.youngjo.ssg.domain.product.domain.Category;
-import com.youngjo.ssg.domain.product.domain.CategoryM;
-import com.youngjo.ssg.domain.product.domain.CategoryS;
-import com.youngjo.ssg.domain.product.domain.CategorySS;
+import com.youngjo.ssg.domain.product.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 
+import java.util.List;
+
 import static com.youngjo.ssg.domain.product.domain.QCategory.category;
 import static com.youngjo.ssg.domain.product.domain.QCategoryM.categoryM;
 import static com.youngjo.ssg.domain.product.domain.QCategoryS.categoryS;
 import static com.youngjo.ssg.domain.product.domain.QCategorySS.categorySS;
+import static com.youngjo.ssg.domain.product.domain.QHappyLoungeItem.happyLoungeItem;
 
 @Repository
 public class ProductRepositoryImpl implements ProductRepository {
@@ -24,6 +24,14 @@ public class ProductRepositoryImpl implements ProductRepository {
     public ProductRepositoryImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
         this.queryFactory = new JPAQueryFactory(entityManager);
+    }
+
+    @Override
+    public List<HappyLoungeItem> findHappyLoungeItems(Integer qty) {
+        return queryFactory.selectFrom(happyLoungeItem)
+                .limit(qty)
+                .offset(0)
+                .fetch();
     }
 
     @Override

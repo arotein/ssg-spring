@@ -4,7 +4,9 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.youngjo.ssg.domain.product.domain.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbookFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,6 +19,7 @@ import javax.persistence.EntityManager;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.youngjo.ssg.domain.product.domain.QCategoryM.categoryM;
@@ -24,7 +27,7 @@ import static com.youngjo.ssg.domain.product.domain.QCategoryM.categoryM;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class CategoryInit {
+public class DbInit {
     private final InitService initService;
     @Value("${spring.jpa.hibernate.ddl-auto}")
     private String ddlOption;
@@ -34,7 +37,8 @@ public class CategoryInit {
         if (ddlOption.equals("create")) {
             initService.categoryInit();
             initService.categoryInit2();
-            log.info("categoryInit 실행완료");
+            initService.happyLoungeInit();
+            log.info("DbInit 실행완료");
         }
     }
 
@@ -50,17 +54,87 @@ public class CategoryInit {
             this.queryFactory = new JPAQueryFactory(entityManager);
         }
 
-        @Value("${global.category-xlsx-dir}")
+        @Value("${global.xlsx-dir}")
         private String filePath;
+        // sheet는 1부터, row, col은 0부터
+
+        @Modifying(clearAutomatically = true)
+        public void happyLoungeInit() throws IOException {
+            XSSFWorkbookFactory wb = new XSSFWorkbookFactory();
+            InputStream file = new FileInputStream(filePath + "/happyLoungeInit.xlsx");
+            String[] titleList = {"쇼케이스",
+                    "패션/언더웨어",
+                    "뷰티",
+                    "슈즈/잡화",
+                    "스포츠",
+                    "유아동",
+                    "디지털",
+                    "리빙",
+                    "식품",
+                    "생활용품"};
+            List<String> valueList = new ArrayList<>();
+            XSSFWorkbook ws = wb.create(file);
+            for (int i = 0; i < titleList.length; i++) {
+                XSSFSheet sheet = ws.getSheetAt(i);
+                for (int row = 1; row <= sheet.getLastRowNum(); row++) {
+                    for (int col = 0; col <= 10; col++) {
+                        try {
+                            valueList.add(sheet.getRow(row).getCell(col).getStringCellValue());
+                        } catch (Exception e) {
+                            valueList.add(null);
+                        }
+                    }
+                    if (valueList.get(8) == null) {
+                        valueList.set(8, "0");
+                    } else if (valueList.get(8).equals("무료배송")) {
+                        valueList.set(8, "0");
+                        valueList.set(10, "무료배송");
+                    }
+                    HappyLoungeItem item = HappyLoungeItem.builder()
+                            .name(RandomStringUtils.randomAlphabetic(7))
+                            .imgUrl1(valueList.get(0))
+                            .imgUrl2(valueList.get(1))
+                            .imgUrl3(valueList.get(2))
+                            .imgUrl4(valueList.get(3))
+                            .title1(valueList.get(4))
+                            .title2(valueList.get(5))
+                            .productTitle(valueList.get(6))
+                            .price(parseToInt(valueList.get(7)))
+                            .pick(parseToInt(valueList.get(8)))
+                            .productUrl(valueList.get(9))
+                            .isFreeShipping(parseToBool(valueList.get(10)))
+                            .ctg(titleList[i])
+                            .build();
+                    entityManager.persist(item);
+                    valueList.clear();
+                }
+            }
+        }
+
+        private Integer parseToInt(String str) {
+            try {
+                return Integer.parseInt(str);
+            } catch (Exception e) {
+                return 0;
+            }
+        }
+
+        private Boolean parseToBool(String str) {
+            try {
+                return str.equals("무료배송");
+            } catch (Exception e) {
+                return false;
+            }
+        }
 
         // L2 src add
         @Modifying(clearAutomatically = true)
         public void categoryInit2() throws IOException {
             XSSFWorkbookFactory wb = new XSSFWorkbookFactory();
-            InputStream file = new FileInputStream(filePath);
+            InputStream file = new FileInputStream(filePath + "/categoryAll.xlsx");
             XSSFSheet sheet = wb.create(file).getSheetAt(1);
             long idx = 0;
-            for (int row = 0; row <= 14; row++) {
+            for (int row = 0; row <= sheet.getLastRowNum(); row++) {
                 for (int col = 0; col <= 10; col++) {
                     String src;
                     try {
@@ -77,6 +151,7 @@ public class CategoryInit {
         }
 
         // category init, L1 src add
+        @Modifying(clearAutomatically = true)
         public void categoryInit() throws IOException {
             String[] cats = {
                     "패션의류",
@@ -111,7 +186,7 @@ public class CategoryInit {
             List<String> catList = List.of(cats);
 
             XSSFWorkbookFactory wb = new XSSFWorkbookFactory();
-            InputStream file = new FileInputStream(filePath);
+            InputStream file = new FileInputStream(filePath + "/categoryAll.xlsx");
             XSSFSheet sheet = wb.create(file).getSheetAt(0);
 
             Category catL1 = null;
@@ -121,7 +196,7 @@ public class CategoryInit {
             int idx = 0;
 
 
-            for (int row = 0; row < 786; row++) {
+            for (int row = 0; row <= sheet.getLastRowNum(); row++) {
                 for (int col = 0; col < 19; col++) {
                     try {
                         // 시트값 존재하는지 체크

@@ -21,12 +21,12 @@ public class CategoryController {
     // 카테고리 목록페이지
     @GetMapping("/main")
     public List<Category> categoryL1All() {
-        return categoryService.findCtgAll();
+        return categoryService.getCtgAll();
     }
 
     @GetMapping("/main-detail")
     public List<CtgL1L2Dto> categoryL1L2All() {
-        return categoryService.findAllCtgL1L2Dto();
+        return categoryService.getAllCtgL1L2Dto();
     }
 
     // 카테고리 첫번째 상세페이지

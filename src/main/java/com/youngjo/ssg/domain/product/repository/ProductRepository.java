@@ -1,11 +1,13 @@
 package com.youngjo.ssg.domain.product.repository;
 
-import com.youngjo.ssg.domain.product.domain.Category;
-import com.youngjo.ssg.domain.product.domain.CategoryM;
-import com.youngjo.ssg.domain.product.domain.CategoryS;
-import com.youngjo.ssg.domain.product.domain.CategorySS;
+import com.youngjo.ssg.domain.product.domain.*;
+
+import java.util.List;
 
 public interface ProductRepository {
+
+    List<HappyLoungeItem> findHappyLoungeItems(Integer qty);
+
     void addCategory(Category category);
 
     void addCategoryM(CategoryM categoryM);
