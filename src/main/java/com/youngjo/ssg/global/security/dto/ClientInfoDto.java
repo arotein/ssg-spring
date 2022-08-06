@@ -1,6 +1,6 @@
 package com.youngjo.ssg.global.security.dto;
 
-import com.youngjo.ssg.domain.user.enumeration.Role;
+import com.youngjo.ssg.global.enumeration.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

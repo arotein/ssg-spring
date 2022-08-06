@@ -1,23 +1,22 @@
 package com.youngjo.ssg.domain.user.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.youngjo.ssg.domain.product.domain.Product;
 import com.youngjo.ssg.global.common.BaseEntity;
+import com.youngjo.ssg.global.common.IdGenTable;
+import com.youngjo.ssg.global.common.SeqTable;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
+@IdGenTable
 public class PeriodicCart extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = SeqTable.name)
     @Column(name = "periodic_cart_id")
     private Long id;
 
@@ -27,10 +26,6 @@ public class PeriodicCart extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "periodicCart")
-    private List<Product> product = new ArrayList<>();
 
     @Builder
     public PeriodicCart(Integer qty, User user) {

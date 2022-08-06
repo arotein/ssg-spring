@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface ProductRepository {
 
+    ProductBoard findBoard();
+
     List<HappyLoungeItem> findHappyLoungeItems(Integer qty);
 
     void addCategory(Category category);

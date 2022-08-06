@@ -1,6 +1,6 @@
 package com.youngjo.ssg.domain.product.controller;
 
-import com.youngjo.ssg.domain.product.domain.HappyLoungeItem;
+import com.youngjo.ssg.domain.product.domain.ProductBoard;
 import com.youngjo.ssg.domain.product.dto.response.SlideImgDto;
 import com.youngjo.ssg.domain.product.service.ProductService;
 import com.youngjo.ssg.global.security.bean.ClientInfoLoader;
@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -22,6 +21,11 @@ import java.util.List;
 public class ProductController {
     private final ProductService productService;
     private final ClientInfoLoader clientInfoLoader;
+
+    @GetMapping("/test")
+    public ProductBoard board() {
+        return productService.getBoard();
+    }
 
     @GetMapping("/slide/img")
     public List<SlideImgDto> imgs() {
@@ -67,11 +71,19 @@ public class ProductController {
         return dtos;
     }
 
-    @GetMapping("/happyLoungeItem")
-    public List<HappyLoungeItem> happyLoungeItem(@RequestParam(name = "qty", defaultValue = "3") Integer qty) {
-        log.info("/api/happyLoungeItem 요청들어옴");
-        return productService.getHappyLoungeItems(qty);
-    }
+//    @GetMapping("/happyLoungeItem")
+//    public List<HappyLoungeItem> happyLoungeItem(@RequestParam(name = "qty", defaultValue = "3") Integer qty,
+//                                                 @RequestParam(name = "ctg", defaultValue = "1") Integer ctg) { // -1 : 카테고리 전체
+//        log.info("/api/happyLoungeItem 요청들어옴");
+//        if (qty > 25 || qty < 0) {
+//            qty = 25;
+//        }
+//        if (0 <= ctg || ctg <= ctgMap.size()) {
+//            return productService.getHappyLoungeItems(qty);
+//        } else {
+//            return productService.getHappyLoungeItems(ctg, qty);
+//        }
+//    }
 
     @GetMapping("/img4")
     public List<SlideImgDto> imgs4() {

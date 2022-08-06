@@ -1,6 +1,6 @@
 package com.youngjo.ssg.global.security.filter;
 
-import com.youngjo.ssg.domain.user.enumeration.Role;
+import com.youngjo.ssg.global.enumeration.Role;
 import com.youngjo.ssg.global.security.auth.UserDetailsImpl;
 import com.youngjo.ssg.global.security.dto.ClientInfoDto;
 import com.youngjo.ssg.global.security.token.JwtAuthenticationToken;
@@ -18,7 +18,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
-import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -37,10 +36,6 @@ public class JwtRequestProcessingFilter extends AbstractAuthenticationProcessing
 
     public JwtRequestProcessingFilter(String defaultFilterProcessesUrl) {
         super(defaultFilterProcessesUrl);
-    }
-
-    public JwtRequestProcessingFilter(RequestMatcher requiresAuthenticationRequestMatcher) {
-        super(requiresAuthenticationRequestMatcher);
     }
 
     @Override

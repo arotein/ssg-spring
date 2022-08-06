@@ -1,6 +1,8 @@
 package com.youngjo.ssg.domain.user.domain;
 
 import com.youngjo.ssg.global.common.BaseEntity;
+import com.youngjo.ssg.global.common.IdGenTable;
+import com.youngjo.ssg.global.common.SeqTable;
 import lombok.*;
 
 import javax.persistence.*;
@@ -8,9 +10,10 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
+@IdGenTable
 public class PaymentCard extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = SeqTable.name)
     @Column(name = "payment_card_id")
     private Long id;
 

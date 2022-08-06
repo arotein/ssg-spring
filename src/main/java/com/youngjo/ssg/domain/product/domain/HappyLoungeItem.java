@@ -23,6 +23,8 @@ public class HappyLoungeItem extends BaseEntity { // product를 올려놓은 boa
     private String title1;
     private String title2;
     private String productTitle;
+    private String brand;
+
     private Integer price;
     private Integer pick;
     private Boolean isFreeShipping; // 배송비 무료?

@@ -4,14 +4,16 @@ import io.fusionauth.jwt.Verifier;
 import io.fusionauth.jwt.domain.JWT;
 import io.fusionauth.jwt.hmac.HMACSigner;
 import io.fusionauth.jwt.hmac.HMACVerifier;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
-//@SpringBootTest
+@SpringBootTest
 class SsgApplicationTests {
 
-//    @Test
+    //    @Test
     void contextLoads() {
         HMACSigner secretKey = HMACSigner.newSHA256Signer("youngjo");
 
@@ -39,7 +41,13 @@ class SsgApplicationTests {
         System.out.println("decodedJwt = " + decodedJwt);
         System.out.println("만료됨? = " + decodedJwt.isExpired());
         System.out.println("2는 만료됨? = " + decodedJwt2.isExpired());
-
     }
 
+    @Test
+    void test() {
+//        JSONPObject
+    }
 }
+
+// 5e57e4b5e4ea9
+// 6000200799

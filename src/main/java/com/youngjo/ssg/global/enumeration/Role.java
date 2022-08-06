@@ -1,4 +1,4 @@
-package com.youngjo.ssg.domain.user.enumeration;
+package com.youngjo.ssg.global.enumeration;
 
 public enum Role {
     ROLE_NORMAL,

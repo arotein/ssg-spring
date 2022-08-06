@@ -1,7 +1,7 @@
 package com.youngjo.ssg.global.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.youngjo.ssg.domain.user.enumeration.Role;
+import com.youngjo.ssg.global.enumeration.Role;
 import com.youngjo.ssg.global.security.filter.JwtRequestProcessingFilter;
 import com.youngjo.ssg.global.security.handler.JwtAuthenticationFailureHandler;
 import com.youngjo.ssg.global.security.handler.JwtAuthenticationSuccessHandler;
@@ -27,7 +27,6 @@ import org.springframework.web.filter.CorsFilter;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
-//@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final String LOGIN_PROCESSING_URL = "/api/login";
     private final AuthenticationProvider authenticationProvider;

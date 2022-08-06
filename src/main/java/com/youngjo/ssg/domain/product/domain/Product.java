@@ -3,9 +3,10 @@ package com.youngjo.ssg.domain.product.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.youngjo.ssg.domain.buy.domain.Buy;
 import com.youngjo.ssg.domain.user.domain.NormalCart;
-import com.youngjo.ssg.domain.user.domain.PeriodicCart;
 import com.youngjo.ssg.domain.user.domain.Review;
 import com.youngjo.ssg.global.common.BaseEntity;
+import com.youngjo.ssg.global.common.IdGenTable;
+import com.youngjo.ssg.global.common.SeqTable;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,24 +20,29 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
+@IdGenTable
 public class Product extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = SeqTable.name)
     @Column(name = "product_id")
     private Long id;
     private String name;
     private Integer price;
-    private Integer qty;
+    //    private Integer qty; -> 옵션에 추가
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_board_id")
+    private ProductBoard productBoard;
+    private String option1;
+    private String option2;
 
+
+    //==쿠폰== -> 엔티티 만들기
     private Integer discountRate;
     private Timestamp availableDate; // 사용가능 날짜
     private Timestamp expDate; // 만료날짜
+    //==쿠폰 끝==
 
     //==매핑==
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_ss_id")
-    private CategorySS categorySS;
-
     @JsonIgnore
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<ProductImg> productImgList = new ArrayList<>();
@@ -50,27 +56,18 @@ public class Product extends BaseEntity {
     private NormalCart normalCart;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "periodic_cart_id")
-    private PeriodicCart periodicCart;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "buy_id")
     private Buy buy;
 
     @Builder
-
-    public Product(String name, Integer price, Integer qty, Integer discountRate, Timestamp availableDate, Timestamp expDate, CategorySS categorySS, List<ProductImg> productImgList, List<Review> reviewList, NormalCart normalCart, PeriodicCart periodicCart, Buy buy) {
+    public Product(String name, Integer price, ProductBoard productBoard, String option1, String option2, Integer discountRate, Timestamp availableDate, Timestamp expDate) {
         this.name = name;
         this.price = price;
-        this.qty = qty;
+        this.productBoard = productBoard;
+        this.option1 = option1;
+        this.option2 = option2;
         this.discountRate = discountRate;
         this.availableDate = availableDate;
         this.expDate = expDate;
-        this.categorySS = categorySS;
-        this.productImgList = productImgList;
-        this.reviewList = reviewList;
-        this.normalCart = normalCart;
-        this.periodicCart = periodicCart;
-        this.buy = buy;
     }
 }

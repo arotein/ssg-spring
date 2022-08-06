@@ -1,6 +1,8 @@
 package com.youngjo.ssg.domain.product.domain;
 
 import com.youngjo.ssg.global.common.BaseEntity;
+import com.youngjo.ssg.global.common.IdGenTable;
+import com.youngjo.ssg.global.common.SeqTable;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,9 +13,10 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
+@IdGenTable
 public class ProductImg extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = SeqTable.name)
     @Column(name = "product_img_id")
     private Long id;
     private String name;

@@ -14,6 +14,7 @@ import static com.youngjo.ssg.domain.product.domain.QCategoryM.categoryM;
 import static com.youngjo.ssg.domain.product.domain.QCategoryS.categoryS;
 import static com.youngjo.ssg.domain.product.domain.QCategorySS.categorySS;
 import static com.youngjo.ssg.domain.product.domain.QHappyLoungeItem.happyLoungeItem;
+import static com.youngjo.ssg.domain.product.domain.QProductBoard.productBoard;
 
 @Repository
 public class ProductRepositoryImpl implements ProductRepository {
@@ -24,6 +25,12 @@ public class ProductRepositoryImpl implements ProductRepository {
     public ProductRepositoryImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
         this.queryFactory = new JPAQueryFactory(entityManager);
+    }
+
+    @Override
+    public ProductBoard findBoard() {
+        return queryFactory.selectFrom(productBoard)
+                .fetchFirst();
     }
 
     @Override

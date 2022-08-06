@@ -1,6 +1,6 @@
 package com.youngjo.ssg.global.security.bean;
 
-import com.youngjo.ssg.domain.user.enumeration.Role;
+import com.youngjo.ssg.global.enumeration.Role;
 import com.youngjo.ssg.global.security.auth.UserDetailsImpl;
 import com.youngjo.ssg.global.security.dto.ClientInfoDto;
 import org.springframework.security.core.Authentication;

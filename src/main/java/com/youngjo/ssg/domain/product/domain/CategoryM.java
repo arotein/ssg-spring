@@ -2,7 +2,12 @@ package com.youngjo.ssg.domain.product.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.youngjo.ssg.global.common.BaseEntity;
-import lombok.*;
+import com.youngjo.ssg.global.common.IdGenTable;
+import com.youngjo.ssg.global.common.SeqTable;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,13 +17,14 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "category_m")
+@IdGenTable
 public class CategoryM extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = SeqTable.name)
     @Column(name = "category_m_id")
     private Long id;
     private String name;
-    private String src;
+    private String imgUrl;
 
     //==매핑==
     @JsonIgnore
@@ -31,9 +37,9 @@ public class CategoryM extends BaseEntity {
     private List<CategoryS> categorySList = new ArrayList<>();
 
     @Builder
-    public CategoryM(String name, String src) {
+    public CategoryM(String name, String imgUrl) {
         this.name = name;
-        this.src = src;
+        this.imgUrl = imgUrl;
     }
 
 

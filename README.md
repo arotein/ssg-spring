@@ -11,9 +11,10 @@
 2. 애플리케이션 실행
 
 ## 🍜 구현된 기능
-1. JWT를 이용한 로그인 및 인증
+1. JWT를 이용한 로그인 및 인증 (Access Token만 구현)
 
 ## 🍜 사용된 환경변수
 1. ${SSG_DB_USERNAME}
 2. ${SSG_DB_PASSWORD}
 3. ${SSG_JWT_SIGNER}
+4. ${SSG_CATEGORY_DIR}

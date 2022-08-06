@@ -56,12 +56,24 @@ public class DbInit {
 
         @Value("${global.xlsx-dir}")
         private String filePath;
-        // sheet는 1부터, row, col은 0부터
 
+        @Modifying(clearAutomatically = true)
+        public void boardTest() {
+            ProductBoard board = ProductBoard.builder().name("보드").build();
+            board.addRequiredInfo("제이슨", "개쩌네 ㅋ");
+            board.addRequiredInfo("우왕ㅋ", "진짜개쩌네 ㅋ");
+            board.addRequiredInfo("하나만 더 ㄱㄱ", "ㄷㄷ");
+            entityManager.persist(board);
+            System.out.println("board.getRequiredInfo = " + board.getRequiredInfo());
+            board.removeRequiredInfo("제이슨");
+            System.out.println("board.getRequiredInfo = " + board.getRequiredInfo());
+        }
+
+        // sheet는 1부터, row, col은 0부터
         @Modifying(clearAutomatically = true)
         public void happyLoungeInit() throws IOException {
             XSSFWorkbookFactory wb = new XSSFWorkbookFactory();
-            InputStream file = new FileInputStream(filePath + "/happyLoungeInit.xlsx");
+            InputStream file = new FileInputStream(filePath + "happyLoungeInit.xlsx");
             String[] titleList = {"쇼케이스",
                     "패션/언더웨어",
                     "뷰티",
@@ -131,7 +143,7 @@ public class DbInit {
         @Modifying(clearAutomatically = true)
         public void categoryInit2() throws IOException {
             XSSFWorkbookFactory wb = new XSSFWorkbookFactory();
-            InputStream file = new FileInputStream(filePath + "/categoryAll.xlsx");
+            InputStream file = new FileInputStream(filePath + "categoryAll.xlsx");
             XSSFSheet sheet = wb.create(file).getSheetAt(1);
             long idx = 0;
             for (int row = 0; row <= sheet.getLastRowNum(); row++) {
@@ -141,7 +153,7 @@ public class DbInit {
                         src = sheet.getRow(row).getCell(col).getStringCellValue(); // ctgL2 src
                         idx++;
                         queryFactory.update(categoryM)
-                                .set(categoryM.src, src)
+                                .set(categoryM.imgUrl, src)
                                 .where(categoryM.id.eq(idx))
                                 .execute();
                     } catch (Exception e) {
@@ -206,7 +218,7 @@ public class DbInit {
                     }
                     // L1체크
                     if (catList.contains(value) && col == 0) {
-                        catL1 = Category.builder().name(value).src(urls[idx]).build();
+                        catL1 = Category.builder().name(value).imgUrl(urls[idx]).build();
                         idx++;
                     } else {
                         // L2체크
