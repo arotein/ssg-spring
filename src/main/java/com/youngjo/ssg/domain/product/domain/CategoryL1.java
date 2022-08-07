@@ -16,11 +16,12 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
+@Table(name = "category_l1")
 @IdGenTable
-public class Category extends BaseEntity {
+public class CategoryL1 extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = SeqTable.name)
-    @Column(name = "category_id")
+    @Column(name = "category_l1_id")
     private Long id;
     @Column(unique = true)
     private String name;
@@ -28,16 +29,16 @@ public class Category extends BaseEntity {
 
     //==매핑==
     @JsonIgnore
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<CategoryM> categoryMList = new ArrayList<>();
+    @OneToMany(mappedBy = "categoryL1", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<CategoryL2> categoryL2List = new ArrayList<>();
 
     @Builder
-    public Category(String name, String imgUrl) {
+    public CategoryL1(String name, String imgUrl) {
         this.name = name;
         this.imgUrl = imgUrl;
     }
 
-    public void linkToCategoryM(CategoryM categoryM) {
-        this.categoryMList.add(categoryM);
+    public void linkToCategoryL2(CategoryL2 categoryL2) {
+        this.categoryL2List.add(categoryL2);
     }
 }

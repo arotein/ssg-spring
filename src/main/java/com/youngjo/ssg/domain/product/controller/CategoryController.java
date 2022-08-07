@@ -1,13 +1,12 @@
 package com.youngjo.ssg.domain.product.controller;
 
-import com.youngjo.ssg.domain.product.domain.Category;
-import com.youngjo.ssg.domain.product.dto.response.CtgL1L2Dto;
+import com.youngjo.ssg.domain.product.domain.CategoryL1;
+import com.youngjo.ssg.domain.product.dto.request.CtgL1toL4Init;
 import com.youngjo.ssg.domain.product.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,15 +19,13 @@ public class CategoryController {
 
     // 카테고리 목록페이지
     @GetMapping("/main")
-    public List<Category> categoryL1All() {
+    public List<CategoryL1> categoryL1All() {
         return categoryService.getCtgAll();
     }
 
-    @GetMapping("/main-detail")
-    public List<CtgL1L2Dto> categoryL1L2All() {
-        return categoryService.getAllCtgL1L2Dto();
+    // category init URL
+    @PostMapping("/add/L1-to-L4")
+    public Boolean ctgL1Init(@Validated @RequestBody CtgL1toL4Init ctgL1ToL4Init) {
+        return categoryService.addCtgL1toL4(ctgL1ToL4Init);
     }
-
-    // 카테고리 첫번째 상세페이지
-    // 카테고리 두번째 상세페이지
 }

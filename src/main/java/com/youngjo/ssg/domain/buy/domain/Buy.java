@@ -1,7 +1,5 @@
 package com.youngjo.ssg.domain.buy.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.youngjo.ssg.domain.product.domain.Product;
 import com.youngjo.ssg.domain.user.domain.Delivery;
 import com.youngjo.ssg.domain.user.domain.User;
 import com.youngjo.ssg.global.common.BaseEntity;
@@ -13,21 +11,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @IdGenTable
-public class Buy extends BaseEntity { //회원 주문
+public class Buy extends BaseEntity {
+    // User Buy
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = SeqTable.name)
     @Column(name = "buy_id")
     private Long id;
-    private String serial; // 주문 고유번호
-    private Integer toalPrice;
+    private Integer totalPrice;
     private String paymentType; // 결제종류
-    // 결제 상세정보는 카카오 API 참고해서 작성하기
+    // 결제 상세정보 중간테이블 만들어서 작성하기. -> 카카오 API 참고
 
     //==매핑==
     @ManyToOne(fetch = FetchType.LAZY)
@@ -38,15 +35,16 @@ public class Buy extends BaseEntity { //회원 주문
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "buy", fetch = FetchType.LAZY)
-    private List<Product> productList;
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "buy", fetch = FetchType.LAZY)
+//    private List<ProductBoard> productBoardList;
 
     @Builder
-    public Buy(String serial, Integer toalPrice, String paymentType) {
-        this.serial = serial;
-        this.toalPrice = toalPrice;
+    public Buy(Integer totalPrice, String paymentType, User user, Delivery delivery) {
+        this.totalPrice = totalPrice;
         this.paymentType = paymentType;
+        this.user = user;
+        this.delivery = delivery;
     }
 }
 

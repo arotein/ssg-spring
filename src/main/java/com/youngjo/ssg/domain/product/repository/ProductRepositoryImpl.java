@@ -9,10 +9,6 @@ import javax.persistence.EntityManager;
 
 import java.util.List;
 
-import static com.youngjo.ssg.domain.product.domain.QCategory.category;
-import static com.youngjo.ssg.domain.product.domain.QCategoryM.categoryM;
-import static com.youngjo.ssg.domain.product.domain.QCategoryS.categoryS;
-import static com.youngjo.ssg.domain.product.domain.QCategorySS.categorySS;
 import static com.youngjo.ssg.domain.product.domain.QHappyLoungeItem.happyLoungeItem;
 import static com.youngjo.ssg.domain.product.domain.QProductBoard.productBoard;
 
@@ -42,50 +38,22 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public void addCategory(Category category) {
-        entityManager.persist(category);
+    public void addCategory(CategoryL1 categoryL1) {
+        entityManager.persist(categoryL1);
     }
 
     @Override
-    public void addCategoryM(CategoryM categoryM) {
-        entityManager.persist(categoryM);
+    public void addCategoryM(CategoryL2 categoryL2) {
+        entityManager.persist(categoryL2);
     }
 
     @Override
-    public void addCategoryS(CategoryS categoryS) {
-        entityManager.persist(categoryS);
+    public void addCategoryS(CategoryL3 categoryL3) {
+        entityManager.persist(categoryL3);
     }
 
     @Override
-    public void addCategorySS(CategorySS categorySS) {
-        entityManager.persist(categorySS);
-    }
-
-    @Override
-    public Category findCategoryByName(String name) {
-        return queryFactory.selectFrom(category)
-                .where(category.name.eq(name))
-                .fetchOne();
-    }
-
-    @Override
-    public CategoryM findCategoryMByName(String name) {
-        return queryFactory.selectFrom(categoryM)
-                .where(categoryM.name.eq(name))
-                .fetchOne();
-    }
-
-    @Override
-    public CategoryS findCategorySByName(String name) {
-        return queryFactory.selectFrom(categoryS)
-                .where(categoryS.name.eq(name))
-                .fetchOne();
-    }
-
-    @Override
-    public CategorySS findCategorySSByName(String name) {
-        return queryFactory.selectFrom(categorySS)
-                .where(categorySS.name.eq(name))
-                .fetchOne();
+    public void addCategorySS(CategoryL4 categoryL4) {
+        entityManager.persist(categoryL4);
     }
 }

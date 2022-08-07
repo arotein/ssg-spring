@@ -10,19 +10,11 @@ public interface ProductRepository {
 
     List<HappyLoungeItem> findHappyLoungeItems(Integer qty);
 
-    void addCategory(Category category);
+    void addCategory(CategoryL1 categoryL1);
 
-    void addCategoryM(CategoryM categoryM);
+    void addCategoryM(CategoryL2 categoryL2);
 
-    void addCategoryS(CategoryS categoryS);
+    void addCategoryS(CategoryL3 categoryL3);
 
-    void addCategorySS(CategorySS categorySS);
-
-    Category findCategoryByName(String name);
-
-    CategoryM findCategoryMByName(String name);
-
-    CategoryS findCategorySByName(String name);
-
-    CategorySS findCategorySSByName(String name);
+    void addCategorySS(CategoryL4 categoryL4);
 }

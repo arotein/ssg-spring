@@ -24,8 +24,8 @@ public class ProductImg extends BaseEntity {
 
     //==매핑==
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @JoinColumn(name = "product_board_id")
+    private ProductBoard productBoard;
 
     @Builder
     public ProductImg(String name, String originPath) {

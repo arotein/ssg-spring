@@ -16,37 +16,37 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "category_s")
+@Table(name = "category_l3")
 @IdGenTable
-public class CategoryS extends BaseEntity {
+public class CategoryL3 extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = SeqTable.name)
-    @Column(name = "category_s_id")
+    @Column(name = "category_l3_id")
     private Long id;
     private String name;
 
     //==매핑==
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "category_m_id")
-    private CategoryM categoryM;
+    @JoinColumn(name = "category_l2_id")
+    private CategoryL2 categoryL2;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "categoryS", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<CategorySS> categorySSList = new ArrayList<>();
+    @OneToMany(mappedBy = "categoryL3", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<CategoryL4> categoryL4List = new ArrayList<>();
 
     @Builder
-    public CategoryS(String name, CategoryM categoryM) {
+    public CategoryL3(String name, CategoryL2 categoryL2) {
         this.name = name;
-        this.categoryM = categoryM;
+        this.categoryL2 = categoryL2;
     }
 
-    public void linkToCategorySS(CategorySS categorySS) {
-        this.categorySSList.add(categorySS);
+    public void linkToCategoryL4(CategoryL4 categoryL4) {
+        this.categoryL4List.add(categoryL4);
     }
 
-    public void linkToCategoryM(CategoryM categoryM) {
-        this.categoryM = categoryM;
-        categoryM.linkToCategoryS(this);
+    public void linkToCategoryL2(CategoryL2 categoryL2) {
+        this.categoryL2 = categoryL2;
+        categoryL2.linkToCategoryL3(this);
     }
 }
