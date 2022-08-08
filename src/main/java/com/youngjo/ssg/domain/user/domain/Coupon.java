@@ -1,8 +1,6 @@
 package com.youngjo.ssg.domain.user.domain;
 
 import com.youngjo.ssg.global.common.BaseEntity;
-import com.youngjo.ssg.global.common.IdGenTable;
-import com.youngjo.ssg.global.common.SeqTable;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,10 +12,9 @@ import java.sql.Timestamp;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@IdGenTable
 public class Coupon extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = SeqTable.name)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "coupon_id")
     private Long id;
 

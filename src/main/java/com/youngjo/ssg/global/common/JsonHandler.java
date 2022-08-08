@@ -40,4 +40,24 @@ public class JsonHandler {
             return rawJson;
         }
     }
+
+    public static JSONObject parseToJSONObject(String rawJson) {
+        JSONObject result = null;
+        try {
+            result = (JSONObject) parser.parse(rawJson);
+        } catch (ParseException pe) {
+            log.error("ParseException occurred in JsonHandler's parseToJSONObject.");
+        }
+        return result;
+    }
+
+    public static JSONArray parseToJSONArray(String rawJson) {
+        JSONArray result = null;
+        try {
+            result = (JSONArray) parser.parse(rawJson);
+        } catch (ParseException pe) {
+            log.error("ParseException occurred in JsonHandler's parseToJSONObject.");
+        }
+        return result;
+    }
 }

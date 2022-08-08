@@ -16,9 +16,4 @@ public class AppConfig {
     public Argon2PasswordEncoder passwordEncoder() {
         return new Argon2PasswordEncoder();
     }
-
-//    @Bean
-//    public JSONParser jsonParser() {
-//        return new JSONParser();
-//    }
 }

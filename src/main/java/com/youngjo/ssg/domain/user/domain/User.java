@@ -2,11 +2,9 @@ package com.youngjo.ssg.domain.user.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.youngjo.ssg.domain.buy.domain.Buy;
-import com.youngjo.ssg.global.common.IdGenTable;
-import com.youngjo.ssg.global.common.SeqTable;
+import com.youngjo.ssg.global.common.BaseEntity;
 import com.youngjo.ssg.global.enumeration.Grade;
 import com.youngjo.ssg.global.enumeration.Role;
-import com.youngjo.ssg.global.common.BaseEntity;
 import com.youngjo.ssg.global.enumeration.Status;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -22,11 +20,10 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@IdGenTable
 public class User extends BaseEntity {
     //==유저 정보==
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = SeqTable.name)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
 

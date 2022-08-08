@@ -2,8 +2,6 @@ package com.youngjo.ssg.domain.product.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.youngjo.ssg.global.common.BaseEntity;
-import com.youngjo.ssg.global.common.IdGenTable;
-import com.youngjo.ssg.global.common.SeqTable;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,17 +14,14 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "category_l3")
-@IdGenTable
 public class CategoryL3 extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = SeqTable.name)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_l3_id")
     private Long id;
     private String name;
 
     //==매핑==
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "category_l2_id")
     private CategoryL2 categoryL2;

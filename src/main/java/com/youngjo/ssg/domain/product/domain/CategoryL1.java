@@ -2,8 +2,6 @@ package com.youngjo.ssg.domain.product.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.youngjo.ssg.global.common.BaseEntity;
-import com.youngjo.ssg.global.common.IdGenTable;
-import com.youngjo.ssg.global.common.SeqTable;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,11 +14,9 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "category_l1")
-@IdGenTable
 public class CategoryL1 extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = SeqTable.name)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_l1_id")
     private Long id;
     @Column(unique = true)

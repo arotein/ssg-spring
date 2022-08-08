@@ -3,8 +3,6 @@ package com.youngjo.ssg.domain.buy.domain;
 import com.youngjo.ssg.domain.user.domain.Delivery;
 import com.youngjo.ssg.domain.user.domain.User;
 import com.youngjo.ssg.global.common.BaseEntity;
-import com.youngjo.ssg.global.common.IdGenTable;
-import com.youngjo.ssg.global.common.SeqTable;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,11 +13,10 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@IdGenTable
 public class Buy extends BaseEntity {
     // User Buy
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = SeqTable.name)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "buy_id")
     private Long id;
     private Integer totalPrice;

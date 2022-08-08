@@ -2,8 +2,6 @@ package com.youngjo.ssg.domain.buy.domain;
 
 import com.youngjo.ssg.domain.user.domain.Address;
 import com.youngjo.ssg.global.common.BaseEntity;
-import com.youngjo.ssg.global.common.IdGenTable;
-import com.youngjo.ssg.global.common.SeqTable;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,10 +12,9 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@IdGenTable
 public class AnonymousBuy extends BaseEntity { //비회원 주문
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = SeqTable.name)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "anonymous_buy_id")
     private Long id;
     private String serial; // 주문 고유번호

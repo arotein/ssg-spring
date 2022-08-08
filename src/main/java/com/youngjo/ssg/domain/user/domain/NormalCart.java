@@ -1,8 +1,6 @@
 package com.youngjo.ssg.domain.user.domain;
 
 import com.youngjo.ssg.global.common.BaseEntity;
-import com.youngjo.ssg.global.common.IdGenTable;
-import com.youngjo.ssg.global.common.SeqTable;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,10 +11,9 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@IdGenTable
 public class NormalCart extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = SeqTable.name)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "normal_cart_id")
     private Long id;
 
@@ -26,10 +23,6 @@ public class NormalCart extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "normalCart", fetch = FetchType.LAZY)
-//    private List<Product> product = new ArrayList<>();
 
     @Builder
     public NormalCart(Integer qty) {

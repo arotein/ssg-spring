@@ -1,7 +1,7 @@
 package com.youngjo.ssg.domain.user.domain;
 
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,21 +11,28 @@ import java.util.Objects;
 @Getter
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 public class Address {
     private String city;
     private String street;
     private String detail;
     private String postalCode;
 
+    @Builder
+    public Address(String city, String street, String detail, String postalCode) {
+        this.city = city;
+        this.street = street;
+        this.detail = detail;
+        this.postalCode = postalCode;
+    }
+
     @Override
-    public boolean equals(Object ad) {
-        if (ad instanceof Address) {
-            Address address = (Address) ad;
-            return address.city.equals(city) &&
-                    address.street.equals(street) &&
-                    address.detail.equals(detail) &&
-                    address.postalCode.equals(postalCode);
+    public boolean equals(Object obj) {
+        if (obj instanceof Address) {
+            Address address = (Address) obj;
+            return this.city.equals(address.city) &&
+                    this.street.equals(address.street) &&
+                    this.detail.equals(address.detail) &&
+                    this.postalCode.equals(address.postalCode);
         } else {
             throw new IllegalArgumentException("It is not an Address type");
         }

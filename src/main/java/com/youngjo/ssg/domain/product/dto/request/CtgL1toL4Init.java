@@ -14,6 +14,5 @@ public class CtgL1toL4Init {
     private String ctgL2;
     @NotEmpty
     private String ctgL3;
-    @NotEmpty
     private String ctgL4;
 }

@@ -2,8 +2,6 @@ package com.youngjo.ssg.domain.product.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.youngjo.ssg.global.common.BaseEntity;
-import com.youngjo.ssg.global.common.IdGenTable;
-import com.youngjo.ssg.global.common.SeqTable;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,11 +14,9 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "category_l4")
-@IdGenTable
 public class CategoryL4 extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = SeqTable.name)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_l4_id")
     private Long id;
     private String name;
@@ -36,9 +32,10 @@ public class CategoryL4 extends BaseEntity {
     private List<ProductBoard> productBoardList = new ArrayList<>();
 
     @Builder
-    public CategoryL4(String name, CategoryL3 categoryL3) {
+    public CategoryL4(String name, CategoryL3 categoryL3, List<ProductBoard> productBoardList) {
         this.name = name;
         this.categoryL3 = categoryL3;
+        this.productBoardList = productBoardList;
     }
 
     public void linkToProductBoard(ProductBoard board) {

@@ -1,15 +1,12 @@
 package com.youngjo.ssg.domain.product.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.youngjo.ssg.domain.product.domain.*;
+import com.youngjo.ssg.domain.product.domain.ProductBoard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 
-import java.util.List;
-
-import static com.youngjo.ssg.domain.product.domain.QHappyLoungeItem.happyLoungeItem;
 import static com.youngjo.ssg.domain.product.domain.QProductBoard.productBoard;
 
 @Repository
@@ -23,37 +20,18 @@ public class ProductRepositoryImpl implements ProductRepository {
         this.queryFactory = new JPAQueryFactory(entityManager);
     }
 
+    // == service code ==
+    @Override
+    public Long save(ProductBoard productBoard) {
+        entityManager.persist(productBoard);
+        return productBoard.getId();
+    }
+
     @Override
     public ProductBoard findBoard() {
         return queryFactory.selectFrom(productBoard)
                 .fetchFirst();
     }
 
-    @Override
-    public List<HappyLoungeItem> findHappyLoungeItems(Integer qty) {
-        return queryFactory.selectFrom(happyLoungeItem)
-                .limit(qty)
-                .offset(0)
-                .fetch();
-    }
-
-    @Override
-    public void addCategory(CategoryL1 categoryL1) {
-        entityManager.persist(categoryL1);
-    }
-
-    @Override
-    public void addCategoryM(CategoryL2 categoryL2) {
-        entityManager.persist(categoryL2);
-    }
-
-    @Override
-    public void addCategoryS(CategoryL3 categoryL3) {
-        entityManager.persist(categoryL3);
-    }
-
-    @Override
-    public void addCategorySS(CategoryL4 categoryL4) {
-        entityManager.persist(categoryL4);
-    }
+    // == dev code ==
 }
