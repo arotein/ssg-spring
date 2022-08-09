@@ -2,10 +2,7 @@ package com.youngjo.ssg.domain.product.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.youngjo.ssg.global.common.BaseEntity;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -31,6 +28,10 @@ public class CategoryL1 extends BaseEntity {
     @Builder
     public CategoryL1(String name, String imgUrl) {
         this.name = name;
+        this.imgUrl = imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
     }
 

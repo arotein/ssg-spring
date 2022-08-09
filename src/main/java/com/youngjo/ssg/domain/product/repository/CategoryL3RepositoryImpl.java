@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 
 import static com.youngjo.ssg.domain.product.domain.QCategoryL3.categoryL3;
+import static com.youngjo.ssg.domain.product.domain.QCategoryL4.categoryL4;
 
 @Repository
 public class CategoryL3RepositoryImpl implements CategoryL3Repository {
@@ -35,9 +36,10 @@ public class CategoryL3RepositoryImpl implements CategoryL3Repository {
     }
 
     @Override
-    public CategoryL3 findById(Long id) {
+    public CategoryL3 getCtgL3WithL4ById(Long ctgL3Id) {
         return queryFactory.selectFrom(categoryL3)
-                .where(categoryL3.id.eq(id))
+                .join(categoryL4).on(categoryL4.categoryL3.id.eq(ctgL3Id)).fetchJoin()
+                .where(categoryL3.id.eq(ctgL3Id))
                 .fetchOne();
     }
 }

@@ -1,6 +1,7 @@
 package com.youngjo.ssg.domain.product.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.youngjo.ssg.domain.user.domain.Address;
 import com.youngjo.ssg.domain.user.domain.NormalCart;
 import com.youngjo.ssg.global.common.BaseEntity;
 import com.youngjo.ssg.global.enumeration.SalesSite;
@@ -26,12 +27,8 @@ public class ProductBoard extends BaseEntity {
     private String title;
     private String brand; // -> 목록 검색되게
     private SalesSite salesSite; // 판매 싸이트
-    // Shipping Information
-    private Boolean isEachShippingFee; // 배송비 개당 부과? true(1), false(0)
-    private Integer shippingFee; // 0원(무료), 3000원 선택
-    private Integer shippingFeeJeju; // 제주 추가금
-    private Integer shippingFeeIsland; // 도서산간 추가금
-    private Integer shippingFreeOver; // ~원 이상 무료배송, 10원 이상 or null
+    @Embedded
+    private ShippingInfo shippingInfo;
     // Product Detail Information
     private String pdtName;
     private String optionName1;
@@ -48,7 +45,10 @@ public class ProductBoard extends BaseEntity {
 
     @ElementCollection
     private List<ProductRequiredInfo> requiredInfo = new ArrayList<>(); // 상품 필수정보
-    //교환/반품주소, 위탁판매자 정보 추가하기
+
+    @Embedded
+    private Address exchangeRefundAddress;
+    //위탁판매자 정보 추가하기
 
     // Auto Count
     private Integer totalReviewQty; // 리뷰 작성시 count
@@ -69,30 +69,28 @@ public class ProductBoard extends BaseEntity {
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "normal_cart_id")
-    private NormalCart normalCart;
+    private NormalCart normalCart; // ManyToOne가 맞나?
 
     //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "buy_id")
 //    private Buy buy; -> n:m 이므로 중간테이블 만들기. review도 buy에 걸기? cart는 주문(buy)와 1:1 단방향
 
     @Builder
-    public ProductBoard(String title, String brand, SalesSite salesSite, Boolean isEachShippingFee, Integer shippingFee, Integer shippingFeeJeju, Integer shippingFeeIsland, Integer shippingFreeOver, String pdtName, String optionName1, String optionName2, List<Product> productList, List<ProductRequiredInfo> requiredInfo, Integer totalReviewQty, Integer totalScore, Integer minPrice, Integer onePrice, Integer love, Integer salesVol, CategoryL4 categoryL4, List<Image> thumbImgList, List<Image> detailImgList, NormalCart normalCart) {
+    public ProductBoard(String title, String brand, SalesSite salesSite, ShippingInfo shippingInfo, String pdtName, String optionName1, String optionName2, List<Image> thumbImgList, List<Image> detailImgList, List<ProductRequiredInfo> requiredInfo, Address exchangeRefundAddress, CategoryL4 categoryL4) {
         this.title = title;
         this.brand = brand;
         this.salesSite = salesSite;
-        this.isEachShippingFee = isEachShippingFee;
-        this.shippingFee = shippingFee;
-        this.shippingFeeJeju = shippingFeeJeju;
-        this.shippingFeeIsland = shippingFeeIsland;
-        this.shippingFreeOver = shippingFreeOver;
+        this.shippingInfo = shippingInfo;
         this.pdtName = pdtName;
         this.optionName1 = optionName1;
         this.optionName2 = optionName2;
-        this.productList = productList;
+        this.thumbImgList = thumbImgList;
+        this.detailImgList = detailImgList;
         this.requiredInfo = requiredInfo;
+        this.exchangeRefundAddress = exchangeRefundAddress;
         this.categoryL4 = categoryL4;
-        this.normalCart = normalCart;
     }
+
 
     public ProductBoard linkToProductList(List<Product> productList) {
         this.productList = productList;

@@ -7,7 +7,7 @@ import javax.validation.constraints.NotEmpty;
 
 @Data
 @NoArgsConstructor
-public class CtgL1toL4Init {
+public class AddCtgL1toL4ReqDto {
     @NotEmpty
     private String ctgL1;
     @NotEmpty

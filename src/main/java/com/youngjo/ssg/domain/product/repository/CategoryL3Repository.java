@@ -7,5 +7,5 @@ public interface CategoryL3Repository {
 
     Long save(CategoryL3 categoryL3);
 
-    CategoryL3 findById(Long id);
+    CategoryL3 getCtgL3WithL4ById(Long id);
 }

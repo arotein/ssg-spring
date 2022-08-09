@@ -1,0 +1,32 @@
+# develop
+server:
+  port: 9001
+  servlet:
+    encoding:
+      charset: UTF-8
+      enable: true
+      force: true
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/ssgdev?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    username: ${SSG_DB_USERNAME}
+    password: ${SSG_DB_PASSWORD}
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate.ddl-auto: update
+#===================================================
+
+logging.level:
+  root: info
+  org.hibernate:
+    SQL: debug
+
+global:
+  jwt-token:
+    signer: ${SSG_JWT_SIGNER}
+  xlsx-dir: ${SSG_CATEGORY_DIR}

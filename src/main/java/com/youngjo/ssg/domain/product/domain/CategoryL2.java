@@ -24,7 +24,6 @@ public class CategoryL2 extends BaseEntity {
     private String imgUrl;
 
     //==매핑==
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "category_l1_id")
     private CategoryL1 categoryL1;
