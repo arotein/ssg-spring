@@ -29,4 +29,3 @@ logging.level:
 global:
   jwt-token:
     signer: ${SSG_JWT_SIGNER}
-  xlsx-dir: ${SSG_CATEGORY_DIR}

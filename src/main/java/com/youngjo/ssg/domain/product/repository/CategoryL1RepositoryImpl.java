@@ -28,9 +28,9 @@ public class CategoryL1RepositoryImpl implements CategoryL1Repository {
     }
 
     @Override
-    public CategoryL1 findByName(String ctgL1Name) {
+    public CategoryL1 findByName(String name) {
         return queryFactory.selectFrom(categoryL1)
-                .where(categoryL1.name.eq(ctgL1Name))
+                .where(categoryL1.name.eq(name))
                 .fetchOne();
     }
 
@@ -42,9 +42,8 @@ public class CategoryL1RepositoryImpl implements CategoryL1Repository {
     }
 
     @Override
-    public List<CategoryL1> getAllWithL2() {
-        List<CategoryL1> fetch = queryFactory.selectFrom(categoryL1).fetch();
-        return fetch;
+    public List<CategoryL1> getAll() {
+        return queryFactory.selectFrom(categoryL1).fetch();
     }
 
     @Override

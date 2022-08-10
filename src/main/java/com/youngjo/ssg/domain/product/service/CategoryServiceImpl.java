@@ -4,6 +4,7 @@ import com.youngjo.ssg.domain.product.domain.CategoryL1;
 import com.youngjo.ssg.domain.product.domain.CategoryL2;
 import com.youngjo.ssg.domain.product.domain.CategoryL3;
 import com.youngjo.ssg.domain.product.domain.CategoryL4;
+import com.youngjo.ssg.domain.product.domain.common.Category;
 import com.youngjo.ssg.domain.product.dto.request.AddCtgL1ImgUrlReqDto;
 import com.youngjo.ssg.domain.product.dto.request.AddCtgL1toL4ReqDto;
 import com.youngjo.ssg.domain.product.repository.CategoryL1Repository;
@@ -42,28 +43,60 @@ public class CategoryServiceImpl implements CategoryService {
         if (ctgL3 == null) {
             ctgL3 = CategoryL3.builder().name(addCtgL1ToL4ReqDto.getCtgL3()).build();
             ctgL3.linkToCategoryL2(ctgL2);
+            categoryL3Repository.save(ctgL3);
         }
         if (addCtgL1ToL4ReqDto.getCtgL4().equals("Null")) {
             categoryL3Repository.save(ctgL3);
             return true;
         }
-        CategoryL4 ctgL4 = categoryL4Repository.findByName(addCtgL1ToL4ReqDto.getCtgL4());
-        if (ctgL4 == null) {
-            ctgL4 = CategoryL4.builder().name(addCtgL1ToL4ReqDto.getCtgL4()).build();
-        }
+        CategoryL4 ctgL4 = CategoryL4.builder().name(addCtgL1ToL4ReqDto.getCtgL4()).build();
         ctgL4.linkToCategoryL3(ctgL3);
         categoryL4Repository.save(ctgL4);
         return true;
     }
 
     @Override
-    public List<CategoryL1> getCtgL1ToL2() {
-        return categoryL1Repository.getAllWithL2();
+    @Transactional(readOnly = true)
+    public List<CategoryL1> getCtgL1All() {
+        return categoryL1Repository.getAll();
+    }
+
+    // nav
+    @Override
+    @Transactional(readOnly = true)
+    public List<CategoryL2> getCtgL2AllByL3Id(Long id) {
+        return categoryL2Repository.getAllByL3IdSameL1(id);
     }
 
     @Override
-    public CategoryL3 getCtgL3ToL4ById(Long ctgL3Id) {
-        return categoryL3Repository.getCtgL3WithL4ById(ctgL3Id);
+    @Transactional(readOnly = true)
+    public List<CategoryL3> getCtgL3AllByL4Id(Long id) {
+        return categoryL3Repository.getAllByL4IdSameL2(id);
+    }
+
+    // menu
+    @Override
+    @Transactional(readOnly = true)
+    public List<CategoryL2> getCtgL2AllById(Long id) {
+        return categoryL2Repository.getAllByIdSameL1(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<CategoryL3> getCtgL3AllById(Long id) {
+        return categoryL3Repository.getAllByIdSameL2(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<CategoryL4> getCtgL4AllById(Long id) {
+        return categoryL4Repository.getAllByIdSameL3(id);
+    }
+
+
+    @Override
+    public List<? extends Category> getCtgDetailMenu(String ctg, Long id) {
+        return null;
     }
 
     @Override

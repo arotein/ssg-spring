@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 @RestControllerAdvice
 public class ExceptionControllerAdvice {
-    @ExceptionHandler
-    public CommonResponse<String> runtimeExHandle(RuntimeException ex) {
-        log.error("Exception Name = {}, Message = {}", ex.getClass().getName(), ex.getMessage());
-        return new CommonResponse<String>()
-                .setSuccess(false)
-                .setErrorMessage(ex.getMessage());
-    }
+//    @ExceptionHandler
+//    public CommonResponse<String> runtimeExHandle(RuntimeException ex) {
+//        log.error("Exception Name = {}, Message = {}", ex.getClass().getName(), ex.getMessage());
+//        return new CommonResponse<String>()
+//                .setSuccess(false)
+//                .setErrorMessage(ex.getMessage());
+//    }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler

@@ -34,7 +34,7 @@ public class ProductServiceImpl implements ProductService {
                         .detailImgList(pdtBoardAddReqDto.getDetailImgList())
                         .requiredInfo(pdtBoardAddReqDto.getRequiredInfo())
                         .exchangeRefundAddress(pdtBoardAddReqDto.getExchangeRefundAddress())
-                        .categoryL4(categoryL4Repository.findById(pdtBoardAddReqDto.getCtgL4Id()).get())
+                        .categoryL4(categoryL4Repository.findById(pdtBoardAddReqDto.getCtgL4Id()))
                         .build()
 
                         .linkToProductList(pdtBoardAddReqDto.getProductList())

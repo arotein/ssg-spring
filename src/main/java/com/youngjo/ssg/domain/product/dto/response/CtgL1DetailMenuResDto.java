@@ -11,11 +11,11 @@ import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
-public class CtgMainResDto {
+public class CtgL1DetailMenuResDto {
     private CategoryL1 ctgL1;
     private List<CategoryL2Dto> ctgL2List = new ArrayList<>();
 
-    public CtgMainResDto(CategoryL1 ctgL1) {
+    public CtgL1DetailMenuResDto(CategoryL1 ctgL1) {
         this.ctgL1 = ctgL1;
         this.ctgL2List = ctgL1.getCategoryL2List().stream()
                 .map(ctg -> new CategoryL2Dto(ctg.getId(), ctg.getName()))

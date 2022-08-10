@@ -51,12 +51,8 @@ public class ProductBoard extends BaseEntity {
     //위탁판매자 정보 추가하기
 
     // Auto Count
-    private Integer totalReviewQty; // 리뷰 작성시 count
-    private Integer totalScore; // 0.5 ~ 5점 입력받기, 리뷰 작성시마다 + 1
-    private Integer minPrice; // 물건마다 가격이 다를 때. 아닐땐 null
-    private Integer onePrice; // 가격이 1개일 때
-    private Integer love; // 좋아요 -> user와 연결
-    private Integer salesVol; // 판매량 -> 구매시마다 + 1
+    @Embedded
+    private AutoCountInfo autoCountInfo;
 
     // 쿠폰 엔티티 연결(만들기)
 
@@ -99,14 +95,12 @@ public class ProductBoard extends BaseEntity {
             product.linkToProductBoard(this);
             if (min != product.getPrice()) {
                 if (min > product.getPrice()) {
-                    this.minPrice = product.getPrice();
+                    this.autoCountInfo.setMinPrice(product.getPrice());
                 } else {
-                    this.minPrice = min;
+                    this.autoCountInfo.setMinPrice(min);
                 }
-                this.onePrice = null;
             } else {
-                this.onePrice = product.getPrice();
-                this.minPrice = null;
+                this.autoCountInfo.setOnePrice(product.getPrice());
             }
         }
         return this;

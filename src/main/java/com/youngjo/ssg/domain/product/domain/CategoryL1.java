@@ -1,7 +1,7 @@
 package com.youngjo.ssg.domain.product.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.youngjo.ssg.global.common.BaseEntity;
+import com.youngjo.ssg.domain.product.domain.common.Category;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,7 +11,8 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class CategoryL1 extends BaseEntity {
+@ToString
+public class CategoryL1 extends Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_l1_id")

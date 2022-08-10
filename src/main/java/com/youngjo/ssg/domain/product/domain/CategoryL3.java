@@ -1,7 +1,7 @@
 package com.youngjo.ssg.domain.product.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.youngjo.ssg.global.common.BaseEntity;
+import com.youngjo.ssg.domain.product.domain.common.Category;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class CategoryL3 extends BaseEntity {
+public class CategoryL3 extends Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_l3_id")

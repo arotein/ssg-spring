@@ -1,7 +1,7 @@
 package com.youngjo.ssg.domain.product.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.youngjo.ssg.global.common.BaseEntity;
+import com.youngjo.ssg.domain.product.domain.common.Category;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class CategoryL2 extends BaseEntity {
+public class CategoryL2 extends Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_l2_id")
@@ -24,6 +24,7 @@ public class CategoryL2 extends BaseEntity {
     private String imgUrl;
 
     //==매핑==
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "category_l1_id")
     private CategoryL1 categoryL1;
