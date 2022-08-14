@@ -1,5 +1,6 @@
 package com.youngjo.ssg.domain.user.domain;
 
+import com.youngjo.ssg.global.common.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Delivery { // 유저의 배송지들
+public class Delivery extends BaseEntity { // 유저의 배송지들
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "delivery_id")
@@ -18,8 +19,7 @@ public class Delivery { // 유저의 배송지들
     private String alias;
     private String recipient;
     private String phone;
-    @Embedded
-    private Address address;
+//    private Address address;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user")

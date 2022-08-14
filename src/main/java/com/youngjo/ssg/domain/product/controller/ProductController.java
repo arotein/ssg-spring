@@ -1,6 +1,7 @@
 package com.youngjo.ssg.domain.product.controller;
 
 import com.youngjo.ssg.domain.product.dto.request.PdtBoardAddReqDto;
+import com.youngjo.ssg.domain.product.dto.response.BoardListResDto;
 import com.youngjo.ssg.domain.product.dto.response.PdtBoardDetailResDto;
 import com.youngjo.ssg.domain.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -9,20 +10,42 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/pdt")
+@RequestMapping("/api/pdtBoard")
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;
 
-    @PostMapping("/add-board")
-    public Boolean addBoard(@RequestBody PdtBoardAddReqDto pdtBoardAddReqDto) {
-        System.out.println("pdtBoardAddReqDto = " + pdtBoardAddReqDto);
-        productService.addPdtBoard(pdtBoardAddReqDto);
-        return true;
+    @GetMapping("/detail/{boardId}")
+    public PdtBoardDetailResDto getBoardDetail(@PathVariable Long boardId) {
+//        return new PdtBoardDetailResDto(productService.getBoardById(boardId));
+        return null;
     }
 
-    @GetMapping("/board-first")
-    public PdtBoardDetailResDto getBoardFirst() {
-        return new PdtBoardDetailResDto(productService.getBoardFirst());
+    @GetMapping("/list/ctgL2/{ctgL2Id}")
+    public BoardListResDto getBoardListByL2Id(@PathVariable Long ctgL2Id,
+                                              @RequestParam(required = false, defaultValue = "0") Integer offset,
+                                              @RequestParam(required = false, defaultValue = "4") Integer limit) {
+        return productService.getBoardListByL2Id(ctgL2Id, offset, limit);
+    }
+
+    @GetMapping("/list/ctgL3/{ctgL3Id}")
+    public BoardListResDto getBoardListByL3Id(@PathVariable Long ctgL3Id,
+                                              @RequestParam(required = false, defaultValue = "0") Integer offset,
+                                              @RequestParam(required = false, defaultValue = "4") Integer limit) {
+        return productService.getBoardListByL3Id(ctgL3Id, offset, limit);
+    }
+
+    @GetMapping("/list/ctgL4/{ctgL4Id}")
+    public BoardListResDto getBoardListByL4Id(@PathVariable Long ctgL4Id,
+                                              @RequestParam(required = false, defaultValue = "0") Integer offset,
+                                              @RequestParam(required = false, defaultValue = "4") Integer limit) {
+        return productService.getBoardListByL4Id(ctgL4Id, offset, limit);
+    }
+
+    // == dev code ==
+    @PostMapping("/add")
+    public Boolean addBoard(@RequestBody PdtBoardAddReqDto pdtBoardAddReqDto) {
+        productService.addPdtBoard(pdtBoardAddReqDto);
+        return true;
     }
 }

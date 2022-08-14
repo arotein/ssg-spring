@@ -11,9 +11,13 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/***
+ * 상품 삭제시 pdtQty-- 부분은 구현 생략.
+ */
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
+@Table(name = "category_l2")
 public class CategoryL2 extends Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +26,7 @@ public class CategoryL2 extends Category {
     @Column(unique = true)
     private String name;
     private String imgUrl;
+    private Integer pdtQty = 0; // Auto Count
 
     //==매핑==
     @JsonIgnore
@@ -47,5 +52,10 @@ public class CategoryL2 extends Category {
     public void linkToCategoryL1(CategoryL1 categoryL1) {
         this.categoryL1 = categoryL1;
         categoryL1.linkToCategoryL2(this);
+    }
+
+    public CategoryL2 plusPdtQty() {
+        this.pdtQty++;
+        return this;
     }
 }

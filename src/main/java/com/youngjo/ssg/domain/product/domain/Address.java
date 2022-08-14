@@ -1,17 +1,20 @@
-package com.youngjo.ssg.domain.user.domain;
+package com.youngjo.ssg.domain.product.domain;
 
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Embeddable;
-import java.util.Objects;
+import javax.persistence.*;
 
 @Getter
-@Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity
 public class Address {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "address_id")
+    private Long id;
     private String city;
     private String street;
     private String detail;
@@ -23,24 +26,6 @@ public class Address {
         this.street = street;
         this.detail = detail;
         this.postalCode = postalCode;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof Address) {
-            Address address = (Address) obj;
-            return this.city.equals(address.city) &&
-                    this.street.equals(address.street) &&
-                    this.detail.equals(address.detail) &&
-                    this.postalCode.equals(address.postalCode);
-        } else {
-            throw new IllegalArgumentException("It is not an Address type");
-        }
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(city, street, detail, postalCode);
     }
 }
 

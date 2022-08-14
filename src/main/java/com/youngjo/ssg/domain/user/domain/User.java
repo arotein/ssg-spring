@@ -37,8 +37,7 @@ public class User extends BaseEntity {
     private String email;
 
     private String phone;
-    @Embedded
-    private Address address;
+    //    private Address address;
     private Integer point;
 
     @Enumerated(EnumType.STRING)
@@ -81,13 +80,12 @@ public class User extends BaseEntity {
     private Status status = Status.ENABLED;
 
     @Builder
-    public User(String loginId, String password, String name, String email, String phone, Address address) {
+    public User(String loginId, String password, String name, String email, String phone) {
         this.loginId = loginId;
         this.password = password;
         this.name = name;
         this.email = email;
         this.phone = phone;
-        this.address = address;
     }
 
     public void updateLastAccessTime() {

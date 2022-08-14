@@ -1,7 +1,9 @@
 package com.youngjo.ssg.domain.product.repository;
 
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.youngjo.ssg.domain.product.domain.CategoryL4;
+import com.youngjo.ssg.domain.product.domain.QCategoryL4;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +16,7 @@ import static com.youngjo.ssg.domain.product.domain.QCategoryL4.categoryL4;
 public class CategoryL4RepositoryImpl implements CategoryL4Repository {
     private final EntityManager entityManager;
     private final JPAQueryFactory queryFactory;
+    private final QCategoryL4 ctgL4Sub = new QCategoryL4("ctgL4Sub");
 
     @Autowired
     public CategoryL4RepositoryImpl(EntityManager entityManager) {
@@ -47,10 +50,12 @@ public class CategoryL4RepositoryImpl implements CategoryL4Repository {
     }
 
     @Override
-    public List<CategoryL4> getAllByIdSameL3(Long id) { // N+1문제 고치기
-        return queryFactory.select(categoryL4.categoryL3)
-                .from(categoryL4)
-                .where(categoryL4.id.eq(id))
-                .fetchOne().getCategoryL4List();
+    public List<CategoryL4> getAllByIdSameL3(Long id) {
+        return queryFactory.selectFrom(categoryL4)
+                .where(categoryL4.categoryL3.id.eq(
+                        JPAExpressions.select(ctgL4Sub.categoryL3.id)
+                                .from(ctgL4Sub)
+                                .where(ctgL4Sub.id.eq(id))))
+                .fetch();
     }
 }

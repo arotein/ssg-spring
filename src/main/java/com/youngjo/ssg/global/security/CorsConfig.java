@@ -14,6 +14,7 @@ public class CorsConfig {
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
+        config.setExposedHeaders(Arrays.asList("Authentication")); // 리액트에서 헤더받을 수 있게 설정
         config.setAllowCredentials(true);
 //        config.addAllowedOrigin("*"); -> 이게 문제
         config.addAllowedOriginPattern("*");

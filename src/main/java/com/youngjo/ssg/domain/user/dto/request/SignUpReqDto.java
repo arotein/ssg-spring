@@ -1,6 +1,5 @@
 package com.youngjo.ssg.domain.user.dto.request;
 
-import com.youngjo.ssg.domain.user.domain.Address;
 import com.youngjo.ssg.domain.user.domain.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +21,7 @@ public class SignUpReqDto {
     @Email
     private String email;
     private String phone;
-    private Address address;
+//    private Address address;
 
     public User createUser() {
         return User.builder()
@@ -31,7 +30,11 @@ public class SignUpReqDto {
                 .name(name)
                 .email(email)
                 .phone(phone)
-                .address(address)
+//                .address(Address.builder()
+//                        .city(address.getCity())
+//                        .street(address.getStreet())
+//                        .detail(address.getDetail())
+//                        .postalCode(address.getPostalCode()).build())
                 .build();
     }
 }

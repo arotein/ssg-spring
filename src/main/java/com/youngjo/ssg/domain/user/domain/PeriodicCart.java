@@ -16,7 +16,6 @@ public class PeriodicCart extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "periodic_cart_id")
     private Long id;
-
     private Integer qty;
 
     //==매핑==

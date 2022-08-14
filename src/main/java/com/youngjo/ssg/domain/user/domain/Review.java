@@ -20,7 +20,6 @@ public class Review extends BaseEntity {
     @Column(name = "review_id")
     private Long id;
     private String title;
-
     private String content;
 
     //==매핑==

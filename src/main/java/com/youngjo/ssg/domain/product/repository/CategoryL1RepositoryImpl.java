@@ -43,7 +43,10 @@ public class CategoryL1RepositoryImpl implements CategoryL1Repository {
 
     @Override
     public List<CategoryL1> getAll() {
-        return queryFactory.selectFrom(categoryL1).fetch();
+        return queryFactory.selectFrom(categoryL1)
+                .join(categoryL1.categoryL2List).fetchJoin()
+                .distinct()
+                .fetch();
     }
 
     @Override

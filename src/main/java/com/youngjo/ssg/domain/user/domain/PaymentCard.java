@@ -16,7 +16,6 @@ public class PaymentCard extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "payment_card_id")
     private Long id;
-
     private String alias;
     private String cardOwner;
     private String cardNumber; // 0000-0000-0000-0000

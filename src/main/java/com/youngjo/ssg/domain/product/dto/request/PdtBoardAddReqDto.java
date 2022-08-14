@@ -1,39 +1,50 @@
 package com.youngjo.ssg.domain.product.dto.request;
 
-import com.youngjo.ssg.domain.product.domain.Image;
-import com.youngjo.ssg.domain.product.domain.Product;
-import com.youngjo.ssg.domain.product.domain.ProductRequiredInfo;
-import com.youngjo.ssg.domain.product.domain.ShippingInfo;
-import com.youngjo.ssg.domain.user.domain.Address;
-import lombok.Data;
+import com.youngjo.ssg.domain.product.domain.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-import java.util.ArrayList;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
-@Data
+@Getter
 @NoArgsConstructor
-@ToString
 public class PdtBoardAddReqDto {
     private String title;
     private String brand;
     private String salesSite;
+    // == ShippingInfo ==
+    private Boolean isEachShippingFee;
+    private Boolean isPremium;
+    private Boolean isCrossBorderShipping;
+    private Boolean isOnlineOnly;
 
-    private ShippingInfo shippingInfo;
+    private Integer shippingFee;
+    private Integer shippingFreeOver;
+    private Boolean availableDeliveryJeju;
+    private Boolean availableDeliveryIsland;
+    private Integer shippingFeeJeju;
+    private Integer shippingFeeIsland;
 
+    private String courierCompany;
+
+    // Product Detail Information
     private String pdtName;
-    private String optionName1;
-    private String optionName2;
 
-    private List<Image> thumbImgList = new ArrayList<>();
-    private List<Image> detailImgList = new ArrayList<>();
+    private List<ProductRequiredInfo> requiredInfoList;
 
-    private List<ProductRequiredInfo> requiredInfo = new ArrayList<>();
+    // == Exchange Refund ==
+    private Address returnAddress;
+    private Integer exchangeShippingFee;
+    private Integer returnShippingFee;
+    private Integer premiumExchangeShippingFee;
+    private Integer premiumReturnShippingFee;
 
-    private Address exchangeRefundAddress;
-
+    private ConsignmentSellerInfo consignmentSellerInfo;
+    // == Mapping ==
+    @NotEmpty
     private Long ctgL4Id;
-
-    private List<Product> productList = new ArrayList<>();
+    private List<ProductImg> thumbImgList;
+    private List<ProductImg> detailImgList;
+    private List<MainProduct> mainProductList;
 }

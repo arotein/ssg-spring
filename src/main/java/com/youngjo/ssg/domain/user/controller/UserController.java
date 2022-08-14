@@ -22,9 +22,9 @@ public class UserController {
     private final ClientInfoLoader clientInfoLoader;
 
     @PreAuthorize("isAnonymous()")
-    @PostMapping("/sign-up")
+    @PostMapping("/signUp")
     public CommonResponse<String> signUp(@Validated @RequestBody SignUpReqDto dto) {
-        log.info("signUp 요청왔음.");
+        log.info("/api/signUp request");
         userService.signUp(dto);
         return new CommonResponse<String>()
                 .setData("회원가입이 완료되었습니다.");

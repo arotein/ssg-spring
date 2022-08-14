@@ -3,6 +3,7 @@ package com.youngjo.ssg.domain.product.repository;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.youngjo.ssg.domain.product.domain.CategoryL3;
+import com.youngjo.ssg.domain.product.domain.QCategoryL3;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +17,7 @@ import static com.youngjo.ssg.domain.product.domain.QCategoryL4.categoryL4;
 public class CategoryL3RepositoryImpl implements CategoryL3Repository {
     private final EntityManager entityManager;
     private final JPAQueryFactory queryFactory;
+    private final QCategoryL3 ctgL3Sub = new QCategoryL3("ctgL3Sub");
 
     @Autowired
     public CategoryL3RepositoryImpl(EntityManager entityManager) {
@@ -45,21 +47,27 @@ public class CategoryL3RepositoryImpl implements CategoryL3Repository {
     }
 
     @Override
-    public List<CategoryL3> getAllByL4IdSameL2(Long id) { // N+1문제 고치기
-        return queryFactory.select(categoryL3.categoryL2)
-                .from(categoryL3)
-                .where(categoryL3.id.eq(
-                        JPAExpressions.select(categoryL4.categoryL3.id)
+    public List<CategoryL3> getAllByL4IdSameL2(Long id) {
+        return queryFactory.selectFrom(categoryL3)
+                .join(categoryL3.categoryL4List).fetchJoin()
+                .where(categoryL3.categoryL2.id.eq(
+                        JPAExpressions.select(categoryL4.categoryL3.categoryL2.id)
                                 .from(categoryL4)
                                 .where(categoryL4.id.eq(id))
-                )).fetchOne().getCategoryL3List();
+                ))
+                .distinct()
+                .fetch();
     }
 
     @Override
-    public List<CategoryL3> getAllByIdSameL2(Long id) { // N+1문제 고치기
-        return queryFactory.select(categoryL3.categoryL2)
-                .from(categoryL3)
-                .where(categoryL3.id.eq(id))
-                .fetchOne().getCategoryL3List();
+    public List<CategoryL3> getAllByIdSameL2(Long id) {
+        return queryFactory.selectFrom(categoryL3)
+                .join(categoryL3.categoryL4List).fetchJoin()
+                .where(categoryL3.categoryL2.id.eq(
+                        JPAExpressions.select(ctgL3Sub.categoryL2.id)
+                                .from(ctgL3Sub)
+                                .where(ctgL3Sub.id.eq(id))))
+                .distinct()
+                .fetch();
     }
 }

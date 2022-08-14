@@ -1,6 +1,5 @@
 package com.youngjo.ssg.domain.buy.domain;
 
-import com.youngjo.ssg.domain.user.domain.Address;
 import com.youngjo.ssg.global.common.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -21,8 +20,7 @@ public class AnonymousBuy extends BaseEntity { //비회원 주문
     private String recipient;
     private String phone;
     private String email;
-    @Embedded
-    private Address address;
+    //    private Address address;
     private Integer toalPrice;
     private String paymentType; // 결제종류
     // 결제 상세정보는 카카오 API 참고해서 작성하기
@@ -33,12 +31,11 @@ public class AnonymousBuy extends BaseEntity { //비회원 주문
 //    private List<Product> productList = new ArrayList<>();
 
     @Builder
-    public AnonymousBuy(String serial, String recipient, String phone, String email, Address address, Integer toalPrice, String paymentType) {
+    public AnonymousBuy(String serial, String recipient, String phone, String email, Integer toalPrice, String paymentType) {
         this.serial = serial;
         this.recipient = recipient;
         this.phone = phone;
         this.email = email;
-        this.address = address;
         this.toalPrice = toalPrice;
         this.paymentType = paymentType;
     }
