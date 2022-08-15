@@ -6,6 +6,7 @@ import com.youngjo.ssg.domain.product.dto.response.PdtBoardDetailResDto;
 import com.youngjo.ssg.domain.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -17,8 +18,7 @@ public class ProductController {
 
     @GetMapping("/detail/{boardId}")
     public PdtBoardDetailResDto getBoardDetail(@PathVariable Long boardId) {
-//        return new PdtBoardDetailResDto(productService.getBoardById(boardId));
-        return null;
+        return new PdtBoardDetailResDto(productService.getBoardById(boardId));
     }
 
     @GetMapping("/list/ctgL2/{ctgL2Id}")
@@ -40,6 +40,20 @@ public class ProductController {
                                               @RequestParam(required = false, defaultValue = "0") Integer offset,
                                               @RequestParam(required = false, defaultValue = "4") Integer limit) {
         return productService.getBoardListByL4Id(ctgL4Id, offset, limit);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/pressLike/{boardId}")
+    public Boolean pressBoardLike(@PathVariable Long boardId) {
+        productService.pressBoardLike(boardId);
+        return true;
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/cancelLike/{boardId}")
+    public Boolean cancelBoardLike(@PathVariable Long boardId) {
+        productService.cancelBoardLike(boardId);
+        return true;
     }
 
     // == dev code ==

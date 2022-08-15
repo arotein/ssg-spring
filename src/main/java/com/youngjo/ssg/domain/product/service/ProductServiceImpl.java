@@ -2,23 +2,30 @@ package com.youngjo.ssg.domain.product.service;
 
 import com.youngjo.ssg.domain.product.domain.CategoryL4;
 import com.youngjo.ssg.domain.product.domain.ProductBoard;
+import com.youngjo.ssg.domain.product.domain.ProductBoardLike;
 import com.youngjo.ssg.domain.product.dto.request.PdtBoardAddReqDto;
 import com.youngjo.ssg.domain.product.dto.response.BoardListResDto;
 import com.youngjo.ssg.domain.product.dto.response.BoardResDto;
 import com.youngjo.ssg.domain.product.repository.CategoryL4Repository;
 import com.youngjo.ssg.domain.product.repository.ProductRepository;
+import com.youngjo.ssg.domain.user.repository.UserRepository;
 import com.youngjo.ssg.global.enumeration.SalesSite;
+import com.youngjo.ssg.global.security.bean.ClientInfoLoader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
+    private final ClientInfoLoader clientInfoLoader;
+    private final UserRepository userRepository;
     private final ProductRepository productRepository;
     private final CategoryL4Repository categoryL4Repository;
 
@@ -66,39 +73,86 @@ public class ProductServiceImpl implements ProductService {
     @Transactional(readOnly = true)
     @Override
     public BoardListResDto getBoardListByL2Id(Long id, Integer offset, Integer limit) {
+        Long userId = clientInfoLoader.getUserId();
         List<ProductBoard> boardList = productRepository.findBoardListByL2Id(id, offset, limit);
+        Map<Long, Boolean> likeMap;
+        if (userId != null) {
+            likeMap = productRepository.findBoardLikeAllByBoardIdAndUserId(
+                    boardList.stream().map(ProductBoard::getId).collect(Collectors.toList()),
+                    userId);
+        } else {
+            likeMap = new HashMap<>();
+        }
+
         return new BoardListResDto(
                 boardList.get(0).getCategoryL4().getCategoryL3().getCategoryL2().getPdtQty(),
                 boardList.stream()
-                        .map(board -> new BoardResDto(board))
+                        .map(board -> new BoardResDto(board, likeMap.getOrDefault(board.getId(), false)))
                         .collect(Collectors.toList()));
     }
 
     @Transactional(readOnly = true)
     @Override
     public BoardListResDto getBoardListByL3Id(Long id, Integer offset, Integer limit) {
+        Long userId = clientInfoLoader.getUserId();
         List<ProductBoard> boardList = productRepository.findBoardListByL3Id(id, offset, limit);
+        Map<Long, Boolean> likeMap;
+        if (userId != null) {
+            likeMap = productRepository.findBoardLikeAllByBoardIdAndUserId(
+                    boardList.stream().map(ProductBoard::getId).collect(Collectors.toList()),
+                    userId);
+        } else {
+            likeMap = new HashMap<>();
+        }
+
         return new BoardListResDto(
                 boardList.get(0).getCategoryL4().getCategoryL3().getPdtQty(),
                 boardList.stream()
-                        .map(board -> new BoardResDto(board))
+                        .map(board -> new BoardResDto(board, likeMap.getOrDefault(board.getId(), false)))
                         .collect(Collectors.toList()));
     }
 
     @Transactional(readOnly = true)
     @Override
     public BoardListResDto getBoardListByL4Id(Long id, Integer offset, Integer limit) {
+        Long userId = clientInfoLoader.getUserId();
         List<ProductBoard> boardList = productRepository.findBoardListByL4Id(id, offset, limit);
+        Map<Long, Boolean> likeMap;
+        if (userId != null) {
+            likeMap = productRepository.findBoardLikeAllByBoardIdAndUserId(
+                    boardList.stream().map(ProductBoard::getId).collect(Collectors.toList()),
+                    userId);
+        } else {
+            likeMap = new HashMap<>();
+        }
+
         return new BoardListResDto(
                 boardList.get(0).getCategoryL4().getPdtQty(),
                 boardList.stream()
-                        .map(board -> new BoardResDto(board))
+                        .map(board -> new BoardResDto(board, likeMap.getOrDefault(board.getId(), false)))
                         .collect(Collectors.toList()));
     }
 
-    // == dev code ==
+    @Override
+    public void pressBoardLike(Long boardId) {
+        ProductBoardLike boardLike = productRepository.findBoardLikeByBoardIdAndUserId(boardId, clientInfoLoader.getUserId());
+        if (boardLike != null) {
+            boardLike.pressLike();
+        } else {
+            productRepository.save(ProductBoardLike.builder().value(true).build()
+                    .linkToProductBoard(productRepository.findBoardById(boardId))
+                    .linkToUser(userRepository.findUserById(clientInfoLoader.getUserId())));
+        }
+    }
+
+    @Override
+    public void cancelBoardLike(Long boardId) {
+        productRepository.findBoardLikeByBoardIdAndUserId(boardId, clientInfoLoader.getUserId())
+                .cancelLike();
+    }
+
     @Override
     public ProductBoard getBoardById(Long id) {
-        return productRepository.findBoardFirst(id);
+        return productRepository.findBoardById(id);
     }
 }

@@ -18,14 +18,15 @@ public class BoardResDto {
     private Integer totalReviewQty;
     private Float totalScore;
     private Boolean isSamePrice;
-    private Integer minPrice;
+    private Long minPrice;
     // == ShippingInfo ==
     private Integer shippingFee;
+    private Boolean boardLike;
     private Boolean isPremium;
     private Boolean isCrossBorderShipping;
     private Boolean isOnlineOnly;
 
-    public BoardResDto(ProductBoard productBoard) {
+    public BoardResDto(ProductBoard productBoard, Boolean boardLike) {
         this.boardId = productBoard.getId();
         this.mainImgUrl = productBoard.getThumbImgList().get(0).getImgPath();
         this.title = productBoard.getTitle();
@@ -39,5 +40,6 @@ public class BoardResDto {
         this.isPremium = productBoard.getIsPremium();
         this.isCrossBorderShipping = productBoard.getIsCrossBorderShipping();
         this.isOnlineOnly = productBoard.getIsOnlineOnly();
+        this.boardLike = boardLike;
     }
 }

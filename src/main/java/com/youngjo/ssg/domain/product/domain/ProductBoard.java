@@ -44,7 +44,6 @@ import java.util.List;
  * totalScore : 0.5 ~ 5.0 점 입력받기, 리뷰 작성시마자 +1
  * minPrice : 물건마다 가격이 다를 때, 아닐땐 null
  * onePrice : 모든 물건가격이 같을 때, 아닐땐 null
- * love : 좋아요 -> User와 연결
  * salesVol : 판매량, 구매 확정시마다 +1
  * deliveryDate : 예상 배송도착일(10일 이내 도착, 8/11(목) 도착예정), Unix Time -> 백에서 처리 후 리턴
  *
@@ -108,19 +107,18 @@ public class ProductBoard extends BaseEntity {
     private Integer totalReviewQty;
     private Float totalScore;
     private Boolean isSamePrice;
-    private Integer minPrice;
-    private Integer love; // -> 유저의 좋아요와 연결하기
+    private Long minPrice;
     private Integer salesVol;
     private Long deliveryDate;
 
     // 카테고리 L3에 걸린 애들은 거르기 -> 실제로 L3에 걸거나 L4의 더미값으로 연결시키기
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "consignment_seller_info_id")
+    private ConsignmentSellerInfo consignmentSellerInfo;
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_l4_id")
     private CategoryL4 categoryL4;
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "consignment_seller_info_id")
-    private ConsignmentSellerInfo consignmentSellerInfo;
     @JsonIgnore
     @OneToMany(mappedBy = "productBoardThumb", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductImg> thumbImgList = new ArrayList<>();
@@ -130,8 +128,12 @@ public class ProductBoard extends BaseEntity {
     @JsonIgnore
     @OneToMany(mappedBy = "productBoard", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<MainProduct> mainProductList = new ArrayList<>();
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    @OneToMany(mappedBy = "productBoard", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductRequiredInfo> productRequiredInfoList = new ArrayList<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "productBoard", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductBoardLike> productBoardLikeList = new ArrayList<>();
 
 
 //    private NormalCart normalCart; // ManyToMany
@@ -142,7 +144,7 @@ public class ProductBoard extends BaseEntity {
 //    private Buy buy; -> n:m 이므로 중간테이블 만들기. review도 buy에 걸기? cart는 주문(buy)와 1:1 단방향
 
     @Builder
-    public ProductBoard(String title, String brand, SalesSite salesSite, Boolean isEachShippingFee, Boolean isPremium, Boolean isCrossBorderShipping, Boolean isOnlineOnly, Integer shippingFee, Integer shippingFreeOver, Boolean availableDeliveryJeju, Boolean availableDeliveryIsland, Integer shippingFeeJeju, Integer shippingFeeIsland, String courierCompany, Long deliveryDate, String pdtName, Address returnAddress, Integer exchangeShippingFee, Integer returnShippingFee, Integer premiumExchangeShippingFee, Integer premiumReturnShippingFee, CategoryL4 categoryL4, List<ProductImg> thumbImgList, List<ProductImg> detailImgList, List<MainProduct> mainProductList, ConsignmentSellerInfo consignmentSellerInfo) {
+    public ProductBoard(String title, String brand, SalesSite salesSite, Boolean isEachShippingFee, Boolean isPremium, Boolean isCrossBorderShipping, Boolean isOnlineOnly, Integer shippingFee, Integer shippingFreeOver, Boolean availableDeliveryJeju, Boolean availableDeliveryIsland, Integer shippingFeeJeju, Integer shippingFeeIsland, String courierCompany, Long deliveryDate, String pdtName, Address returnAddress, Integer exchangeShippingFee, Integer returnShippingFee, Integer premiumExchangeShippingFee, Integer premiumReturnShippingFee, CategoryL4 categoryL4, ConsignmentSellerInfo consignmentSellerInfo) {
         this.title = title;
         this.brand = brand;
         this.salesSite = salesSite;
@@ -170,7 +172,7 @@ public class ProductBoard extends BaseEntity {
 
     public ProductBoard linkToProductList(List<MainProduct> mainProductList) {
         this.mainProductList = mainProductList;
-        int min = mainProductList.get(0).getPrice();
+        long min = mainProductList.get(0).getPrice();
         for (MainProduct mainProduct : mainProductList) {
             mainProduct.linkToProductBoard(this);
             if (min != mainProduct.getPrice()) { // 상품마다 가격이 다르다
@@ -209,6 +211,11 @@ public class ProductBoard extends BaseEntity {
             this.detailImgList.add(img);
             img.linkToProductBoardDetail(this);
         }
+        return this;
+    }
+
+    public ProductBoard linkToPdtBoardLike(ProductBoardLike productBoardLike) {
+        this.productBoardLikeList.add(productBoardLike);
         return this;
     }
 }

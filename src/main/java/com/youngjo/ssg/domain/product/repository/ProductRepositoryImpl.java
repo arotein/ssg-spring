@@ -2,16 +2,22 @@ package com.youngjo.ssg.domain.product.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.youngjo.ssg.domain.product.domain.ProductBoard;
+import com.youngjo.ssg.domain.product.domain.ProductBoardLike;
+import com.youngjo.ssg.global.common.BaseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Map;
 
+import static com.querydsl.core.group.GroupBy.groupBy;
 import static com.youngjo.ssg.domain.product.domain.QCategoryL2.categoryL2;
 import static com.youngjo.ssg.domain.product.domain.QCategoryL3.categoryL3;
 import static com.youngjo.ssg.domain.product.domain.QCategoryL4.categoryL4;
 import static com.youngjo.ssg.domain.product.domain.QProductBoard.productBoard;
+import static com.youngjo.ssg.domain.product.domain.QProductBoardLike.productBoardLike;
+import static com.youngjo.ssg.domain.user.domain.QUser.user;
 
 @Repository
 public class ProductRepositoryImpl implements ProductRepository {
@@ -24,11 +30,40 @@ public class ProductRepositoryImpl implements ProductRepository {
         this.queryFactory = new JPAQueryFactory(entityManager);
     }
 
-    // == service code ==
+    //     == service code ==
     @Override
-    public Long save(ProductBoard productBoard) {
-        entityManager.persist(productBoard);
-        return productBoard.getId();
+    public <T extends BaseEntity> void save(T entity) {
+        entityManager.persist(entity);
+    }
+
+    @Override
+    public ProductBoard findBoardById(Long boardId) {
+        return queryFactory.selectFrom(productBoard)
+                .where(productBoard.id.eq(boardId))
+                .fetchOne();
+    }
+
+    // 단건조회 -> 상품 상세보기 페이지 좋아요 확인
+    @Override
+    public ProductBoardLike findBoardLikeByBoardIdAndUserId(Long boardId, Long userId) {
+        return queryFactory.selectFrom(productBoardLike)
+                .join(productBoardLike.productBoard, productBoard)
+                .join(productBoardLike.user, user)
+                .where(productBoard.id.eq(boardId),
+                        user.id.eq(userId))
+                .fetchOne();
+    }
+
+    // 리스트조회 -> 상품 목록보기 페이지 좋아요 확인 -> boardList와 합치기
+    @Override
+    public Map<Long, Boolean> findBoardLikeAllByBoardIdAndUserId(List<Long> boardIds, Long userId) {
+        return queryFactory.from(productBoardLike)
+                .join(productBoardLike.productBoard, productBoard)
+                .join(productBoardLike.user, user)
+                .where(productBoard.id.in(boardIds),
+                        user.id.eq(userId))
+                .transform(groupBy(productBoard.id).as(productBoardLike.value));
+
     }
 
     // offset(index)은 0부터 시작
@@ -70,13 +105,5 @@ public class ProductRepositoryImpl implements ProductRepository {
                 .limit(limit)
                 .distinct()
                 .fetch();
-    }
-
-    // == dev code ==
-    @Override
-    public ProductBoard findBoardFirst(Long id) {
-        return queryFactory.selectFrom(productBoard)
-                .where(productBoard.id.eq(id))
-                .fetchOne();
     }
 }

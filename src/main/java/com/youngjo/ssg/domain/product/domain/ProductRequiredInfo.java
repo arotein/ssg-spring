@@ -10,7 +10,7 @@ import javax.persistence.*;
 /***
  * ==상품 필수정보==
  * infoTitle : 필수정보 제목
- * infoContent : 필수정보 내용
+ * infoCnt : 필수정보 내용
  */
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

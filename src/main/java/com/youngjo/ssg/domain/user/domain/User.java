@@ -2,6 +2,7 @@ package com.youngjo.ssg.domain.user.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.youngjo.ssg.domain.buy.domain.Buy;
+import com.youngjo.ssg.domain.product.domain.ProductBoardLike;
 import com.youngjo.ssg.global.common.BaseEntity;
 import com.youngjo.ssg.global.enumeration.Grade;
 import com.youngjo.ssg.global.enumeration.Role;
@@ -10,7 +11,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -21,29 +21,32 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class User extends BaseEntity {
-    //==유저 정보==
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
 
-    @Column(unique = true, columnDefinition = "VARCHAR(20)")
-    private String loginId; // 로그인시 필요한 id, 20자까지 허용
+    @Column(unique = true)
+    private String loginId;
 
     private String password;
     private String name;
 
     @Column(unique = true)
     private String email;
-
+    @Column(unique = true)
     private String phone;
     //    private Address address;
-    private Integer point;
+    private Long point;
 
     @Enumerated(EnumType.STRING)
     private Grade grade = Grade.FRIENDS;
 
-    //==매핑==
+    // == Mapping ==
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<ProductBoardLike> productBoardLikeList = new ArrayList<>();
+
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private NormalCart normalCart;
 
@@ -72,7 +75,6 @@ public class User extends BaseEntity {
 
     //==시스템 정보==
     private Timestamp lastAccessTime;
-    @CreationTimestamp
     private Timestamp lastPasswordChangeTime;
     @Enumerated(EnumType.STRING)
     private Role role = Role.ROLE_NORMAL;
@@ -90,5 +92,10 @@ public class User extends BaseEntity {
 
     public void updateLastAccessTime() {
         this.lastAccessTime = new Timestamp(System.currentTimeMillis());
+    }
+
+    public User linkToPdtBoardLike(ProductBoardLike productBoardLike) {
+        this.productBoardLikeList.add(productBoardLike);
+        return this;
     }
 }

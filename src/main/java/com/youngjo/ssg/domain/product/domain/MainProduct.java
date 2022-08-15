@@ -25,7 +25,7 @@ public class MainProduct extends BaseEntity {
     private String optionName2;
     private String optionValue2;
 
-    private Integer price;
+    private Long price;
     private Integer stock;
 
     //==매핑==
@@ -35,7 +35,7 @@ public class MainProduct extends BaseEntity {
     private ProductBoard productBoard;
 
     @Builder
-    public MainProduct(String modelCode, String optionName1, String optionValue1, String optionName2, String optionValue2, Integer price, Integer stock) {
+    public MainProduct(String modelCode, String optionName1, String optionValue1, String optionName2, String optionValue2, Long price, Integer stock) {
         this.modelCode = modelCode;
         this.optionName1 = optionName1;
         this.optionValue1 = optionValue1;
