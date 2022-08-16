@@ -2,10 +2,7 @@ package com.youngjo.ssg.domain.product.domain;
 
 import com.youngjo.ssg.domain.user.domain.User;
 import com.youngjo.ssg.global.common.BaseEntity;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 

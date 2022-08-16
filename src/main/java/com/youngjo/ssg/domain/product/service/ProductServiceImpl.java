@@ -6,6 +6,7 @@ import com.youngjo.ssg.domain.product.domain.ProductBoardLike;
 import com.youngjo.ssg.domain.product.dto.request.PdtBoardAddReqDto;
 import com.youngjo.ssg.domain.product.dto.response.BoardListResDto;
 import com.youngjo.ssg.domain.product.dto.response.BoardResDto;
+import com.youngjo.ssg.domain.product.dto.response.PdtBoardDetailResDto;
 import com.youngjo.ssg.domain.product.repository.CategoryL4Repository;
 import com.youngjo.ssg.domain.product.repository.ProductRepository;
 import com.youngjo.ssg.domain.user.repository.UserRepository;
@@ -60,6 +61,7 @@ public class ProductServiceImpl implements ProductService {
                         .premiumExchangeShippingFee(pdtBoardAddReqDto.getPremiumExchangeShippingFee())
                         .premiumReturnShippingFee(pdtBoardAddReqDto.getPremiumReturnShippingFee())
                         .consignmentSellerInfo(pdtBoardAddReqDto.getConsignmentSellerInfo())
+                        .productRequiredInfoList(pdtBoardAddReqDto.getRequiredInfoList())
 
                         .build()
 
@@ -67,7 +69,17 @@ public class ProductServiceImpl implements ProductService {
                         .linkToProductDetailImgList(pdtBoardAddReqDto.getDetailImgList())
                         .linkToProductList(pdtBoardAddReqDto.getMainProductList())
                         .linkToCategoryL4(ctgL4)
+                        .linkToReturnAddress(pdtBoardAddReqDto.getReturnAddress())
+                        .linkToProductRequiredInfo(pdtBoardAddReqDto.getRequiredInfoList())
+                        .linkToConsignmentSellerInfo(pdtBoardAddReqDto.getConsignmentSellerInfo())
         );
+    }
+
+    // 상품 상세보기
+    @Override
+    public PdtBoardDetailResDto getBoardById(Long boardId) {
+        return new PdtBoardDetailResDto(productRepository.findBoardById(boardId))
+                .boardLike(clientInfoLoader.getUserId() == null ? false : productRepository.findBoardLikeByBoardIdAndUserId(boardId, clientInfoLoader.getUserId()).getValue());
     }
 
     @Transactional(readOnly = true)
@@ -143,10 +155,5 @@ public class ProductServiceImpl implements ProductService {
                     .linkToProductBoard(productRepository.findBoardById(boardId))
                     .linkToUser(userRepository.findUserById(clientInfoLoader.getUserId())));
         }
-    }
-
-    @Override
-    public ProductBoard getBoardById(Long id) {
-        return productRepository.findBoardById(id);
     }
 }

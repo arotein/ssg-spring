@@ -36,7 +36,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:9001/api/ctg/all/ctgL2?id=1",
+							"raw": "http://localhost:9001/api/ctg/all/ctgL2/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -46,13 +46,8 @@
 								"api",
 								"ctg",
 								"all",
-								"ctgL2"
-							],
-							"query": [
-								{
-									"key": "id",
-									"value": "1"
-								}
+								"ctgL2",
+								"1"
 							]
 						}
 					},
@@ -87,7 +82,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:9001/api/ctg/detail/nav/ctgL3?id=1",
+							"raw": "http://localhost:9001/api/ctg/detail/nav/ctgL3/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -98,13 +93,8 @@
 								"ctg",
 								"detail",
 								"nav",
-								"ctgL3"
-							],
-							"query": [
-								{
-									"key": "id",
-									"value": "1"
-								}
+								"ctgL3",
+								"1"
 							]
 						}
 					},
@@ -116,7 +106,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:9001/api/ctg/detail/nav/ctgL4?id=1",
+							"raw": "http://localhost:9001/api/ctg/detail/nav/ctgL4/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -127,13 +117,8 @@
 								"ctg",
 								"detail",
 								"nav",
-								"ctgL4"
-							],
-							"query": [
-								{
-									"key": "id",
-									"value": "1"
-								}
+								"ctgL4",
+								"1"
 							]
 						}
 					},
@@ -145,7 +130,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:9001/api/ctg/detail/menu/ctgL2?id=1",
+							"raw": "http://localhost:9001/api/ctg/detail/menu/ctgL2/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -156,13 +141,8 @@
 								"ctg",
 								"detail",
 								"menu",
-								"ctgL2"
-							],
-							"query": [
-								{
-									"key": "id",
-									"value": "1"
-								}
+								"ctgL2",
+								"1"
 							]
 						}
 					},
@@ -174,7 +154,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:9001/api/ctg/detail/menu/ctgL3?id=1",
+							"raw": "http://localhost:9001/api/ctg/detail/menu/ctgL3/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -185,13 +165,8 @@
 								"ctg",
 								"detail",
 								"menu",
-								"ctgL3"
-							],
-							"query": [
-								{
-									"key": "id",
-									"value": "1"
-								}
+								"ctgL3",
+								"1"
 							]
 						}
 					},
@@ -203,7 +178,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:9001/api/ctg/detail/menu/ctgL4?id=1",
+							"raw": "http://localhost:9001/api/ctg/detail/menu/ctgL4/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -214,25 +189,20 @@
 								"ctg",
 								"detail",
 								"menu",
-								"ctgL4"
-							],
-							"query": [
-								{
-									"key": "id",
-									"value": "1"
-								}
+								"ctgL4",
+								"1"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "get pdt board by board id",
+					"name": "/pdtBoard/detail/{boardId}",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:9001/api/pdt/detail/1",
+							"raw": "http://localhost:9001/api/pdtBoard/detail/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -240,7 +210,7 @@
 							"port": "9001",
 							"path": [
 								"api",
-								"pdt",
+								"pdtBoard",
 								"detail",
 								"1"
 							]
@@ -249,12 +219,18 @@
 					"response": []
 				},
 				{
-					"name": "get full page pdt board by L3 id",
+					"name": "/pdtBoard/list/ctgL2/{ctgL2Id}",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authentication",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjA1NzgyMTgsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnUxQGNoYW51LmNvbSIsInJvbGUiOiJST0xFX05PUk1BTCJ9.z4x68ALKo7AYIyV9msPuMXL4ocxbMynKgt20WBnnp_k",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "http://localhost:9001/api/pdt/fullPage/boardList/ctgL3/1",
+							"raw": "http://localhost:9001/api/pdtBoard/list/ctgL2/1?limit=80",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -262,10 +238,95 @@
 							"port": "9001",
 							"path": [
 								"api",
-								"pdt",
-								"fullPage",
-								"boardList",
+								"pdtBoard",
+								"list",
+								"ctgL2",
+								"1"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "80"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/pdtBoard/list/ctgL3/{ctgL3Id}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9001/api/pdtBoard/list/ctgL3/1?limit=80",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"pdtBoard",
+								"list",
 								"ctgL3",
+								"1"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "80"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/pdtBoard/list/ctgL4/{ctgL4Id}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9001/api/pdtBoard/list/ctgL4/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"pdtBoard",
+								"list",
+								"ctgL4",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "press like",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authentication",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjA2MzU2ODIsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnUxQGNoYW51LmNvbSIsInJvbGUiOiJST0xFX05PUk1BTCJ9.Uw9Wk0YiHvcRJfT0bVFwYJKUw5aqdQcUYKWuhyMQnEg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:9001/api/pdtBoard/pressLike/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"pdtBoard",
+								"pressLike",
 								"1"
 							]
 						}

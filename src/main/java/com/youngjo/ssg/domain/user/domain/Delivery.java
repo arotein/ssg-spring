@@ -21,7 +21,8 @@ public class Delivery extends BaseEntity { // 유저의 배송지들
     private String phone;
 //    private Address address;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user")
-    private User user;
+    // cascade 유의
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "user")
+//    private User user;
 }

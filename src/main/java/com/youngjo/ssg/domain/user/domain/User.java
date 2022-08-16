@@ -1,7 +1,6 @@
 package com.youngjo.ssg.domain.user.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.youngjo.ssg.domain.buy.domain.Buy;
 import com.youngjo.ssg.domain.product.domain.ProductBoardLike;
 import com.youngjo.ssg.global.common.BaseEntity;
 import com.youngjo.ssg.global.enumeration.Grade;
@@ -35,8 +34,7 @@ public class User extends BaseEntity {
     @Column(unique = true)
     private String email;
     @Column(unique = true)
-    private String phone;
-    //    private Address address;
+    private String phoneNumber;
     private Long point;
 
     @Enumerated(EnumType.STRING)
@@ -44,34 +42,33 @@ public class User extends BaseEntity {
 
     // == Mapping ==
     @JsonIgnore
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductBoardLike> productBoardLikeList = new ArrayList<>();
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private NormalCart normalCart;
-
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private PeriodicCart periodicCart;
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<NormalCart> normalCartList = new ArrayList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Coupon> couponList = new ArrayList<>();
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "writer", fetch = FetchType.LAZY)
-    private List<Review> reviewList = new ArrayList<>();
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "writer", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+//    private List<Review> reviewList = new ArrayList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PaymentCard> paymentCardList = new ArrayList<>();
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Delivery> deliveryList = new ArrayList<>();
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Buy> buyList = new ArrayList<>();
+    // cascade 유의
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+//    private List<Delivery> deliveryList = new ArrayList<>();
+//
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+//    private List<Buy> buyList = new ArrayList<>();
 
     //==시스템 정보==
     private Timestamp lastAccessTime;
@@ -82,12 +79,12 @@ public class User extends BaseEntity {
     private Status status = Status.ENABLED;
 
     @Builder
-    public User(String loginId, String password, String name, String email, String phone) {
+    public User(String loginId, String password, String name, String email, String phoneNumber) {
         this.loginId = loginId;
         this.password = password;
         this.name = name;
         this.email = email;
-        this.phone = phone;
+        this.phoneNumber = phoneNumber;
     }
 
     public void updateLastAccessTime() {

@@ -1,12 +1,14 @@
 package com.youngjo.ssg.domain.product.dto.response;
 
-import com.youngjo.ssg.domain.product.domain.*;
+import com.youngjo.ssg.domain.product.domain.ProductBoard;
+import com.youngjo.ssg.global.common.AddressConverter;
 import com.youngjo.ssg.global.enumeration.SalesSite;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor
@@ -32,7 +34,7 @@ public class PdtBoardDetailResDto {
 
     private String pdtName;
 
-    private Address returnAddress;
+    private String returnAddress;
     private Integer exchangeShippingFee;
     private Integer returnShippingFee;
     private Integer premiumExchangeShippingFee;
@@ -45,15 +47,16 @@ public class PdtBoardDetailResDto {
     private Integer salesVol;
     private Long deliveryDate;
 
-    private ConsignmentSellerInfo consignmentSellerInfo;
+    private ConsignmentSellerInfoDto consignmentSellerInfo;
     private CtgL4Dto ctgL4;
     private Boolean boardLike;
-    private List<ProductImg> thumbImgList;
-    private List<ProductImg> detailImgList;
-    private List<MainProduct> mainProductList;
-    private List<ProductRequiredInfo> productRequiredInfoList;
+    private List<ProductImgDto> thumbImgList;
+    private List<ProductImgDto> detailImgList;
+    private List<MainProductDto> mainProductList;
+    private List<ProductRequiredInfoDto> productRequiredInfoList;
 
     public PdtBoardDetailResDto(ProductBoard productBoard) {
+        this.id = productBoard.getId();
         this.title = productBoard.getTitle();
         this.brand = productBoard.getBrand();
         this.salesSite = productBoard.getSalesSite();
@@ -69,7 +72,7 @@ public class PdtBoardDetailResDto {
         this.shippingFeeIsland = productBoard.getShippingFeeIsland();
         this.courierCompany = productBoard.getCourierCompany();
         this.pdtName = productBoard.getPdtName();
-        this.returnAddress = productBoard.getReturnAddress();
+        this.returnAddress = AddressConverter.convertToString(productBoard.getReturnAddress());
         this.exchangeShippingFee = productBoard.getExchangeShippingFee();
         this.returnShippingFee = productBoard.getReturnShippingFee();
         this.premiumExchangeShippingFee = productBoard.getPremiumExchangeShippingFee();
@@ -80,12 +83,36 @@ public class PdtBoardDetailResDto {
         this.minPrice = productBoard.getMinPrice();
         this.salesVol = productBoard.getSalesVol();
         this.deliveryDate = productBoard.getDeliveryDate();
-        this.consignmentSellerInfo = productBoard.getConsignmentSellerInfo();
-        this.ctgL4 = new CtgL4Dto(productBoard.getCategoryL4());
-        this.thumbImgList = productBoard.getThumbImgList();
-        this.detailImgList = productBoard.getDetailImgList();
-        this.mainProductList = productBoard.getMainProductList();
-        this.productRequiredInfoList = productBoard.getProductRequiredInfoList();
+        this.consignmentSellerInfo = new ConsignmentSellerInfoDto(
+                productBoard.getConsignmentSellerInfo().getName(),
+                AddressConverter.convertToString(productBoard.getConsignmentSellerInfo().getConsignmentSellerAddress()),
+                productBoard.getConsignmentSellerInfo().getMailOrderNum());
+        this.ctgL4 = new CtgL4Dto(productBoard.getCategoryL4().getId(),
+                productBoard.getCategoryL4().getName());
+        this.thumbImgList = productBoard.getThumbImgList()
+                .stream().map(img -> new ProductImgDto(img.getImgPath()))
+                .collect(Collectors.toList());
+        this.detailImgList = productBoard.getDetailImgList()
+                .stream().map(img -> new ProductImgDto(img.getImgPath()))
+                .collect(Collectors.toList());
+        this.mainProductList = productBoard.getMainProductList()
+                .stream().map(pdt -> new MainProductDto(
+                        pdt.getModelCode(),
+                        pdt.getOptionName1(),
+                        pdt.getOptionValue1(),
+                        pdt.getOptionName2(),
+                        pdt.getOptionValue2(),
+                        pdt.getPrice(),
+                        pdt.getStock()))
+                .collect(Collectors.toList());
+        this.productRequiredInfoList = productBoard.getProductRequiredInfoList()
+                .stream().map(info -> new ProductRequiredInfoDto(info.getInfoTitle(), info.getInfoCnt()))
+                .collect(Collectors.toList());
+    }
+
+    public PdtBoardDetailResDto boardLike(Boolean bool) {
+        this.boardLike = bool;
+        return this;
     }
 
     @Getter
@@ -93,10 +120,38 @@ public class PdtBoardDetailResDto {
     class CtgL4Dto {
         private Long id;
         private String name;
+    }
 
-        public CtgL4Dto(CategoryL4 categoryL4) {
-            this.id = categoryL4.getId();
-            this.name = categoryL4.getName();
-        }
+    @Getter
+    @AllArgsConstructor
+    class ConsignmentSellerInfoDto {
+        private String name;
+        private String consignmentSellerAddress;
+        private String mailOrderNum;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    class ProductImgDto {
+        private String imgPath;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    class MainProductDto {
+        private String modelCode;
+        private String optionName1;
+        private String optionValue1;
+        private String optionName2;
+        private String optionValue2;
+        private Long price;
+        private Integer stock;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    class ProductRequiredInfoDto {
+        private String infoTitle;
+        private String infoCnt;
     }
 }

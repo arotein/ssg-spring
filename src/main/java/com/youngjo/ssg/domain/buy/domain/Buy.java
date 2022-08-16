@@ -24,13 +24,14 @@ public class Buy extends BaseEntity {
     // 결제 상세정보 중간테이블 만들어서 작성하기. -> 카카오 API 참고
 
     //==매핑==
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "delivery_id")
-    private Delivery delivery;
+    // cascade 유의
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "user_id")
+//    private User user;
+//
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "delivery_id")
+//    private Delivery delivery;
 
 //    @JsonIgnore
 //    @OneToMany(mappedBy = "buy", fetch = FetchType.LAZY)
@@ -40,8 +41,8 @@ public class Buy extends BaseEntity {
     public Buy(Integer totalPrice, String paymentType, User user, Delivery delivery) {
         this.totalPrice = totalPrice;
         this.paymentType = paymentType;
-        this.user = user;
-        this.delivery = delivery;
+//        this.user = user;
+//        this.delivery = delivery;
     }
 }
 

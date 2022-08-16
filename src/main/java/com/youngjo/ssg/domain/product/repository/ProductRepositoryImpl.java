@@ -36,13 +36,24 @@ public class ProductRepositoryImpl implements ProductRepository {
         entityManager.persist(entity);
     }
 
+    // 이거 최적화 어떻게하냐...
     @Override
     public ProductBoard findBoardById(Long boardId) {
-        return queryFactory.selectFrom(productBoard)
+        ProductBoard board = queryFactory.selectFrom(productBoard)
+//                .join(productBoard.returnAddress).fetchJoin()
+//                .join(productBoard.consignmentSellerInfo).fetchJoin()
+//                .join(productBoard.thumbImgList).fetchJoin()
+//                .join(productBoard.detailImgList).fetchJoin()
+//                .join(productBoard.mainProductList).fetchJoin()
+//                .join(productBoard.productRequiredInfoList).fetchJoin()
+//                .join(productBoard.categoryL4).fetchJoin()
                 .where(productBoard.id.eq(boardId))
+                .distinct()
                 .fetchOne();
+        return board;
     }
 
+    // board 단건에 대한 좋아요
     @Override
     public ProductBoardLike findBoardLikeByBoardIdAndUserId(Long boardId, Long userId) {
         return queryFactory.selectFrom(productBoardLike)
@@ -53,6 +64,7 @@ public class ProductRepositoryImpl implements ProductRepository {
                 .fetchOne();
     }
 
+    // board 여러건에 대한 좋아요
     @Override
     public Map<Long, Boolean> findBoardLikeMapByBoardIdAndUserId(List<Long> boardIds, Long userId) {
         return queryFactory.from(productBoardLike)

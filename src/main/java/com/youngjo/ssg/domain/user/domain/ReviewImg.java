@@ -1,7 +1,7 @@
 package com.youngjo.ssg.domain.user.domain;
 
 import com.youngjo.ssg.global.common.BaseEntity;
-import com.youngjo.ssg.global.common.GeneratorFileName;
+import com.youngjo.ssg.global.common.FileNameGenerator;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,7 +17,7 @@ public class ReviewImg extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_img_id")
     private Long id;
-    private String imgTitle = GeneratorFileName.generate();
+    private String imgTitle = FileNameGenerator.generate();
     private String imgPath;
 
     @ManyToOne(fetch = FetchType.LAZY)

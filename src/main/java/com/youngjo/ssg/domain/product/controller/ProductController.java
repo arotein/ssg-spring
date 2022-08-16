@@ -18,7 +18,7 @@ public class ProductController {
 
     @GetMapping("/detail/{boardId}")
     public PdtBoardDetailResDto getBoardDetail(@PathVariable Long boardId) {
-        return new PdtBoardDetailResDto(productService.getBoardById(boardId));
+        return productService.getBoardById(boardId);
     }
 
     @GetMapping("/list/ctgL2/{ctgL2Id}")

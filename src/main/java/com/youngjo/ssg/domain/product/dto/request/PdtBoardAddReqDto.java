@@ -10,8 +10,11 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class PdtBoardAddReqDto {
+    @NotEmpty
     private String title;
+    @NotEmpty
     private String brand;
+    @NotEmpty
     private String salesSite;
     // == ShippingInfo ==
     private Boolean isEachShippingFee;

@@ -25,15 +25,30 @@ public class UserServiceImpl implements UserService {
         if (!dto.getLoginId().matches(loginIdRegex)) {
             throw new IllegalArgumentException("loginId는 4~16자의 숫자, 영문자만 가능합니다.");
         }
+        // passwordConfirm 검증
+        if (!dto.getPassword().equals(dto.getPasswordConfirm())) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
         // password 검증
         String passwordRegex = "^[\\w/\\{\\}\\[\\]\\/?.,;:|\\)*~`!^\\-+<>@\\#$%&\\\\\\=\\(\\'\\\"]{8,40}$";
         if (!rawPassword.matches(passwordRegex)) {
             throw new IllegalArgumentException("password는 8~40자의 숫자, 영문자, 특수문자만 가능합니다.");
         }
-        dto.setPassword(passwordEncoder.encode(rawPassword));
+        dto.setEncodedPassword(passwordEncoder.encode(rawPassword));
+        // 전화번호 검증
+        String phoneNumRegex = "^010-\\d{3,4}-\\d{3,4}$";
+        if (!dto.getPhoneNum().matches(phoneNumRegex)) {
+            throw new IllegalArgumentException("휴대폰 번호는 010-[3~4자리]-[3~4자리]로만 가능합니다.");
+        }
 
         // 임시 계정 생성
-        userRepository.saveUser(dto.createUser());
+        userRepository.saveUser(User.builder()
+                .loginId(dto.getLoginId())
+                .password(dto.getPassword())
+                .name(dto.getName())
+                .email(dto.getEmail())
+                .phoneNumber(dto.getPhoneNum())
+                .build());
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.youngjo.ssg.domain.product.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.youngjo.ssg.domain.user.domain.NormalCart;
 import com.youngjo.ssg.global.common.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -8,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -33,6 +35,11 @@ public class MainProduct extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_board_id")
     private ProductBoard productBoard;
+
+    // 카트에 담긴 제품이 삭제됨 -> 카트에는 남아있고 상품이 삭제처리되었다고 알려야되나 그냥 삭제처리함.
+    @JsonIgnore
+    @OneToMany(mappedBy = "mainProduct", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<NormalCart> normalCartList;
 
     @Builder
     public MainProduct(String modelCode, String optionName1, String optionValue1, String optionName2, String optionValue2, Long price, Integer stock) {

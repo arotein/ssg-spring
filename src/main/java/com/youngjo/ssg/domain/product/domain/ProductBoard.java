@@ -86,11 +86,7 @@ public class ProductBoard extends BaseEntity {
     // == Product Detail Information =
     private String pdtName;
 
-    // subProductList : 추가구성품 -> 미구현
-//    private List<SubProduct> subProductList = new ArrayList<>();
 //    private List<InstallmentPlan> installmentPlan = new ArrayList<>(); // 할부 -> 카드 엔티티 연결해야할듯
-
-//    private List<ProductRequiredInfo> requiredInfo = new ArrayList<>(); // 상품 필수정보 -> 엔티티로 변경
 
     // == Exchange Refund ==
     @JsonIgnore
@@ -111,7 +107,7 @@ public class ProductBoard extends BaseEntity {
     private Integer salesVol;
     private Long deliveryDate;
 
-    // 카테고리 L3에 걸린 애들은 거르기 -> 실제로 L3에 걸거나 L4의 더미값으로 연결시키기
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "consignment_seller_info_id")
     private ConsignmentSellerInfo consignmentSellerInfo;
@@ -126,7 +122,7 @@ public class ProductBoard extends BaseEntity {
     @OneToMany(mappedBy = "productBoardDetail", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductImg> detailImgList = new ArrayList<>();
     @JsonIgnore
-    @OneToMany(mappedBy = "productBoard", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "productBoard", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MainProduct> mainProductList = new ArrayList<>();
     @JsonIgnore
     @OneToMany(mappedBy = "productBoard", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -136,15 +132,13 @@ public class ProductBoard extends BaseEntity {
     private List<ProductBoardLike> productBoardLikeList = new ArrayList<>();
 
 
-//    private NormalCart normalCart; // ManyToMany
-
     // 쿠폰 엔티티 연결(만들기)
 
 //    @JoinColumn(name = "buy_id")
 //    private Buy buy; -> n:m 이므로 중간테이블 만들기. review도 buy에 걸기? cart는 주문(buy)와 1:1 단방향
 
     @Builder
-    public ProductBoard(String title, String brand, SalesSite salesSite, Boolean isEachShippingFee, Boolean isPremium, Boolean isCrossBorderShipping, Boolean isOnlineOnly, Integer shippingFee, Integer shippingFreeOver, Boolean availableDeliveryJeju, Boolean availableDeliveryIsland, Integer shippingFeeJeju, Integer shippingFeeIsland, String courierCompany, Long deliveryDate, String pdtName, Address returnAddress, Integer exchangeShippingFee, Integer returnShippingFee, Integer premiumExchangeShippingFee, Integer premiumReturnShippingFee, CategoryL4 categoryL4, ConsignmentSellerInfo consignmentSellerInfo) {
+    public ProductBoard(String title, String brand, SalesSite salesSite, Boolean isEachShippingFee, Boolean isPremium, Boolean isCrossBorderShipping, Boolean isOnlineOnly, Integer shippingFee, Integer shippingFreeOver, Boolean availableDeliveryJeju, Boolean availableDeliveryIsland, Integer shippingFeeJeju, Integer shippingFeeIsland, String courierCompany, Long deliveryDate, String pdtName, Address returnAddress, Integer exchangeShippingFee, Integer returnShippingFee, Integer premiumExchangeShippingFee, Integer premiumReturnShippingFee, CategoryL4 categoryL4, ConsignmentSellerInfo consignmentSellerInfo, List<ProductRequiredInfo> productRequiredInfoList) {
         this.title = title;
         this.brand = brand;
         this.salesSite = salesSite;
@@ -168,6 +162,7 @@ public class ProductBoard extends BaseEntity {
         this.premiumReturnShippingFee = premiumReturnShippingFee;
         this.categoryL4 = categoryL4;
         this.consignmentSellerInfo = consignmentSellerInfo;
+        this.productRequiredInfoList = productRequiredInfoList;
     }
 
     public ProductBoard linkToProductList(List<MainProduct> mainProductList) {
@@ -197,25 +192,37 @@ public class ProductBoard extends BaseEntity {
     }
 
     // 역방향 필요없어서 단방향으로만 연결됨
-    public ProductBoard linkToProductThumbImgList(List<ProductImg> productImgList) {
-        for (ProductImg img : productImgList) {
-            this.thumbImgList.add(img);
-            img.linkToProductBoardThumb(this);
-        }
+    public ProductBoard linkToProductThumbImgList(List<ProductImg> thumbImgList) {
+        this.thumbImgList = thumbImgList;
+        thumbImgList.forEach(img -> img.linkToProductBoardThumb(this));
         return this;
     }
 
     // 역방향 필요없어서 단방향으로만 연결됨
-    public ProductBoard linkToProductDetailImgList(List<ProductImg> productImgList) {
-        for (ProductImg img : productImgList) {
-            this.detailImgList.add(img);
-            img.linkToProductBoardDetail(this);
-        }
+    public ProductBoard linkToProductDetailImgList(List<ProductImg> detailImgList) {
+        this.detailImgList = detailImgList;
+        detailImgList.forEach(img -> img.linkToProductBoardDetail(this));
         return this;
     }
 
     public ProductBoard linkToPdtBoardLike(ProductBoardLike productBoardLike) {
         this.productBoardLikeList.add(productBoardLike);
+        return this;
+    }
+
+    public ProductBoard linkToReturnAddress(Address returnAddress) {
+        this.returnAddress = returnAddress;
+        return this;
+    }
+
+    public ProductBoard linkToProductRequiredInfo(List<ProductRequiredInfo> productRequiredInfoList) {
+        this.productRequiredInfoList = productRequiredInfoList;
+        productRequiredInfoList.forEach(info -> info.linkToProductBoard(this));
+        return this;
+    }
+
+    public ProductBoard linkToConsignmentSellerInfo(ConsignmentSellerInfo consignmentSellerInfo) {
+        this.consignmentSellerInfo = consignmentSellerInfo;
         return this;
     }
 }

@@ -30,7 +30,7 @@ public class CategoryL2 extends Category {
 
     //==매핑==
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "category_l1_id")
     private CategoryL1 categoryL1;
 

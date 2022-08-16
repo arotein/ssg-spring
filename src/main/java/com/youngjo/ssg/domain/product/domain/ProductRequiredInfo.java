@@ -27,4 +27,9 @@ public class ProductRequiredInfo {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_board_id")
     private ProductBoard productBoard;
+
+    public ProductRequiredInfo linkToProductBoard(ProductBoard productBoard) {
+        this.productBoard = productBoard;
+        return this;
+    }
 }

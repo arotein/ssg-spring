@@ -27,4 +27,9 @@ public class ConsignmentSellerInfo extends BaseEntity {
     @JoinColumn(name = "consignment_seller_address_id")
     private Address consignmentSellerAddress;
     private String mailOrderNum;
+
+    public ConsignmentSellerInfo linkToAddress(Address address) {
+        this.consignmentSellerAddress = address;
+        return this;
+    }
 }

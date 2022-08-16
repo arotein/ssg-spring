@@ -24,12 +24,13 @@ public class Review extends BaseEntity {
 
     //==매핑==
     @JsonIgnore
-    @OneToMany(mappedBy = "review", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "review", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReviewImg> reviewImgList = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User writer;
+    // user(writer)와 mainProduct와 매핑 시키기
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "user_id")
+//    private User writer;
 
     @Builder
     public Review(String title, String content) {

@@ -1,15 +1,12 @@
 package com.youngjo.ssg.domain.user.dto.request;
 
-import com.youngjo.ssg.domain.user.domain.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 @Getter
-@Setter
 @NoArgsConstructor
 public class SignUpReqDto {
     @NotEmpty
@@ -17,24 +14,16 @@ public class SignUpReqDto {
     @NotEmpty
     private String password;
     @NotEmpty
+    private String passwordConfirm;
+    @NotEmpty
     private String name;
     @Email
     private String email;
-    private String phone;
+    private String phoneNum;
 //    private Address address;
 
-    public User createUser() {
-        return User.builder()
-                .loginId(loginId)
-                .password(password)
-                .name(name)
-                .email(email)
-                .phone(phone)
-//                .address(Address.builder()
-//                        .city(address.getCity())
-//                        .street(address.getStreet())
-//                        .detail(address.getDetail())
-//                        .postalCode(address.getPostalCode()).build())
-                .build();
+    public SignUpReqDto setEncodedPassword(String encodedPassword) {
+        this.password = encodedPassword;
+        return this;
     }
 }
