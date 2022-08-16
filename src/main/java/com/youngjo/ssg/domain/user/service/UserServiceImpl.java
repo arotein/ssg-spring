@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("loginId는 4~16자의 숫자, 영문자만 가능합니다.");
         }
         // password 검증
-        String passwordRegex = "^[\\w/[\\{\\}\\[\\]\\/?.,;:|\\)*~`!^\\-+<>@\\#$%&\\\\\\=\\(\\'\\\"]]{8,40}$";
+        String passwordRegex = "^[\\w/\\{\\}\\[\\]\\/?.,;:|\\)*~`!^\\-+<>@\\#$%&\\\\\\=\\(\\'\\\"]{8,40}$";
         if (!rawPassword.matches(passwordRegex)) {
             throw new IllegalArgumentException("password는 8~40자의 숫자, 영문자, 특수문자만 가능합니다.");
         }

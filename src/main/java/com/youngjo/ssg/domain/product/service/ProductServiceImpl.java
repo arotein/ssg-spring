@@ -77,7 +77,7 @@ public class ProductServiceImpl implements ProductService {
         List<ProductBoard> boardList = productRepository.findBoardListByL2Id(id, offset, limit);
         Map<Long, Boolean> likeMap;
         if (userId != null) {
-            likeMap = productRepository.findBoardLikeAllByBoardIdAndUserId(
+            likeMap = productRepository.findBoardLikeMapByBoardIdAndUserId(
                     boardList.stream().map(ProductBoard::getId).collect(Collectors.toList()),
                     userId);
         } else {
@@ -98,7 +98,7 @@ public class ProductServiceImpl implements ProductService {
         List<ProductBoard> boardList = productRepository.findBoardListByL3Id(id, offset, limit);
         Map<Long, Boolean> likeMap;
         if (userId != null) {
-            likeMap = productRepository.findBoardLikeAllByBoardIdAndUserId(
+            likeMap = productRepository.findBoardLikeMapByBoardIdAndUserId(
                     boardList.stream().map(ProductBoard::getId).collect(Collectors.toList()),
                     userId);
         } else {
@@ -119,7 +119,7 @@ public class ProductServiceImpl implements ProductService {
         List<ProductBoard> boardList = productRepository.findBoardListByL4Id(id, offset, limit);
         Map<Long, Boolean> likeMap;
         if (userId != null) {
-            likeMap = productRepository.findBoardLikeAllByBoardIdAndUserId(
+            likeMap = productRepository.findBoardLikeMapByBoardIdAndUserId(
                     boardList.stream().map(ProductBoard::getId).collect(Collectors.toList()),
                     userId);
         } else {
@@ -143,12 +143,6 @@ public class ProductServiceImpl implements ProductService {
                     .linkToProductBoard(productRepository.findBoardById(boardId))
                     .linkToUser(userRepository.findUserById(clientInfoLoader.getUserId())));
         }
-    }
-
-    @Override
-    public void cancelBoardLike(Long boardId) {
-        productRepository.findBoardLikeByBoardIdAndUserId(boardId, clientInfoLoader.getUserId())
-                .cancelLike();
     }
 
     @Override

@@ -17,6 +17,4 @@ public interface ProductService {
     ProductBoard getBoardById(Long id);
 
     void pressBoardLike(Long id);
-
-    void cancelBoardLike(Long boardId);
 }

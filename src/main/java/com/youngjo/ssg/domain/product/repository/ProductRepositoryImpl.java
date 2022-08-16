@@ -43,7 +43,6 @@ public class ProductRepositoryImpl implements ProductRepository {
                 .fetchOne();
     }
 
-    // 단건조회 -> 상품 상세보기 페이지 좋아요 확인
     @Override
     public ProductBoardLike findBoardLikeByBoardIdAndUserId(Long boardId, Long userId) {
         return queryFactory.selectFrom(productBoardLike)
@@ -54,9 +53,8 @@ public class ProductRepositoryImpl implements ProductRepository {
                 .fetchOne();
     }
 
-    // 리스트조회 -> 상품 목록보기 페이지 좋아요 확인 -> boardList와 합치기
     @Override
-    public Map<Long, Boolean> findBoardLikeAllByBoardIdAndUserId(List<Long> boardIds, Long userId) {
+    public Map<Long, Boolean> findBoardLikeMapByBoardIdAndUserId(List<Long> boardIds, Long userId) {
         return queryFactory.from(productBoardLike)
                 .join(productBoardLike.productBoard, productBoard)
                 .join(productBoardLike.user, user)

@@ -37,12 +37,7 @@ public class ProductBoardLike extends BaseEntity {
     private User user;
 
     public ProductBoardLike pressLike() {
-        this.value = true;
-        return this;
-    }
-
-    public ProductBoardLike cancelLike() {
-        this.value = false;
+        this.value = this.value ? false : true;
         return this;
     }
 

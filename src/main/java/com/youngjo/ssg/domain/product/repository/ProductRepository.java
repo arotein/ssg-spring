@@ -15,7 +15,7 @@ public interface ProductRepository {
 
     ProductBoardLike findBoardLikeByBoardIdAndUserId(Long boardId, Long userId);
 
-    Map<Long, Boolean> findBoardLikeAllByBoardIdAndUserId(List<Long> boardIds, Long userId);
+    Map<Long, Boolean> findBoardLikeMapByBoardIdAndUserId(List<Long> boardIds, Long userId);
 
     List<ProductBoard> findBoardListByL3Id(Long id, Integer offset, Integer limit);
 

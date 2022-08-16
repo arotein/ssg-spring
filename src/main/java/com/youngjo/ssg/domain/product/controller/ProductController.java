@@ -49,13 +49,6 @@ public class ProductController {
         return true;
     }
 
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/cancelLike/{boardId}")
-    public Boolean cancelBoardLike(@PathVariable Long boardId) {
-        productService.cancelBoardLike(boardId);
-        return true;
-    }
-
     // == dev code ==
     @PostMapping("/add")
     public Boolean addBoard(@RequestBody PdtBoardAddReqDto pdtBoardAddReqDto) {
