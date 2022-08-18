@@ -23,7 +23,7 @@ public class ConsignmentSellerInfo extends BaseEntity {
     @Column(name = "consignment_seller_info_id")
     private Long id;
     private String name;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "consignment_seller_address_id")
     private Address consignmentSellerAddress;
     private String mailOrderNum;

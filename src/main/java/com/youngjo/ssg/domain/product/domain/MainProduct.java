@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -39,7 +40,7 @@ public class MainProduct extends BaseEntity {
     // 카트에 담긴 제품이 삭제됨 -> 카트에는 남아있고 상품이 삭제처리되었다고 알려야되나 그냥 삭제처리함.
     @JsonIgnore
     @OneToMany(mappedBy = "mainProduct", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<NormalCart> normalCartList;
+    private List<NormalCart> normalCartList = new ArrayList<>();
 
     @Builder
     public MainProduct(String modelCode, String optionName1, String optionValue1, String optionName2, String optionValue2, Long price, Integer stock) {
@@ -54,5 +55,10 @@ public class MainProduct extends BaseEntity {
 
     public void linkToProductBoard(ProductBoard productBoard) {
         this.productBoard = productBoard;
+    }
+
+    public MainProduct linkToNormalCart(NormalCart normalCart) {
+        this.normalCartList.add(normalCart);
+        return this;
     }
 }

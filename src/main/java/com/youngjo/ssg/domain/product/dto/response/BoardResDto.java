@@ -1,7 +1,6 @@
 package com.youngjo.ssg.domain.product.dto.response;
 
 import com.youngjo.ssg.domain.product.domain.ProductBoard;
-import com.youngjo.ssg.global.enumeration.SalesSite;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,11 +11,11 @@ public class BoardResDto {
     private String mainImgUrl;
     private String title;
     private String brand;
-    private SalesSite salesSite;
+    private String salesSite;
     //    private Integer discountRate; -> 나중에 구현
     // == Auto Count ==
     private Integer totalReviewQty;
-    private Float totalScore;
+    private Integer totalScore;
     private Boolean isSamePrice;
     private Long minPrice;
     // == ShippingInfo ==
@@ -28,10 +27,10 @@ public class BoardResDto {
 
     public BoardResDto(ProductBoard productBoard, Boolean boardLike) {
         this.boardId = productBoard.getId();
-        this.mainImgUrl = productBoard.getThumbImgList().get(0).getImgPath();
+        this.mainImgUrl = productBoard.getMainImgPath();
         this.title = productBoard.getTitle();
         this.brand = productBoard.getBrand();
-        this.salesSite = productBoard.getSalesSite();
+        this.salesSite = productBoard.getSalesSite().getValue();
         this.totalReviewQty = productBoard.getTotalReviewQty();
         this.totalScore = productBoard.getTotalScore();
         this.isSamePrice = productBoard.getIsSamePrice();

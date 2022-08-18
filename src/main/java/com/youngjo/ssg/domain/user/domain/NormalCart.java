@@ -18,8 +18,7 @@ public class NormalCart extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "normal_cart_id")
     private Long id;
-
-    private Integer qty;
+    private Integer pdtQty;
 
     //==매핑==
     @JsonIgnore
@@ -33,7 +32,24 @@ public class NormalCart extends BaseEntity {
     private MainProduct mainProduct;
 
     @Builder
-    public NormalCart(Integer qty) {
-        this.qty = qty;
+    public NormalCart(Integer pdtQty) {
+        this.pdtQty = pdtQty;
+    }
+
+    public NormalCart linkToUser(User user) {
+        this.user = user;
+        user.linkToNormalCart(this);
+        return this;
+    }
+
+    public NormalCart linkToMainProduct(MainProduct mainProduct) {
+        this.mainProduct = mainProduct;
+        mainProduct.linkToNormalCart(this);
+        return this;
+    }
+
+    public NormalCart setPdtQty(Integer pdtQty) {
+        this.pdtQty = pdtQty;
+        return this;
     }
 }

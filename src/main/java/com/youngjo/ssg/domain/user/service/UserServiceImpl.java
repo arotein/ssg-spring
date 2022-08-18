@@ -8,8 +8,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Transactional
 @RequiredArgsConstructor
 @Service
@@ -40,6 +38,7 @@ public class UserServiceImpl implements UserService {
         if (!dto.getPhoneNum().matches(phoneNumRegex)) {
             throw new IllegalArgumentException("휴대폰 번호는 010-[3~4자리]-[3~4자리]로만 가능합니다.");
         }
+        // 주소 검증 생략
 
         // 임시 계정 생성
         userRepository.saveUser(User.builder()
@@ -48,17 +47,18 @@ public class UserServiceImpl implements UserService {
                 .name(dto.getName())
                 .email(dto.getEmail())
                 .phoneNumber(dto.getPhoneNum())
+                .address(dto.getAddress())
                 .build());
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Boolean checkForLoginIdDuplicate(String loginId) {
+        return userRepository.findUserByLoginId(loginId) != null ? true : false;
     }
 
     @Override
     public void updateLastAccessTime(Long id) {
         userRepository.findUserById(id).updateLastAccessTime();
-    }
-
-    // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ아래부터는 개발용 코드ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-    @Override
-    public List<User> findAllUser() {
-        return userRepository.findAllUser();
     }
 }

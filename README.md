@@ -1,7 +1,5 @@
 # SSG Project Made of Spring
 
-----
-
 ## 🍜 프로젝트 설명
 1. ssg.com 클론코딩 백엔드 서버입니다.
 2. spring boot 2.6.8으로 작성되었습니다.
@@ -16,6 +14,7 @@
 2. Category 메뉴바
 3. 상품 상세보기, 상품 목록보기
 4. 상품 좋아요 기능
+5. 장바구니 기능
 
 ## 🍜 사용된 환경변수
 1. ${SSG_DB_USERNAME}

@@ -4,17 +4,17 @@ import com.youngjo.ssg.domain.product.domain.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Getter
 @NoArgsConstructor
 public class PdtBoardAddReqDto {
-    @NotEmpty
+    @NotBlank
     private String title;
-    @NotEmpty
+    @NotBlank
     private String brand;
-    @NotEmpty
+    @NotBlank
     private String salesSite;
     // == ShippingInfo ==
     private Boolean isEachShippingFee;
@@ -45,7 +45,7 @@ public class PdtBoardAddReqDto {
 
     private ConsignmentSellerInfo consignmentSellerInfo;
     // == Mapping ==
-    @NotEmpty
+    @NotBlank
     private Long ctgL4Id;
     private List<ProductImg> thumbImgList;
     private List<ProductImg> detailImgList;

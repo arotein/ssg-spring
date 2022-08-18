@@ -7,10 +7,13 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+/***
+ * User의 배송지 관리
+ */
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Delivery extends BaseEntity { // 유저의 배송지들
+public class Delivery extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "delivery_id")
@@ -21,7 +24,6 @@ public class Delivery extends BaseEntity { // 유저의 배송지들
     private String phone;
 //    private Address address;
 
-    // cascade 유의
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "user")
 //    private User user;

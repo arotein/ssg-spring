@@ -225,8 +225,9 @@
 						"header": [
 							{
 								"key": "Authentication",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjA1NzgyMTgsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnUxQGNoYW51LmNvbSIsInJvbGUiOiJST0xFX05PUk1BTCJ9.z4x68ALKo7AYIyV9msPuMXL4ocxbMynKgt20WBnnp_k",
-								"type": "text"
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjA3NTgxNjcsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.1S3vVjZdivUkU9KXj1MhK_4sc63dSqpAM-76RBvU3f0",
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"url": {
@@ -312,7 +313,7 @@
 						"header": [
 							{
 								"key": "Authentication",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjA2MzU2ODIsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnUxQGNoYW51LmNvbSIsInJvbGUiOiJST0xFX05PUk1BTCJ9.Uw9Wk0YiHvcRJfT0bVFwYJKUw5aqdQcUYKWuhyMQnEg",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjA3MzI4NDEsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.xuMxXSsHpODfMGkhLafaeOa27TRKnRHt5qoRJ0j0J-s",
 								"type": "text"
 							}
 						],
@@ -328,6 +329,281 @@
 								"pdtBoard",
 								"pressLike",
 								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "anonymous cart list",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[1,2,3,4,5,6,7,8,9,10]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9001/api/cart",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"cart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user cart list",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authentication",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjA3OTQ0NDUsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.3nsaQzztW1lwa5fvu7MDyqByqi0XBevcixlypmB4tg8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9001/api/cart",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"cart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user cart soldout del",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authentication",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjA3OTQ0NDUsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.3nsaQzztW1lwa5fvu7MDyqByqi0XBevcixlypmB4tg8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9001/api/cart/soldOutPdt",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"cart",
+								"soldOutPdt"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user cart del pdt",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authentication",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjA3OTQ0NDUsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.3nsaQzztW1lwa5fvu7MDyqByqi0XBevcixlypmB4tg8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    1,2\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9001/api/cart/pdt",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"cart",
+								"pdt"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user cart modify pdt",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authentication",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjA3OTQ0NDUsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.3nsaQzztW1lwa5fvu7MDyqByqi0XBevcixlypmB4tg8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"pdtId\" : 1,\r\n    \"pdtQty\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9001/api/cart/pdt",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"cart",
+								"pdt"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "loginId dupl check",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"loginId\": \"chan\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9001/api/duplCheck/loginId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"duplCheck",
+								"loginId"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"loginId\": \"chan\",\r\n    \"password\": \"chanuchanu\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9001/api/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add cart",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authentication",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjA3OTQ0NDUsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.3nsaQzztW1lwa5fvu7MDyqByqi0XBevcixlypmB4tg8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"pdtId\": 2,\r\n        \"pdtQty\": 1\r\n    },     {\r\n        \"pdtId\": 3,\r\n        \"pdtQty\": 4\r\n    },     {\r\n        \"pdtId\": 4,\r\n        \"pdtQty\": 1\r\n    },     {\r\n        \"pdtId\": 5,\r\n        \"pdtQty\": 1\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9001/api/cart/addPdt",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"cart",
+								"addPdt"
 							]
 						}
 					},

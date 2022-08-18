@@ -24,7 +24,6 @@ import java.util.List;
  * ShippingInfo.deliveryDate : 해당 Board의 최근 15일간 평균 배송일을 기반으로 제공
  * AutoCountInfo.love
  * AutoCountInfo.salesVol
- * Board 등록시 카테고리별 상품 count
  *
  * == ShippingInfo ==
  * isEachShippingFee : 배송비 개당 부과?
@@ -33,7 +32,7 @@ import java.util.List;
  * isOnlineOnly : 온라인 전용?
  * shippingFee : 배송비, 0원이면 무료
  * shippingFreeOver : ~원 이상 무료배송, 10원 이상 or null
- * availableDeliveryJeju : 제주 배송가능
+ * availableDeliveryJeju : 제주 배송가능여부
  * availableDeliveryIsland : 도서산간 배송가능여부
  * shippingFeeJeju : 제주 추가금
  * shippingFeeIsland : 도서산간 추가금
@@ -67,6 +66,8 @@ public class ProductBoard extends BaseEntity {
     private String brand; // -> 목록 검색되게
 
     private SalesSite salesSite; // 판매 싸이트
+    private String mainImgPath; // 메인 썸네일 이미지
+    private String mainImgTitle; // 메인 썸네일 이미지 파일명
     // == ShippingInfo ==
     // true(1), false(0)
     private Boolean isEachShippingFee;
@@ -101,7 +102,7 @@ public class ProductBoard extends BaseEntity {
 
     // == Auto Count ==
     private Integer totalReviewQty;
-    private Float totalScore;
+    private Integer totalScore; // 1~50. 10을 나눠서 사용하면 됨.
     private Boolean isSamePrice;
     private Long minPrice;
     private Integer salesVol;
@@ -193,6 +194,8 @@ public class ProductBoard extends BaseEntity {
 
     // 역방향 필요없어서 단방향으로만 연결됨
     public ProductBoard linkToProductThumbImgList(List<ProductImg> thumbImgList) {
+        this.mainImgPath = thumbImgList.get(0).getImgPath();
+        this.mainImgTitle = thumbImgList.get(0).getImgTitle();
         this.thumbImgList = thumbImgList;
         thumbImgList.forEach(img -> img.linkToProductBoardThumb(this));
         return this;

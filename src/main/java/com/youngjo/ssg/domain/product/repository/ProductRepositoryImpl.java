@@ -1,6 +1,7 @@
 package com.youngjo.ssg.domain.product.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.youngjo.ssg.domain.product.domain.MainProduct;
 import com.youngjo.ssg.domain.product.domain.ProductBoard;
 import com.youngjo.ssg.domain.product.domain.ProductBoardLike;
 import com.youngjo.ssg.global.common.BaseEntity;
@@ -15,6 +16,8 @@ import static com.querydsl.core.group.GroupBy.groupBy;
 import static com.youngjo.ssg.domain.product.domain.QCategoryL2.categoryL2;
 import static com.youngjo.ssg.domain.product.domain.QCategoryL3.categoryL3;
 import static com.youngjo.ssg.domain.product.domain.QCategoryL4.categoryL4;
+import static com.youngjo.ssg.domain.product.domain.QConsignmentSellerInfo.consignmentSellerInfo;
+import static com.youngjo.ssg.domain.product.domain.QMainProduct.mainProduct;
 import static com.youngjo.ssg.domain.product.domain.QProductBoard.productBoard;
 import static com.youngjo.ssg.domain.product.domain.QProductBoardLike.productBoardLike;
 import static com.youngjo.ssg.domain.user.domain.QUser.user;
@@ -36,42 +39,53 @@ public class ProductRepositoryImpl implements ProductRepository {
         entityManager.persist(entity);
     }
 
-    // 이거 최적화 어떻게하냐...
+    @Override
+    public Map<Long, MainProduct> findAllMainPdtByIds(List<Long> pdtIds) {
+        return queryFactory.from(mainProduct)
+                .where(mainProduct.id.in(pdtIds))
+                .transform(groupBy(mainProduct.id).as(mainProduct));
+    }
+
+    @Override
+    public Map<Long, ProductBoard> findAllBoardByPdtIds(List<Long> pdtIds) {
+        return queryFactory.from(mainProduct)
+                .join(mainProduct.productBoard, productBoard)
+                .where(mainProduct.id.in(pdtIds))
+                .distinct()
+                .transform(groupBy(mainProduct.id).as(productBoard));
+    }
+
     @Override
     public ProductBoard findBoardById(Long boardId) {
         ProductBoard board = queryFactory.selectFrom(productBoard)
-//                .join(productBoard.returnAddress).fetchJoin()
-//                .join(productBoard.consignmentSellerInfo).fetchJoin()
-//                .join(productBoard.thumbImgList).fetchJoin()
-//                .join(productBoard.detailImgList).fetchJoin()
-//                .join(productBoard.mainProductList).fetchJoin()
-//                .join(productBoard.productRequiredInfoList).fetchJoin()
-//                .join(productBoard.categoryL4).fetchJoin()
+                .join(productBoard.returnAddress).fetchJoin()
+                .join(productBoard.categoryL4).fetchJoin()
+                .join(productBoard.consignmentSellerInfo, consignmentSellerInfo).fetchJoin()
+                .join(consignmentSellerInfo.consignmentSellerAddress).fetchJoin()
                 .where(productBoard.id.eq(boardId))
                 .distinct()
                 .fetchOne();
         return board;
     }
 
-    // board 단건에 대한 좋아요
+    // board 단건에 대한 좋아요 조회 -> 엔티티 그래프가 필요한게 아닌 where절에 사용할 데이터가 필요한거니 fetch join X
     @Override
     public ProductBoardLike findBoardLikeByBoardIdAndUserId(Long boardId, Long userId) {
         return queryFactory.selectFrom(productBoardLike)
                 .join(productBoardLike.productBoard, productBoard)
                 .join(productBoardLike.user, user)
-                .where(productBoard.id.eq(boardId),
-                        user.id.eq(userId))
+                .where(productBoard.id.eq(boardId), user.id.eq(userId))
+                .distinct()
                 .fetchOne();
     }
 
-    // board 여러건에 대한 좋아요
+    // board 여러건에 대한 좋아요 조회
     @Override
     public Map<Long, Boolean> findBoardLikeMapByBoardIdAndUserId(List<Long> boardIds, Long userId) {
         return queryFactory.from(productBoardLike)
-                .join(productBoardLike.productBoard, productBoard)
-                .join(productBoardLike.user, user)
-                .where(productBoard.id.in(boardIds),
-                        user.id.eq(userId))
+                .join(productBoardLike.productBoard, productBoard).on(productBoard.id.in(boardIds))
+                .join(productBoardLike.user, user).on(user.id.eq(userId))
+                .distinct()
                 .transform(groupBy(productBoard.id).as(productBoardLike.value));
 
     }

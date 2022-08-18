@@ -3,16 +3,16 @@ package com.youngjo.ssg.domain.product.dto.request;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 
 @Data
 @NoArgsConstructor
 public class AddCtgL1toL4ReqDto {
-    @NotEmpty
+    @NotBlank
     private String ctgL1;
-    @NotEmpty
+    @NotBlank
     private String ctgL2;
-    @NotEmpty
+    @NotBlank
     private String ctgL3;
     private String ctgL4;
 }

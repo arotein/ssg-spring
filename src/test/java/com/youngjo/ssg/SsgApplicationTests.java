@@ -45,9 +45,5 @@ class SsgApplicationTests {
 
     @Test
     void test() {
-//        JSONPObject
     }
 }
-
-// 5e57e4b5e4ea9
-// 6000200799

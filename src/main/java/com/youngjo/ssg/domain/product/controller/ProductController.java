@@ -18,6 +18,7 @@ public class ProductController {
 
     @GetMapping("/detail/{boardId}")
     public PdtBoardDetailResDto getBoardDetail(@PathVariable Long boardId) {
+        log.info("/api/pdtBoard/detail/{boardId} request");
         return productService.getBoardById(boardId);
     }
 
@@ -25,6 +26,7 @@ public class ProductController {
     public BoardListResDto getBoardListByL2Id(@PathVariable Long ctgL2Id,
                                               @RequestParam(required = false, defaultValue = "0") Integer offset,
                                               @RequestParam(required = false, defaultValue = "4") Integer limit) {
+        log.info("/api/pdtBoard/list/ctgL2/{ctgL2Id} request");
         return productService.getBoardListByL2Id(ctgL2Id, offset, limit);
     }
 
@@ -32,6 +34,7 @@ public class ProductController {
     public BoardListResDto getBoardListByL3Id(@PathVariable Long ctgL3Id,
                                               @RequestParam(required = false, defaultValue = "0") Integer offset,
                                               @RequestParam(required = false, defaultValue = "4") Integer limit) {
+        log.info("/api/pdtBoard/list/ctgL3/{ctgL3Id} request");
         return productService.getBoardListByL3Id(ctgL3Id, offset, limit);
     }
 
@@ -39,12 +42,14 @@ public class ProductController {
     public BoardListResDto getBoardListByL4Id(@PathVariable Long ctgL4Id,
                                               @RequestParam(required = false, defaultValue = "0") Integer offset,
                                               @RequestParam(required = false, defaultValue = "4") Integer limit) {
+        log.info("/api/pdtBoard/list/ctgL4/{ctgL4Id} request");
         return productService.getBoardListByL4Id(ctgL4Id, offset, limit);
     }
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/pressLike/{boardId}")
     public Boolean pressBoardLike(@PathVariable Long boardId) {
+        log.info("/api/pdtBoard/pressLike/{boardId} request");
         productService.pressBoardLike(boardId);
         return true;
     }

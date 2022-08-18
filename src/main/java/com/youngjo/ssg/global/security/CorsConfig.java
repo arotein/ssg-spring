@@ -16,8 +16,7 @@ public class CorsConfig {
         CorsConfiguration config = new CorsConfiguration();
         config.setExposedHeaders(Arrays.asList("Authentication")); // 리액트에서 헤더받을 수 있게 설정
         config.setAllowCredentials(true);
-//        config.addAllowedOrigin("*"); -> 이게 문제
-        config.addAllowedOriginPattern("*");
+        config.addAllowedOriginPattern("*"); // AllowCredentials이 true일 때 AllowedOrigin 사용못하므로 AllowedOriginPattern으로 대체
         config.setAllowedHeaders(Arrays.asList("*"));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE"));
         source.registerCorsConfiguration("/api/**", config);

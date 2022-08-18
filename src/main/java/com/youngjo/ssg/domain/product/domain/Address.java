@@ -1,9 +1,18 @@
 package com.youngjo.ssg.domain.product.domain;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+/***
+ * city : 도시
+ * street : 도로명주소
+ * detail : 유저에게 입력받는 나머지 주소
+ * postalCode : 우편번호
+ */
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity

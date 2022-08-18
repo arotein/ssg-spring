@@ -8,8 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 
-import java.util.List;
-
 import static com.youngjo.ssg.domain.user.domain.QUser.user;
 
 @Repository
@@ -51,12 +49,5 @@ public class UserRepositoryImpl implements UserRepository {
                 .where(user.email.eq(email),
                         user.status.eq(Status.ENABLED))
                 .fetchOne();
-    }
-
-    // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ아래부터는 개발용 코드ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-    @Override
-    public List<User> findAllUser() {
-        return queryFactory.selectFrom(user)
-                .fetch();
     }
 }

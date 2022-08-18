@@ -1,5 +1,6 @@
 package com.youngjo.ssg.domain.product.repository;
 
+import com.youngjo.ssg.domain.product.domain.MainProduct;
 import com.youngjo.ssg.domain.product.domain.ProductBoard;
 import com.youngjo.ssg.domain.product.domain.ProductBoardLike;
 import com.youngjo.ssg.global.common.BaseEntity;
@@ -10,6 +11,10 @@ import java.util.Map;
 public interface ProductRepository {
     // == service code ==
     <T extends BaseEntity> void save(T entity);
+
+    Map<Long, MainProduct> findAllMainPdtByIds(List<Long> pdtIds);
+
+    Map<Long, ProductBoard> findAllBoardByPdtIds(List<Long> pdtIds);
 
     ProductBoard findBoardById(Long id);
 

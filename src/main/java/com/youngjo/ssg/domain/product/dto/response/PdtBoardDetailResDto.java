@@ -2,7 +2,6 @@ package com.youngjo.ssg.domain.product.dto.response;
 
 import com.youngjo.ssg.domain.product.domain.ProductBoard;
 import com.youngjo.ssg.global.common.AddressConverter;
-import com.youngjo.ssg.global.enumeration.SalesSite;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +15,7 @@ public class PdtBoardDetailResDto {
     private Long id;
     private String title;
     private String brand;
-    private SalesSite salesSite;
+    private String salesSite;
 
     private Boolean isEachShippingFee;
     private Boolean isPremium;
@@ -41,7 +40,7 @@ public class PdtBoardDetailResDto {
     private Integer premiumReturnShippingFee;
 
     private Integer totalReviewQty;
-    private Float totalScore;
+    private Integer totalScore;
     private Boolean isSamePrice;
     private Long minPrice;
     private Integer salesVol;
@@ -59,7 +58,7 @@ public class PdtBoardDetailResDto {
         this.id = productBoard.getId();
         this.title = productBoard.getTitle();
         this.brand = productBoard.getBrand();
-        this.salesSite = productBoard.getSalesSite();
+        this.salesSite = productBoard.getSalesSite().getValue();
         this.isEachShippingFee = productBoard.getIsEachShippingFee();
         this.isPremium = productBoard.getIsPremium();
         this.isCrossBorderShipping = productBoard.getIsCrossBorderShipping();

@@ -1,6 +1,7 @@
 package com.youngjo.ssg.domain.user.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.youngjo.ssg.domain.product.domain.Address;
 import com.youngjo.ssg.domain.product.domain.ProductBoardLike;
 import com.youngjo.ssg.global.common.BaseEntity;
 import com.youngjo.ssg.global.enumeration.Grade;
@@ -20,6 +21,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class User extends BaseEntity {
+    // == User Info ==
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -35,6 +37,12 @@ public class User extends BaseEntity {
     private String email;
     @Column(unique = true)
     private String phoneNumber;
+
+    @JsonIgnore
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "address_id")
+    private Address address;
+
     private Long point;
 
     @Enumerated(EnumType.STRING)
@@ -79,12 +87,13 @@ public class User extends BaseEntity {
     private Status status = Status.ENABLED;
 
     @Builder
-    public User(String loginId, String password, String name, String email, String phoneNumber) {
+    public User(String loginId, String password, String name, String email, String phoneNumber, Address address) {
         this.loginId = loginId;
         this.password = password;
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.address = address;
     }
 
     public void updateLastAccessTime() {
@@ -93,6 +102,11 @@ public class User extends BaseEntity {
 
     public User linkToPdtBoardLike(ProductBoardLike productBoardLike) {
         this.productBoardLikeList.add(productBoardLike);
+        return this;
+    }
+
+    public User linkToNormalCart(NormalCart normalCart) {
+        this.normalCartList.add(normalCart);
         return this;
     }
 }
