@@ -16,7 +16,7 @@ public class AddPdtBoardReqDto {
     private String brand;
     @NotBlank
     private String salesSite;
-    private List<Tag> tag;
+    private List<Tag> tagList;
     // == ShippingInfo ==
     private Boolean isEachShippingFee;
     private Boolean isPremium;

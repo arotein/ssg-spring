@@ -73,6 +73,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     // board 단건에 대한 좋아요 조회 -> 엔티티 그래프가 필요한게 아닌 where절에 사용할 데이터가 필요한거니 fetch join X
+    // 비회원일때는 좋아요 조회할 필요가 없으니 service단에서 조건문 처리
     @Override
     public ProductBoardLike findBoardLikeByBoardIdAndUserId(Long boardId, Long userId) {
         return queryFactory.selectFrom(productBoardLike)
@@ -84,6 +85,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     // board 여러건에 대한 좋아요 조회
+    // 비회원일때는 좋아요 조회할 필요가 없으니 service단에서 조건문 처리
     @Override
     public Map<Long, Boolean> findBoardLikeMapByBoardIdAndUserId(List<Long> boardIds, Long userId) {
         return queryFactory.from(productBoardLike)
@@ -104,9 +106,9 @@ public class ProductRepositoryImpl implements ProductRepository {
                 .where(categoryL2.id.eq(id),
                         goeMinPrice(minPrice),
                         loeMaxPrice(maxPrice))
+                .orderBy(sortExpression(sort))
                 .offset(offset)
                 .limit(limit)
-                .orderBy(sortExpression(sort))
                 .distinct()
                 .fetch();
     }
@@ -119,9 +121,9 @@ public class ProductRepositoryImpl implements ProductRepository {
                 .where(categoryL3.id.eq(id),
                         goeMinPrice(minPrice),
                         loeMaxPrice(maxPrice))
+                .orderBy(sortExpression(sort))
                 .offset(offset)
                 .limit(limit)
-                .orderBy(sortExpression(sort))
                 .distinct()
                 .fetch();
     }
@@ -133,9 +135,9 @@ public class ProductRepositoryImpl implements ProductRepository {
                 .where(categoryL4.id.eq(id),
                         goeMinPrice(minPrice),
                         loeMaxPrice(maxPrice))
+                .orderBy(sortExpression(sort))
                 .offset(offset)
                 .limit(limit)
-                .orderBy(sortExpression(sort))
                 .distinct()
                 .fetch();
     }
@@ -145,13 +147,14 @@ public class ProductRepositoryImpl implements ProductRepository {
     public List<ProductBoard> findAllBoardByQuery(String query, Integer offset, Integer limit, String sort, Long minPrice, Long maxPrice) {
         return queryFactory.selectFrom(productBoard)
                 .join(productBoard.tag, tag)
-                .where(tag.keyword.eq(query)
-                                .or(productBoard.title.contains(query)),
+                .where(tag.keyword.equalsIgnoreCase(query)
+                                .or(productBoard.title.containsIgnoreCase(query))
+                                .or(productBoard.pdtName.containsIgnoreCase(query)),
                         goeMinPrice(minPrice),
                         loeMaxPrice(maxPrice))
+                .orderBy(sortExpression(sort))
                 .offset(offset)
                 .limit(limit)
-                .orderBy(sortExpression(sort))
                 .distinct()
                 .fetch();
     }

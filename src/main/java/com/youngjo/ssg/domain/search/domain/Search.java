@@ -20,7 +20,6 @@ public class Search extends BaseEntity {
     @Column(name = "search_id")
     private Long id;
     private String query;
-
     // == Auto Count ==
     private Integer frequency;
 

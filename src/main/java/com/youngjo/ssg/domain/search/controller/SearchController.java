@@ -1,13 +1,14 @@
 package com.youngjo.ssg.domain.search.controller;
 
 import com.youngjo.ssg.domain.product.dto.request.BoardSortFilterReqDto;
+import com.youngjo.ssg.domain.product.dto.response.BoardListResDto;
+import com.youngjo.ssg.domain.search.dto.request.SearchQueryResDto;
 import com.youngjo.ssg.domain.search.service.SearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -17,8 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class SearchController {
     private final SearchService searchService;
 
+    // limit = 40으로 요청받기
     @GetMapping("")
-    public void search(@RequestParam String query, @Validated BoardSortFilterReqDto queryDto) {
-        searchService.findSearchResult(query, queryDto);
+    public BoardListResDto boardSearch(@Validated SearchQueryResDto queryDto,
+                                       @Validated BoardSortFilterReqDto sortDto) {
+        return searchService.findSearchResult(queryDto.getQuery(), sortDto);
     }
 }

@@ -142,10 +142,11 @@ public class ProductBoard extends BaseEntity {
 //    private Buy buy; -> n:m 이므로 중간테이블 만들기. review도 buy에 걸기? cart는 주문(buy)와 1:1 단방향
 
     @Builder
-    public ProductBoard(String title, String brand, SalesSite salesSite, Boolean isEachShippingFee, Boolean isPremium, Boolean isCrossBorderShipping, Boolean isOnlineOnly, Integer shippingFee, Integer shippingFreeOver, Boolean availableDeliveryJeju, Boolean availableDeliveryIsland, Integer shippingFeeJeju, Integer shippingFeeIsland, String courierCompany, Long deliveryDate, String pdtName, Address returnAddress, Integer exchangeShippingFee, Integer returnShippingFee, Integer premiumExchangeShippingFee, Integer premiumReturnShippingFee, CategoryL4 categoryL4, ConsignmentSellerInfo consignmentSellerInfo, List<ProductRequiredInfo> productRequiredInfoList) {
+    public ProductBoard(String title, String brand, SalesSite salesSite, List<Tag> tag, Boolean isEachShippingFee, Boolean isPremium, Boolean isCrossBorderShipping, Boolean isOnlineOnly, Integer shippingFee, Integer shippingFreeOver, Boolean availableDeliveryJeju, Boolean availableDeliveryIsland, Integer shippingFeeJeju, Integer shippingFeeIsland, String courierCompany, Long deliveryDate, String pdtName, Address returnAddress, Integer exchangeShippingFee, Integer returnShippingFee, Integer premiumExchangeShippingFee, Integer premiumReturnShippingFee, CategoryL4 categoryL4, ConsignmentSellerInfo consignmentSellerInfo, List<ProductRequiredInfo> productRequiredInfoList) {
         this.title = title;
         this.brand = brand;
         this.salesSite = salesSite;
+        this.tag = tag;
         this.isEachShippingFee = isEachShippingFee;
         this.isPremium = isPremium;
         this.isCrossBorderShipping = isCrossBorderShipping;

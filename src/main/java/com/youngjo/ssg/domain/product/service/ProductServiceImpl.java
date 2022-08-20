@@ -42,6 +42,7 @@ public class ProductServiceImpl implements ProductService {
                         .title(addPdtBoardReqDto.getTitle())
                         .brand(addPdtBoardReqDto.getBrand())
                         .salesSite(SalesSite.CONSTRUCT.findInstance(addPdtBoardReqDto.getSalesSite()))
+                        .tag(addPdtBoardReqDto.getTagList())
                         .isEachShippingFee(addPdtBoardReqDto.getIsEachShippingFee())
                         .isPremium(addPdtBoardReqDto.getIsPremium())
                         .isCrossBorderShipping(addPdtBoardReqDto.getIsCrossBorderShipping())
@@ -71,7 +72,7 @@ public class ProductServiceImpl implements ProductService {
                         .linkToReturnAddress(addPdtBoardReqDto.getReturnAddress())
                         .linkToProductRequiredInfoList(addPdtBoardReqDto.getRequiredInfoList())
                         .linkToConsignmentSellerInfo(addPdtBoardReqDto.getConsignmentSellerInfo())
-                        .linkToTagList(addPdtBoardReqDto.getTag())
+                        .linkToTagList(addPdtBoardReqDto.getTagList())
         );
     }
 
@@ -87,7 +88,7 @@ public class ProductServiceImpl implements ProductService {
     public BoardListResDto getBoardListByL2Id(Long id, BoardSortFilterReqDto queryDto) {
         Long userId = clientInfoLoader.getUserId();
         List<ProductBoard> boardList = productRepository.findBoardListByL2Id(id,
-                queryDto.getOffset(),
+                queryDto.getLimit() * (queryDto.getPage() - 1),
                 queryDto.getLimit(),
                 queryDto.getSort(),
                 queryDto.getMinPrice(),
@@ -115,7 +116,7 @@ public class ProductServiceImpl implements ProductService {
     public BoardListResDto getBoardListByL3Id(Long id, BoardSortFilterReqDto queryDto) {
         Long userId = clientInfoLoader.getUserId();
         List<ProductBoard> boardList = productRepository.findBoardListByL3Id(id,
-                queryDto.getOffset(),
+                queryDto.getLimit() * (queryDto.getPage() - 1),
                 queryDto.getLimit(),
                 queryDto.getSort(),
                 queryDto.getMinPrice(),
@@ -143,7 +144,7 @@ public class ProductServiceImpl implements ProductService {
     public BoardListResDto getBoardListByL4Id(Long id, BoardSortFilterReqDto queryDto) {
         Long userId = clientInfoLoader.getUserId();
         List<ProductBoard> boardList = productRepository.findBoardListByL4Id(id,
-                queryDto.getOffset(),
+                queryDto.getLimit() * (queryDto.getPage() - 1),
                 queryDto.getLimit(),
                 queryDto.getSort(),
                 queryDto.getMinPrice(),
