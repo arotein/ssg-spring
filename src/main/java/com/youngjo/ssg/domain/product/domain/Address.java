@@ -1,9 +1,6 @@
 package com.youngjo.ssg.domain.product.domain;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -32,6 +29,14 @@ public class Address {
         this.street = street;
         this.detail = detail;
         this.postalCode = postalCode;
+    }
+
+    public Address updateAddress(String city, String street, String detail, String postalCode) {
+        this.city = city;
+        this.street = street;
+        this.detail = detail;
+        this.postalCode = postalCode;
+        return this;
     }
 }
 

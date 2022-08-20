@@ -40,7 +40,7 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
                 .addClaim("name", clientInfoDto.getName())
                 .addClaim("email", clientInfoDto.getEmail())
                 .addClaim("role", clientInfoDto.getRole())
-                .setExpiration(ZonedDateTime.now(ZoneId.of("Asia/Seoul")).plusHours(2));
+                .setExpiration(ZonedDateTime.now(ZoneId.of("Asia/Seoul")).plusHours(24));
         // 요청헤더 Authorization : Bearer <JWT>
         return String.format("Bearer %s", JWT.getEncoder().encode(rawJwt, secretKey));
     }

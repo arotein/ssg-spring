@@ -20,33 +20,27 @@ public class ProductController {
 
     @GetMapping("/detail/{boardId}")
     public PdtBoardDetailResDto getBoardDetail(@PathVariable Long boardId) {
-        log.info("/api/pdtBoard/detail/{boardId} request");
         return productService.getBoardById(boardId);
     }
 
     @GetMapping("/list/ctgL2/{ctgL2Id}")
     public BoardListResDto getBoardListByL2Id(@PathVariable Long ctgL2Id, @Validated BoardSortFilterReqDto queryDto) {
-        log.info("/api/pdtBoard/list/ctgL2/{ctgL2Id} request");
-        System.out.println("controller queryDto = " + queryDto);
         return productService.getBoardListByL2Id(ctgL2Id, queryDto);
     }
 
     @GetMapping("/list/ctgL3/{ctgL3Id}")
     public BoardListResDto getBoardListByL3Id(@PathVariable Long ctgL3Id, @Validated BoardSortFilterReqDto queryDto) {
-        log.info("/api/pdtBoard/list/ctgL3/{ctgL3Id} request");
         return productService.getBoardListByL3Id(ctgL3Id, queryDto);
     }
 
     @GetMapping("/list/ctgL4/{ctgL4Id}")
     public BoardListResDto getBoardListByL4Id(@PathVariable Long ctgL4Id, @Validated BoardSortFilterReqDto queryDto) {
-        log.info("/api/pdtBoard/list/ctgL4/{ctgL4Id} request");
         return productService.getBoardListByL4Id(ctgL4Id, queryDto);
     }
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/pressLike/{boardId}")
     public Boolean pressBoardLike(@PathVariable Long boardId) {
-        log.info("/api/pdtBoard/pressLike/{boardId} request");
         productService.pressBoardLike(boardId);
         return true;
     }

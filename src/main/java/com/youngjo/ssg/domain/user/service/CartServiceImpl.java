@@ -48,6 +48,7 @@ public class CartServiceImpl implements CartService {
         );
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<PdtInCartResDto> getCartPdtListByPdtIds(List<Long> pdtIds) {
         // <pdt.id, board>
@@ -60,6 +61,7 @@ public class CartServiceImpl implements CartService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<PdtInCartResDto> getUserPdtListInCart() {
         List<NormalCart> myCartList = normalCartRepository.findAllNormalCartByUserId(clientInfoLoader.getUserId());
@@ -86,7 +88,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void modifyPdtInUserCart(PdtInCartReqDto pdtDto) {
+    public void updatePdtInUserCart(PdtInCartReqDto pdtDto) {
         NormalCart cart = normalCartRepository.findPdtInUserCartByPdtId(pdtDto.getPdtId(), clientInfoLoader.getUserId());
         if (cart != null) {
             cart.setPdtQty(pdtDto.getPdtQty());

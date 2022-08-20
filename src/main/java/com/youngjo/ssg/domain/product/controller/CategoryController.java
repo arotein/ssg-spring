@@ -21,7 +21,6 @@ public class CategoryController {
     // 카테고리 목록페이지
     @GetMapping("/main")
     public List<CtgMainResDto> getCtgMain() {
-        log.info("/api/ctg/main request");
         return categoryService.getCtgL1All().stream()
                 .map(ctg -> new CtgMainResDto(ctg))
                 .collect(Collectors.toList());
@@ -30,7 +29,6 @@ public class CategoryController {
     // L2 전체보기 -> L2 목록(id, name, imgUrl)
     @GetMapping("/all/ctgL2/{ctgL2Id}")
     public List<CtgL2AllImg> getAllCtgL2ByIdWithImg(@PathVariable Long ctgL2Id) {
-        log.info("/api/ctg/all/ctgL2/{ctgL2Id} request");
         return categoryService.getCtgL2AllById(ctgL2Id).stream()
                 .map(ctg -> new CtgL2AllImg(ctg))
                 .collect(Collectors.toList());
@@ -38,7 +36,6 @@ public class CategoryController {
 
     @GetMapping("/detail/nav/ctgL2")
     public List<CtgL1ToL2ResDto> getCtgL2DetailNav() {
-        log.info("/api/ctg/detail/nav/ctgL2 request");
         return getCtgMain().stream()
                 .map(ctg -> new CtgL1ToL2ResDto(ctg.getCtgL1(), ctg.getCtgL2List()))
                 .collect(Collectors.toList());
@@ -46,7 +43,6 @@ public class CategoryController {
 
     @GetMapping("/detail/nav/ctgL3/{ctgL3Id}")
     public List<CtgL2ToL3ResDto> getCtgL3DetailNav(@PathVariable Long ctgL3Id) {
-        log.info("/api/ctg/detail/nav/ctgL3/{ctgL3Id} request");
         return categoryService.getCtgL2AllByL3Id(ctgL3Id).stream()
                 .map(ctg -> new CtgL2ToL3ResDto(ctg))
                 .collect(Collectors.toList());
@@ -54,7 +50,6 @@ public class CategoryController {
 
     @GetMapping("/detail/nav/ctgL4/{ctgL4Id}")
     public List<CtgL3ToL4ResDto> getCtgL4DetailNav(@PathVariable Long ctgL4Id) {
-        log.info("/api/ctg/detail/nav/ctgL4/{ctgL4Id} request");
         return categoryService.getCtgL3AllByL4Id(ctgL4Id).stream()
                 .map(ctg -> new CtgL3ToL4ResDto(ctg))
                 .collect(Collectors.toList());
@@ -62,7 +57,6 @@ public class CategoryController {
 
     @GetMapping("/detail/menu/ctgL2/{ctgL2Id}")
     public List<CtgL2ToL3ResDto> getCtgL2DetailMenu(@PathVariable Long ctgL2Id) {
-        log.info("/api/ctg/detail/menu/ctgL2/{ctgL2Id} request");
         return categoryService.getCtgL2AllById(ctgL2Id).stream()
                 .map(ctg -> new CtgL2ToL3ResDto(ctg))
                 .collect(Collectors.toList());
@@ -70,7 +64,6 @@ public class CategoryController {
 
     @GetMapping("/detail/menu/ctgL3/{ctgL3Id}")
     public List<CtgL3ToL4ResDto> getCtgL3DetailMenu(@PathVariable Long ctgL3Id) {
-        log.info("/api/ctg/detail/menu/ctgL3/{ctgL3Id} request");
         return categoryService.getCtgL3AllById(ctgL3Id).stream()
                 .map(ctg -> new CtgL3ToL4ResDto(ctg))
                 .collect(Collectors.toList());
@@ -78,7 +71,6 @@ public class CategoryController {
 
     @GetMapping("/detail/menu/ctgL4/{ctgL4Id}")
     public List<CtgL4ResDto> getCtgL4DetailMenu(@PathVariable Long ctgL4Id) {
-        log.info("/api/ctg/detail/menu/ctgL4/{ctgL4Id} request");
         return categoryService.getCtgL4AllById(ctgL4Id).stream()
                 .map(ctg -> new CtgL4ResDto(ctg))
                 .collect(Collectors.toList());

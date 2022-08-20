@@ -21,7 +21,6 @@ public class CartController {
     @PreAuthorize("isAnonymous()")
     @PostMapping("")
     public List<PdtInCartResDto> anonymousCartList(@RequestBody List<Long> pdtIdList) {
-        log.info("POST /api/cart request");
         return cartService.getCartPdtListByPdtIds(pdtIdList);
     }
 
@@ -30,7 +29,6 @@ public class CartController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/addPdt")
     public Boolean addProductToCart(@RequestBody List<PdtInCartReqDto> pdtDtoList) {
-        log.info("/api/cart/addPdt request");
         cartService.addProductToCart(pdtDtoList);
         return true;
     }
@@ -39,7 +37,6 @@ public class CartController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("")
     public List<PdtInCartResDto> userCartList() {
-        log.info("GET /api/cart request");
         return cartService.getUserPdtListInCart();
     }
 
@@ -47,7 +44,6 @@ public class CartController {
     @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/soldOutPdt")
     public Boolean delSoldOutPdtInUserCart() {
-        log.info("DELETE /api/cart/soldOutPdt request");
         cartService.delSoldOutPdtInUserCart();
         return true;
     }
@@ -56,7 +52,6 @@ public class CartController {
     @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/pdt")
     public Boolean delPdtInUserCart(@RequestBody List<Long> pdtIdList) {
-        log.info("DELETE /api/cart/pdt request");
         cartService.delPdtInUserCart(pdtIdList);
         return true;
     }
@@ -64,9 +59,8 @@ public class CartController {
     // 선택 상품 수정
     @PreAuthorize("isAuthenticated()")
     @PutMapping("/pdt")
-    public Boolean modifyPdtInUserCart(@RequestBody PdtInCartReqDto pdtDto) {
-        log.info("PUT /api/cart/pdt request");
-        cartService.modifyPdtInUserCart(pdtDto);
+    public Boolean updatePdtInUserCart(@RequestBody PdtInCartReqDto pdtDto) {
+        cartService.updatePdtInUserCart(pdtDto);
         return true;
     }
 }

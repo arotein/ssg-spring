@@ -1,6 +1,7 @@
 package com.youngjo.ssg.domain.product.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.youngjo.ssg.global.common.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class ProductRequiredInfo {
+public class ProductRequiredInfo extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_required_info_id")

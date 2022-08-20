@@ -1,6 +1,6 @@
 package com.youngjo.ssg.domain.buy.domain;
 
-import com.youngjo.ssg.domain.user.domain.Delivery;
+import com.youngjo.ssg.domain.user.domain.DeliveryInfo;
 import com.youngjo.ssg.domain.user.domain.User;
 import com.youngjo.ssg.global.common.BaseEntity;
 import lombok.AccessLevel;
@@ -38,7 +38,7 @@ public class Buy extends BaseEntity {
 //    private List<ProductBoard> productBoardList;
 
     @Builder
-    public Buy(Integer totalPrice, String paymentType, User user, Delivery delivery) {
+    public Buy(Integer totalPrice, String paymentType, User user, DeliveryInfo deliveryInfo) {
         this.totalPrice = totalPrice;
         this.paymentType = paymentType;
 //        this.user = user;

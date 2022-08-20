@@ -9,15 +9,18 @@
 2. Gradle -> Tasks -> other -> compileQuerydsl 실행
 3. 애플리케이션 실행
 
-## 🍜 구현된 기능
-1. 회원가입, JWT를 이용한 로그인 및 인증
-2. Category 메뉴바
-3. 상품 상세보기, 상품 목록보기
-4. 상품 좋아요, 상품 정렬
-5. 장바구니
-6. 상품 검색
+## 🍜 구현된 기능(패키지)
+1. 회원가입(domain.user)
+2. JWT를 이용한 로그인 및 인증(global.security)
+3. Category 메뉴바(domain.product)
+4. 상품 상세보기, 상품 목록보기(domain.product)
+5. 상품 좋아요, 상품 정렬(domain.product)
+6. 장바구니(domain.user)
+7. 상품 검색(domain.search)
+8. 배송지 관리(domain.user)
 
 ## 🍜 사용된 환경변수
 1. ${SSG_DB_USERNAME}
 2. ${SSG_DB_PASSWORD}
 3. ${SSG_JWT_SIGNER}
+4. ~~${SSL_PASSWORD}~~

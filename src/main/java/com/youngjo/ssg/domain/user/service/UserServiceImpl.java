@@ -1,8 +1,10 @@
 package com.youngjo.ssg.domain.user.service;
 
+import com.youngjo.ssg.domain.user.domain.DeliveryAddress;
 import com.youngjo.ssg.domain.user.domain.User;
 import com.youngjo.ssg.domain.user.dto.request.SignUpReqDto;
 import com.youngjo.ssg.domain.user.repository.UserRepository;
+import com.youngjo.ssg.global.security.bean.ClientInfoLoader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
+    private final ClientInfoLoader clientInfoLoader;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -37,7 +40,7 @@ public class UserServiceImpl implements UserService {
         // 주소 검증 생략
 
         // 임시 계정 생성
-        userRepository.saveUser(User.builder()
+        User user = User.builder()
                 .loginId(dto.getLoginId())
                 .password(dto.getPassword())
                 .name(dto.getName())
@@ -45,7 +48,18 @@ public class UserServiceImpl implements UserService {
                 .phoneNumber(dto.getPhoneNum())
                 .address(dto.getAddress())
                 .build()
-                .linkToAddress(dto.getAddress()));
+                .linkToAddress(dto.getAddress());
+
+        DeliveryAddress deliveryAddr = DeliveryAddress.builder()
+                .alias(user.getName())
+                .recipientName(user.getName())
+                .phoneNumber(user.getPhoneNumber())
+                .isMain(true)
+                .build()
+                .linkToRecipientAddress(user.getAddress())
+                .linkToUser(user);
+
+        userRepository.saveUser(user);
     }
 
     @Transactional(readOnly = true)

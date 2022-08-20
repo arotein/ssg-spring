@@ -34,39 +34,39 @@ public class PaymentCard extends BaseEntity {
     public PaymentCard(String alias, String cardOwner, String cardNumber, String expDate, String cvc, String password, String company, User user) {
         this.alias = alias;
         this.cardOwner = cardOwner;
-        this.cardNumber = cardNumberFormatMatching(cardNumber);
-        this.expDate = expirationDateFormatMatching(expDate);
-        this.cvc = cvcFormatMatching(cvc);
-        this.password = passwordFormatMatching(password);
+        this.cardNumber = cardNumber;
+        this.expDate = expDate;
+        this.cvc = cvc;
+        this.password = password;
         this.company = company;
         this.user = user;
     }
 
-    private String cardNumberFormatMatching(String cardNumber) {
-        if (!"^([\\d]{4}-){3}[\\d]{4}$".matches(cardNumber)) {
+    public PaymentCard cardNumberFormatMatching() {
+        if (cardNumber == null || !cardNumber.matches("^([\\d]{4}-){3}[\\d]{4}$")) {
             throw new IllegalArgumentException("Invalid card number");
         }
-        return cardNumber;
+        return this;
     }
 
-    private String expirationDateFormatMatching(String expirationDate) {
-        if (!"^(0[1-9]|1[0-2])([2-9][\\d])$".matches(expirationDate)) {
+    public PaymentCard expirationDateFormatMatching() {
+        if (expDate == null || !expDate.matches("^(0[1-9]|1[0-2])([2-9][\\d])$")) {
             throw new IllegalArgumentException("Invalid expiration date");
         }
-        return expirationDate;
+        return this;
     }
 
-    private String cvcFormatMatching(String cvc) {
-        if (!"^[\\d]{3}$".matches(cvc)) {
+    public PaymentCard cvcFormatMatching() {
+        if (cvc == null || !cvc.matches("^[\\d]{3}$")) {
             throw new IllegalArgumentException("Invalid cvc");
         }
-        return cvc;
+        return this;
     }
 
-    private String passwordFormatMatching(String password) {
-        if (!"^[\\d]{2}$".matches(password)) {
+    public PaymentCard passwordFormatMatching() {
+        if (password == null || !password.matches("^[\\d]{2}$")) {
             throw new IllegalArgumentException("Invalid password");
         }
-        return password;
+        return this;
     }
 }

@@ -58,16 +58,20 @@ public class User extends BaseEntity {
     private List<NormalCart> normalCartList = new ArrayList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    private List<Coupon> couponList = new ArrayList<>();
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DeliveryAddress> deliveryAddressList = new ArrayList<>();
+
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+//    private List<Coupon> couponList = new ArrayList<>();
 
 //    @JsonIgnore
 //    @OneToMany(mappedBy = "writer", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 //    private List<Review> reviewList = new ArrayList<>();
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PaymentCard> paymentCardList = new ArrayList<>();
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<PaymentCard> paymentCardList = new ArrayList<>();
 
     // cascade 유의
 //    @JsonIgnore
@@ -112,6 +116,11 @@ public class User extends BaseEntity {
 
     public User linkToAddress(Address address) {
         this.address = address;
+        return this;
+    }
+
+    public User linkToDeliveryAddress(DeliveryAddress deliveryAddress) {
+        this.deliveryAddressList.add(deliveryAddress);
         return this;
     }
 }
