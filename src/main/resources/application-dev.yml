@@ -6,9 +6,9 @@ server:
       charset: UTF-8
       enable: true
       force: true
-  ssl:
 # 키 생성 커맨드
 # keytool -genkey -storetype PKCS12 -keyalg EC -sigalg SHA256withECDSA -groupname secp256r1 -validity 365 -keystore arotein-keystore.p12 -alias arotein-keystore
+#  ssl:
 #    key-store: arotein-keystore.p12
 #    key-store-type: PKCS12
 #    key-store-password: ${SSL_PASSWORD}
@@ -19,7 +19,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/ssgdev?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3307/ssgdev?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
     username: ${SSG_DB_USERNAME}
     password: ${SSG_DB_PASSWORD}
   jpa:

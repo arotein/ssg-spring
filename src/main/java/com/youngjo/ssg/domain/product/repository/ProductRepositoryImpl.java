@@ -1,5 +1,7 @@
 package com.youngjo.ssg.domain.product.repository;
 
+import com.querydsl.core.types.OrderSpecifier;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.youngjo.ssg.domain.product.domain.MainProduct;
 import com.youngjo.ssg.domain.product.domain.ProductBoard;
@@ -20,6 +22,7 @@ import static com.youngjo.ssg.domain.product.domain.QConsignmentSellerInfo.consi
 import static com.youngjo.ssg.domain.product.domain.QMainProduct.mainProduct;
 import static com.youngjo.ssg.domain.product.domain.QProductBoard.productBoard;
 import static com.youngjo.ssg.domain.product.domain.QProductBoardLike.productBoardLike;
+import static com.youngjo.ssg.domain.product.domain.QTag.tag;
 import static com.youngjo.ssg.domain.user.domain.QUser.user;
 
 @Repository
@@ -55,6 +58,7 @@ public class ProductRepositoryImpl implements ProductRepository {
                 .transform(groupBy(mainProduct.id).as(productBoard));
     }
 
+    // board 상세보기, 좋아요
     @Override
     public ProductBoard findBoardById(Long boardId) {
         ProductBoard board = queryFactory.selectFrom(productBoard)
@@ -91,43 +95,89 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     // offset(index)은 0부터 시작
-    // orderBy기준은 뭘로 하는게 좋을까? love, salesVol, totalScore?
     @Override
-    public List<ProductBoard> findBoardListByL2Id(Long id, Integer offset, Integer limit) {
+    public List<ProductBoard> findBoardListByL2Id(Long id, Integer offset, Integer limit, String sort, Long minPrice, Long maxPrice) {
         return queryFactory.selectFrom(productBoard)
-                .join(productBoard.thumbImgList).fetchJoin()
                 .join(productBoard.categoryL4, categoryL4).fetchJoin()
                 .join(categoryL4.categoryL3, categoryL3).fetchJoin()
                 .join(categoryL3.categoryL2, categoryL2).fetchJoin()
-                .where(categoryL2.id.eq(id))
+                .where(categoryL2.id.eq(id),
+                        goeMinPrice(minPrice),
+                        loeMaxPrice(maxPrice))
                 .offset(offset)
                 .limit(limit)
+                .orderBy(sortExpression(sort))
                 .distinct()
                 .fetch();
     }
 
     @Override
-    public List<ProductBoard> findBoardListByL3Id(Long id, Integer offset, Integer limit) {
+    public List<ProductBoard> findBoardListByL3Id(Long id, Integer offset, Integer limit, String sort, Long minPrice, Long maxPrice) {
         return queryFactory.selectFrom(productBoard)
-                .join(productBoard.thumbImgList).fetchJoin()
                 .join(productBoard.categoryL4, categoryL4).fetchJoin()
                 .join(categoryL4.categoryL3, categoryL3).fetchJoin()
-                .where(categoryL3.id.eq(id))
+                .where(categoryL3.id.eq(id),
+                        goeMinPrice(minPrice),
+                        loeMaxPrice(maxPrice))
                 .offset(offset)
                 .limit(limit)
+                .orderBy(sortExpression(sort))
                 .distinct()
                 .fetch();
     }
 
     @Override
-    public List<ProductBoard> findBoardListByL4Id(Long id, Integer offset, Integer limit) {
+    public List<ProductBoard> findBoardListByL4Id(Long id, Integer offset, Integer limit, String sort, Long minPrice, Long maxPrice) {
         return queryFactory.selectFrom(productBoard)
-                .join(productBoard.thumbImgList).fetchJoin()
                 .join(productBoard.categoryL4, categoryL4).fetchJoin()
-                .where(categoryL4.id.eq(id))
+                .where(categoryL4.id.eq(id),
+                        goeMinPrice(minPrice),
+                        loeMaxPrice(maxPrice))
                 .offset(offset)
                 .limit(limit)
+                .orderBy(sortExpression(sort))
                 .distinct()
                 .fetch();
+    }
+
+    // 통합검색
+    @Override
+    public List<ProductBoard> findAllBoardByQuery(String query, Integer offset, Integer limit, String sort, Long minPrice, Long maxPrice) {
+        return queryFactory.selectFrom(productBoard)
+                .join(productBoard.tag, tag)
+                .where(tag.keyword.eq(query)
+                                .or(productBoard.title.contains(query)),
+                        goeMinPrice(minPrice),
+                        loeMaxPrice(maxPrice))
+                .offset(offset)
+                .limit(limit)
+                .orderBy(sortExpression(sort))
+                .distinct()
+                .fetch();
+    }
+
+    private BooleanExpression goeMinPrice(Long minPrice) {
+        return minPrice == null ? null : productBoard.minPrice.goe(minPrice);
+    }
+
+    private BooleanExpression loeMaxPrice(Long maxPrice) {
+        return maxPrice == null ? null : productBoard.minPrice.loe(maxPrice);
+    }
+
+    private OrderSpecifier<?> sortExpression(String sort) {
+        switch (sort) {
+            case "판매순":
+                return productBoard.salesVol.desc();
+            case "낮은가격":
+                return productBoard.minPrice.asc();
+            case "높은가격":
+                return productBoard.minPrice.desc();
+            case "신상품순":
+                return productBoard.createdAt.desc();
+            case "리뷰많은순":
+                return productBoard.totalReviewQty.desc();
+            default:
+                return productBoard.totalScore.desc();
+        }
     }
 }

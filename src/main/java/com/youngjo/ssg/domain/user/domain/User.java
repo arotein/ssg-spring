@@ -109,4 +109,9 @@ public class User extends BaseEntity {
         this.normalCartList.add(normalCart);
         return this;
     }
+
+    public User linkToAddress(Address address) {
+        this.address = address;
+        return this;
+    }
 }

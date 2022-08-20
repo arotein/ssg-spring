@@ -23,10 +23,6 @@ public class UserServiceImpl implements UserService {
         if (!dto.getLoginId().matches(loginIdRegex)) {
             throw new IllegalArgumentException("loginId는 4~16자의 숫자, 영문자만 가능합니다.");
         }
-        // passwordConfirm 검증
-        if (!dto.getPassword().equals(dto.getPasswordConfirm())) {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
-        }
         // password 검증
         String passwordRegex = "^[\\w/\\{\\}\\[\\]\\/?.,;:|\\)*~`!^\\-+<>@\\#$%&\\\\\\=\\(\\'\\\"]{8,40}$";
         if (!rawPassword.matches(passwordRegex)) {
@@ -48,7 +44,8 @@ public class UserServiceImpl implements UserService {
                 .email(dto.getEmail())
                 .phoneNumber(dto.getPhoneNum())
                 .address(dto.getAddress())
-                .build());
+                .build()
+                .linkToAddress(dto.getAddress()));
     }
 
     @Transactional(readOnly = true)

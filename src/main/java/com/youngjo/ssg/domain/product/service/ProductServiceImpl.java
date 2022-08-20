@@ -3,7 +3,8 @@ package com.youngjo.ssg.domain.product.service;
 import com.youngjo.ssg.domain.product.domain.CategoryL4;
 import com.youngjo.ssg.domain.product.domain.ProductBoard;
 import com.youngjo.ssg.domain.product.domain.ProductBoardLike;
-import com.youngjo.ssg.domain.product.dto.request.PdtBoardAddReqDto;
+import com.youngjo.ssg.domain.product.dto.request.BoardSortFilterReqDto;
+import com.youngjo.ssg.domain.product.dto.request.AddPdtBoardReqDto;
 import com.youngjo.ssg.domain.product.dto.response.BoardListResDto;
 import com.youngjo.ssg.domain.product.dto.response.BoardResDto;
 import com.youngjo.ssg.domain.product.dto.response.PdtBoardDetailResDto;
@@ -16,9 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,46 +31,47 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public void addPdtBoard(PdtBoardAddReqDto pdtBoardAddReqDto) {
-        CategoryL4 ctgL4 = categoryL4Repository.findById(pdtBoardAddReqDto.getCtgL4Id()).plusPdtQty();
+    public void addPdtBoard(AddPdtBoardReqDto addPdtBoardReqDto) {
+        CategoryL4 ctgL4 = categoryL4Repository.findById(addPdtBoardReqDto.getCtgL4Id()).plusPdtQty();
         ctgL4.getCategoryL3().plusPdtQty()
                 .getCategoryL2().plusPdtQty()
                 .getCategoryL1().plusPdtQty();
 
         productRepository.save(
                 ProductBoard.builder()
-                        .title(pdtBoardAddReqDto.getTitle())
-                        .brand(pdtBoardAddReqDto.getBrand())
-                        .salesSite(SalesSite.CONSTRUCT.findInstance(pdtBoardAddReqDto.getSalesSite()))
-                        .isEachShippingFee(pdtBoardAddReqDto.getIsEachShippingFee())
-                        .isPremium(pdtBoardAddReqDto.getIsPremium())
-                        .isCrossBorderShipping(pdtBoardAddReqDto.getIsCrossBorderShipping())
-                        .isOnlineOnly(pdtBoardAddReqDto.getIsOnlineOnly())
-                        .shippingFee(pdtBoardAddReqDto.getShippingFee())
-                        .shippingFreeOver(pdtBoardAddReqDto.getShippingFreeOver())
-                        .availableDeliveryJeju(pdtBoardAddReqDto.getAvailableDeliveryJeju())
-                        .availableDeliveryIsland(pdtBoardAddReqDto.getAvailableDeliveryIsland())
-                        .shippingFeeJeju(pdtBoardAddReqDto.getShippingFeeJeju())
-                        .shippingFeeIsland(pdtBoardAddReqDto.getShippingFeeIsland())
-                        .courierCompany(pdtBoardAddReqDto.getCourierCompany())
-                        .pdtName(pdtBoardAddReqDto.getPdtName())
-                        .returnAddress(pdtBoardAddReqDto.getReturnAddress())
-                        .exchangeShippingFee(pdtBoardAddReqDto.getExchangeShippingFee())
-                        .returnShippingFee(pdtBoardAddReqDto.getReturnShippingFee())
-                        .premiumExchangeShippingFee(pdtBoardAddReqDto.getPremiumExchangeShippingFee())
-                        .premiumReturnShippingFee(pdtBoardAddReqDto.getPremiumReturnShippingFee())
-                        .consignmentSellerInfo(pdtBoardAddReqDto.getConsignmentSellerInfo())
-                        .productRequiredInfoList(pdtBoardAddReqDto.getRequiredInfoList())
+                        .title(addPdtBoardReqDto.getTitle())
+                        .brand(addPdtBoardReqDto.getBrand())
+                        .salesSite(SalesSite.CONSTRUCT.findInstance(addPdtBoardReqDto.getSalesSite()))
+                        .isEachShippingFee(addPdtBoardReqDto.getIsEachShippingFee())
+                        .isPremium(addPdtBoardReqDto.getIsPremium())
+                        .isCrossBorderShipping(addPdtBoardReqDto.getIsCrossBorderShipping())
+                        .isOnlineOnly(addPdtBoardReqDto.getIsOnlineOnly())
+                        .shippingFee(addPdtBoardReqDto.getShippingFee())
+                        .shippingFreeOver(addPdtBoardReqDto.getShippingFreeOver())
+                        .availableDeliveryJeju(addPdtBoardReqDto.getAvailableDeliveryJeju())
+                        .availableDeliveryIsland(addPdtBoardReqDto.getAvailableDeliveryIsland())
+                        .shippingFeeJeju(addPdtBoardReqDto.getShippingFeeJeju())
+                        .shippingFeeIsland(addPdtBoardReqDto.getShippingFeeIsland())
+                        .courierCompany(addPdtBoardReqDto.getCourierCompany())
+                        .pdtName(addPdtBoardReqDto.getPdtName())
+                        .returnAddress(addPdtBoardReqDto.getReturnAddress())
+                        .exchangeShippingFee(addPdtBoardReqDto.getExchangeShippingFee())
+                        .returnShippingFee(addPdtBoardReqDto.getReturnShippingFee())
+                        .premiumExchangeShippingFee(addPdtBoardReqDto.getPremiumExchangeShippingFee())
+                        .premiumReturnShippingFee(addPdtBoardReqDto.getPremiumReturnShippingFee())
+                        .consignmentSellerInfo(addPdtBoardReqDto.getConsignmentSellerInfo())
+                        .productRequiredInfoList(addPdtBoardReqDto.getRequiredInfoList())
 
                         .build()
 
-                        .linkToProductThumbImgList(pdtBoardAddReqDto.getThumbImgList())
-                        .linkToProductDetailImgList(pdtBoardAddReqDto.getDetailImgList())
-                        .linkToProductList(pdtBoardAddReqDto.getMainProductList())
+                        .linkToProductThumbImgList(addPdtBoardReqDto.getThumbImgList())
+                        .linkToProductDetailImgList(addPdtBoardReqDto.getDetailImgList())
+                        .linkToProductList(addPdtBoardReqDto.getMainProductList())
                         .linkToCategoryL4(ctgL4)
-                        .linkToReturnAddress(pdtBoardAddReqDto.getReturnAddress())
-                        .linkToProductRequiredInfo(pdtBoardAddReqDto.getRequiredInfoList())
-                        .linkToConsignmentSellerInfo(pdtBoardAddReqDto.getConsignmentSellerInfo())
+                        .linkToReturnAddress(addPdtBoardReqDto.getReturnAddress())
+                        .linkToProductRequiredInfoList(addPdtBoardReqDto.getRequiredInfoList())
+                        .linkToConsignmentSellerInfo(addPdtBoardReqDto.getConsignmentSellerInfo())
+                        .linkToTagList(addPdtBoardReqDto.getTag())
         );
     }
 
@@ -84,9 +84,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Transactional(readOnly = true)
     @Override
-    public BoardListResDto getBoardListByL2Id(Long id, Integer offset, Integer limit) {
+    public BoardListResDto getBoardListByL2Id(Long id, BoardSortFilterReqDto queryDto) {
         Long userId = clientInfoLoader.getUserId();
-        List<ProductBoard> boardList = productRepository.findBoardListByL2Id(id, offset, limit);
+        List<ProductBoard> boardList = productRepository.findBoardListByL2Id(id,
+                queryDto.getOffset(),
+                queryDto.getLimit(),
+                queryDto.getSort(),
+                queryDto.getMinPrice(),
+                queryDto.getMaxPrice());
         Map<Long, Boolean> likeMap;
         if (userId != null) {
             likeMap = productRepository.findBoardLikeMapByBoardIdAndUserId(
@@ -96,18 +101,25 @@ public class ProductServiceImpl implements ProductService {
             likeMap = new HashMap<>();
         }
 
-        return new BoardListResDto(
+        return boardList.size() > 0
+                ? new BoardListResDto(
                 boardList.get(0).getCategoryL4().getCategoryL3().getCategoryL2().getPdtQty(),
                 boardList.stream()
                         .map(board -> new BoardResDto(board, likeMap.getOrDefault(board.getId(), false)))
-                        .collect(Collectors.toList()));
+                        .collect(Collectors.toList()))
+                : new BoardListResDto(0, Arrays.asList());
     }
 
     @Transactional(readOnly = true)
     @Override
-    public BoardListResDto getBoardListByL3Id(Long id, Integer offset, Integer limit) {
+    public BoardListResDto getBoardListByL3Id(Long id, BoardSortFilterReqDto queryDto) {
         Long userId = clientInfoLoader.getUserId();
-        List<ProductBoard> boardList = productRepository.findBoardListByL3Id(id, offset, limit);
+        List<ProductBoard> boardList = productRepository.findBoardListByL3Id(id,
+                queryDto.getOffset(),
+                queryDto.getLimit(),
+                queryDto.getSort(),
+                queryDto.getMinPrice(),
+                queryDto.getMaxPrice());
         Map<Long, Boolean> likeMap;
         if (userId != null) {
             likeMap = productRepository.findBoardLikeMapByBoardIdAndUserId(
@@ -117,18 +129,25 @@ public class ProductServiceImpl implements ProductService {
             likeMap = new HashMap<>();
         }
 
-        return new BoardListResDto(
+        return boardList.size() > 0
+                ? new BoardListResDto(
                 boardList.get(0).getCategoryL4().getCategoryL3().getPdtQty(),
                 boardList.stream()
                         .map(board -> new BoardResDto(board, likeMap.getOrDefault(board.getId(), false)))
-                        .collect(Collectors.toList()));
+                        .collect(Collectors.toList()))
+                : new BoardListResDto(0, Arrays.asList());
     }
 
     @Transactional(readOnly = true)
     @Override
-    public BoardListResDto getBoardListByL4Id(Long id, Integer offset, Integer limit) {
+    public BoardListResDto getBoardListByL4Id(Long id, BoardSortFilterReqDto queryDto) {
         Long userId = clientInfoLoader.getUserId();
-        List<ProductBoard> boardList = productRepository.findBoardListByL4Id(id, offset, limit);
+        List<ProductBoard> boardList = productRepository.findBoardListByL4Id(id,
+                queryDto.getOffset(),
+                queryDto.getLimit(),
+                queryDto.getSort(),
+                queryDto.getMinPrice(),
+                queryDto.getMaxPrice());
         Map<Long, Boolean> likeMap;
         if (userId != null) {
             likeMap = productRepository.findBoardLikeMapByBoardIdAndUserId(
@@ -138,11 +157,13 @@ public class ProductServiceImpl implements ProductService {
             likeMap = new HashMap<>();
         }
 
-        return new BoardListResDto(
+        return boardList.size() > 0
+                ? new BoardListResDto(
                 boardList.get(0).getCategoryL4().getPdtQty(),
                 boardList.stream()
                         .map(board -> new BoardResDto(board, likeMap.getOrDefault(board.getId(), false)))
-                        .collect(Collectors.toList()));
+                        .collect(Collectors.toList()))
+                : new BoardListResDto(0, Arrays.asList());
     }
 
     @Override

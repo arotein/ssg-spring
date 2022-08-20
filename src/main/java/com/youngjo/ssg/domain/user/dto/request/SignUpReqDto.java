@@ -14,8 +14,6 @@ public class SignUpReqDto {
     private String loginId;
     @NotBlank
     private String password;
-    @NotBlank
-    private String passwordConfirm;
     @Email
     private String email;
     @NotBlank

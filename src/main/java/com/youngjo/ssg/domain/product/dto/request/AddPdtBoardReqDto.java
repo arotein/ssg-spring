@@ -9,13 +9,14 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor
-public class PdtBoardAddReqDto {
+public class AddPdtBoardReqDto {
     @NotBlank
     private String title;
     @NotBlank
     private String brand;
     @NotBlank
     private String salesSite;
+    private List<Tag> tag;
     // == ShippingInfo ==
     private Boolean isEachShippingFee;
     private Boolean isPremium;

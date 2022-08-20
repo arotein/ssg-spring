@@ -68,6 +68,9 @@ public class ProductBoard extends BaseEntity {
     private SalesSite salesSite; // 판매 싸이트
     private String mainImgPath; // 메인 썸네일 이미지
     private String mainImgTitle; // 메인 썸네일 이미지 파일명
+    @JsonIgnore
+    @OneToMany(mappedBy = "productBoard", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Tag> tag = new ArrayList<>();
     // == ShippingInfo ==
     // true(1), false(0)
     private Boolean isEachShippingFee;
@@ -218,7 +221,7 @@ public class ProductBoard extends BaseEntity {
         return this;
     }
 
-    public ProductBoard linkToProductRequiredInfo(List<ProductRequiredInfo> productRequiredInfoList) {
+    public ProductBoard linkToProductRequiredInfoList(List<ProductRequiredInfo> productRequiredInfoList) {
         this.productRequiredInfoList = productRequiredInfoList;
         productRequiredInfoList.forEach(info -> info.linkToProductBoard(this));
         return this;
@@ -226,6 +229,12 @@ public class ProductBoard extends BaseEntity {
 
     public ProductBoard linkToConsignmentSellerInfo(ConsignmentSellerInfo consignmentSellerInfo) {
         this.consignmentSellerInfo = consignmentSellerInfo;
+        return this;
+    }
+
+    public ProductBoard linkToTagList(List<Tag> tag) {
+        this.tag = tag;
+        tag.forEach(t -> t.linkToPdtBoard(this));
         return this;
     }
 }
