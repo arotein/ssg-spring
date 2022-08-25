@@ -18,10 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class SearchController {
     private final SearchService searchService;
 
-    // limit = 40으로 요청받기
     @GetMapping("")
     public BoardListResDto boardSearch(@Validated SearchQueryResDto queryDto,
                                        @Validated BoardSortFilterReqDto sortDto) {
-        return searchService.findSearchResult(queryDto.getQuery(), sortDto);
+        return searchService.findSearchResult(queryDto.getQuery(), sortDto.setDefault());
     }
 }

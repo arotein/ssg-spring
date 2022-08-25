@@ -3,7 +3,6 @@ package com.youngjo.ssg.domain.user.dto.response;
 import com.youngjo.ssg.domain.product.domain.MainProduct;
 import com.youngjo.ssg.domain.product.domain.ProductBoard;
 import com.youngjo.ssg.domain.user.domain.NormalCart;
-import com.youngjo.ssg.global.enumeration.SalesSite;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -14,13 +13,9 @@ public class PdtInCartResDto {
     private Long boardId;
     private String title;
     private String brand;
-    private SalesSite salesSite;
+    private String salesSite;
 
     private Boolean isEachShippingFee;
-    private Boolean isPremium;
-    private Boolean isCrossBorderShipping;
-    private Boolean isOnlineOnly;
-
     private Integer shippingFee;
     private Integer shippingFreeOver;
     private Boolean availableDeliveryJeju;
@@ -28,7 +23,7 @@ public class PdtInCartResDto {
     private Integer shippingFeeJeju;
     private Integer shippingFeeIsland;
 
-    private String thumbImgList;
+    private String thumbImg;
 
     // == Product Info ==
     private Long pdtId;
@@ -44,18 +39,15 @@ public class PdtInCartResDto {
         this.boardId = board.getId();
         this.title = board.getTitle();
         this.brand = board.getBrand();
-        this.salesSite = board.getSalesSite();
+        this.salesSite = board.getSalesSite().getValue();
         this.isEachShippingFee = board.getIsEachShippingFee();
-        this.isPremium = board.getIsPremium();
-        this.isCrossBorderShipping = board.getIsCrossBorderShipping();
-        this.isOnlineOnly = board.getIsOnlineOnly();
         this.shippingFee = board.getShippingFee();
         this.shippingFreeOver = board.getShippingFreeOver();
         this.availableDeliveryJeju = board.getAvailableDeliveryJeju();
         this.availableDeliveryIsland = board.getAvailableDeliveryIsland();
         this.shippingFeeJeju = board.getShippingFeeJeju();
         this.shippingFeeIsland = board.getShippingFeeIsland();
-        this.thumbImgList = board.getMainImgPath();
+        this.thumbImg = board.getMainImgPath();
 
         this.pdtId = pdt.getId();
         this.optionValue1 = pdt.getOptionValue1();

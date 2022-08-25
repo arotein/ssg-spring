@@ -30,6 +30,13 @@ spring:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate.ddl-auto: update
+#  security:
+#    oauth2.client.registration:
+#      google:
+#        client-id: ${OAUTH2_GOOGLE_ID}
+#        client-secret: ${OAUTH2_GOOGLE_SECRET}
+#        scope: email, profile
+
 #===================================================
 
 logging.level:

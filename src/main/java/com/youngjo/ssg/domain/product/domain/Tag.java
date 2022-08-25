@@ -3,6 +3,7 @@ package com.youngjo.ssg.domain.product.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.youngjo.ssg.global.common.BaseEntity;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -21,6 +22,11 @@ public class Tag extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_board_id")
     private ProductBoard productBoard;
+
+    @Builder
+    public Tag(String keyword) {
+        this.keyword = keyword;
+    }
 
     public Tag linkToPdtBoard(ProductBoard productBoard) {
         this.productBoard = productBoard;

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
 import java.util.List;
 import java.util.Map;
 
@@ -43,14 +44,14 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public Map<Long, MainProduct> findAllMainPdtByIds(List<Long> pdtIds) {
+    public Map<Long, MainProduct> findAllMainPdtMapByIds(List<Long> pdtIds) {
         return queryFactory.from(mainProduct)
                 .where(mainProduct.id.in(pdtIds))
                 .transform(groupBy(mainProduct.id).as(mainProduct));
     }
 
     @Override
-    public Map<Long, ProductBoard> findAllBoardByPdtIds(List<Long> pdtIds) {
+    public Map<Long, ProductBoard> findAllBoardMapByPdtIds(List<Long> pdtIds) {
         return queryFactory.from(mainProduct)
                 .join(mainProduct.productBoard, productBoard)
                 .where(mainProduct.id.in(pdtIds))
@@ -58,10 +59,28 @@ public class ProductRepositoryImpl implements ProductRepository {
                 .transform(groupBy(mainProduct.id).as(productBoard));
     }
 
+    @Override
+    public List<MainProduct> findAllMainPdtByIds(List<Long> pdtIds) {
+        return queryFactory.selectFrom(mainProduct)
+                .join(mainProduct.productBoard, productBoard).fetchJoin()
+                .where(mainProduct.id.in(pdtIds))
+                .fetch();
+    }
+
+    @Override
+    public List<ProductBoard> findAllBoardByPdtIds(List<Long> pdtIds) {
+        return queryFactory.select(productBoard)
+                .from(mainProduct)
+                .join(mainProduct.productBoard, productBoard).fetchJoin()
+                .where(mainProduct.id.in(pdtIds))
+                .distinct()
+                .fetch();
+    }
+
     // board 상세보기, 좋아요
     @Override
     public ProductBoard findBoardById(Long boardId) {
-        ProductBoard board = queryFactory.selectFrom(productBoard)
+        return queryFactory.selectFrom(productBoard)
                 .join(productBoard.returnAddress).fetchJoin()
                 .join(productBoard.categoryL4).fetchJoin()
                 .join(productBoard.consignmentSellerInfo, consignmentSellerInfo).fetchJoin()
@@ -69,11 +88,11 @@ public class ProductRepositoryImpl implements ProductRepository {
                 .where(productBoard.id.eq(boardId))
                 .distinct()
                 .fetchOne();
-        return board;
     }
 
     // board 단건에 대한 좋아요 조회 -> 엔티티 그래프가 필요한게 아닌 where절에 사용할 데이터가 필요한거니 fetch join X
     // 비회원일때는 좋아요 조회할 필요가 없으니 service단에서 조건문 처리
+    // ★ board를 타고 검색하는게 아니라 boardLike값만 가져와서 상태만 변경 ★
     @Override
     public ProductBoardLike findBoardLikeByBoardIdAndUserId(Long boardId, Long userId) {
         return queryFactory.selectFrom(productBoardLike)
@@ -157,6 +176,14 @@ public class ProductRepositoryImpl implements ProductRepository {
                 .limit(limit)
                 .distinct()
                 .fetch();
+    }
+
+    @Override
+    public MainProduct findMainProductById(Long id) {
+        return queryFactory.selectFrom(mainProduct)
+                .where(mainProduct.id.eq(id))
+                .setLockMode(LockModeType.PESSIMISTIC_READ) // CUD Lock
+                .fetchOne();
     }
 
     private BooleanExpression goeMinPrice(Long minPrice) {

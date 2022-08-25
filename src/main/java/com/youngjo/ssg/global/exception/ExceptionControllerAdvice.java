@@ -3,28 +3,40 @@ package com.youngjo.ssg.global.exception;
 import com.youngjo.ssg.global.common.CommonResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @Slf4j
 @RestControllerAdvice
 public class ExceptionControllerAdvice {
 //    @ExceptionHandler
-//    public CommonResponse<String> runtimeExHandle(RuntimeException ex) {
+//    public ResponseEntity runtimeExHandle(RuntimeException ex) {
 //        log.error("Exception Name = {}, Message = {}", ex.getClass().getName(), ex.getMessage());
-//        return new CommonResponse<String>()
-//                .setSuccess(false)
-//                .setErrorMessage(ex.getMessage());
+//        return ResponseEntity.ok()
+//                .body(CommonResponse.builder().errorCode(5).errorMessage(ex.getMessage()).build());
 //    }
 
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler
-    public CommonResponse<String> accessDeniedExHandle(AccessDeniedException ex) {
+    public ResponseEntity accessDeniedExHandle(AccessDeniedException ex) {
         log.error("Exception Name = {}, Message = {}", ex.getClass().getName(), ex.getMessage());
-        return new CommonResponse<String>()
-                .setSuccess(false)
-                .setErrorMessage(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(CommonResponse.builder().errorCode(3).errorMessage(ex.getMessage()).build());
+    }
+
+    @ExceptionHandler
+    public ResponseEntity methodNotAllowedExHandle(HttpRequestMethodNotSupportedException ex) {
+        log.error("Exception Name = {}, Message = {}", ex.getClass().getName(), ex.getMessage());
+        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED)
+                .body(CommonResponse.builder().errorCode(405).errorMessage(ex.getMessage()).build());
+    }
+
+    @ExceptionHandler
+    public ResponseEntity illegalArgumentExceptionExHandle(IllegalArgumentException ex) {
+        log.error("Exception Name = {}, Message = {}", ex.getClass().getName(), ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(CommonResponse.builder().errorCode(400).errorMessage(ex.getMessage()).build());
     }
 }

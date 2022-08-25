@@ -1,10 +1,9 @@
 package com.youngjo.ssg.domain.product.controller;
 
-import com.youngjo.ssg.domain.product.dto.request.BoardSortFilterReqDto;
 import com.youngjo.ssg.domain.product.dto.request.AddPdtBoardReqDto;
-import com.youngjo.ssg.domain.product.dto.response.BoardListResDto;
-import com.youngjo.ssg.domain.product.dto.response.PdtBoardDetailResDto;
+import com.youngjo.ssg.domain.product.dto.request.BoardSortFilterReqDto;
 import com.youngjo.ssg.domain.product.service.ProductService;
+import com.youngjo.ssg.global.common.CommonResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,36 +18,46 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping("/detail/{boardId}")
-    public PdtBoardDetailResDto getBoardDetail(@PathVariable Long boardId) {
-        return productService.getBoardById(boardId);
+    public CommonResponse getBoardDetail(@PathVariable Long boardId) {
+        return CommonResponse.builder()
+                .data(productService.getBoardById(boardId))
+                .build();
     }
 
     @GetMapping("/list/ctgL2/{ctgL2Id}")
-    public BoardListResDto getBoardListByL2Id(@PathVariable Long ctgL2Id, @Validated BoardSortFilterReqDto queryDto) {
-        return productService.getBoardListByL2Id(ctgL2Id, queryDto);
+    public CommonResponse getBoardListByL2Id(@PathVariable Long ctgL2Id, @Validated BoardSortFilterReqDto sortDto) {
+        return CommonResponse.builder()
+                .data(productService.getBoardListByL2Id(ctgL2Id, sortDto.setDefault()))
+                .build();
     }
 
     @GetMapping("/list/ctgL3/{ctgL3Id}")
-    public BoardListResDto getBoardListByL3Id(@PathVariable Long ctgL3Id, @Validated BoardSortFilterReqDto queryDto) {
-        return productService.getBoardListByL3Id(ctgL3Id, queryDto);
+    public CommonResponse getBoardListByL3Id(@PathVariable Long ctgL3Id, @Validated BoardSortFilterReqDto sortDto) {
+        return CommonResponse.builder()
+                .data(productService.getBoardListByL3Id(ctgL3Id, sortDto.setDefault()))
+                .build();
     }
 
     @GetMapping("/list/ctgL4/{ctgL4Id}")
-    public BoardListResDto getBoardListByL4Id(@PathVariable Long ctgL4Id, @Validated BoardSortFilterReqDto queryDto) {
-        return productService.getBoardListByL4Id(ctgL4Id, queryDto);
+    public CommonResponse getBoardListByL4Id(@PathVariable Long ctgL4Id, @Validated BoardSortFilterReqDto sortDto) {
+        return CommonResponse.builder()
+                .data(productService.getBoardListByL4Id(ctgL4Id, sortDto.setDefault()))
+                .build();
     }
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/pressLike/{boardId}")
-    public Boolean pressBoardLike(@PathVariable Long boardId) {
-        productService.pressBoardLike(boardId);
-        return true;
+    public CommonResponse pressBoardLike(@PathVariable Long boardId) {
+        return CommonResponse.builder()
+                .data(productService.pressBoardLike(boardId))
+                .build();
     }
 
     // == dev code ==
     @PostMapping("/add")
-    public Boolean addBoard(@RequestBody AddPdtBoardReqDto addPdtBoardReqDto) { // 상품 키워드 10개 등록하기 -> 통합검색 조건으로 사용
-        productService.addPdtBoard(addPdtBoardReqDto);
-        return true;
+    public CommonResponse addBoard(@RequestBody AddPdtBoardReqDto addPdtBoardReqDto) {
+        return CommonResponse.builder()
+                .data(productService.addPdtBoard(addPdtBoardReqDto))
+                .build();
     }
 }

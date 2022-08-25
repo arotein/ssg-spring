@@ -48,7 +48,7 @@ public class SearchServiceImpl implements SearchService {
         Search search = searchRepository.findSearch(query);
         if (boardList.size() > 0 && search == null) {
             searchRepository.saveSearch(Search.builder().query(query).build().plusFrequency());
-        } else {
+        } else if (boardList.size() > 0 && search != null) {
             search.plusFrequency();
         }
 

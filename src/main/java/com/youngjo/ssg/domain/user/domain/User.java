@@ -1,12 +1,12 @@
 package com.youngjo.ssg.domain.user.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.youngjo.ssg.domain.product.domain.Address;
 import com.youngjo.ssg.domain.product.domain.ProductBoardLike;
+import com.youngjo.ssg.domain.purchase.domain.UserPurchase;
 import com.youngjo.ssg.global.common.BaseEntity;
 import com.youngjo.ssg.global.enumeration.Grade;
 import com.youngjo.ssg.global.enumeration.Role;
-import com.youngjo.ssg.global.enumeration.Status;
+import com.youngjo.ssg.global.enumeration.UserStatus;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -59,7 +59,11 @@ public class User extends BaseEntity {
 
     @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<DeliveryAddress> deliveryAddressList = new ArrayList<>();
+    private List<MyDeliveryAddress> myDeliveryAddressList = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<UserPurchase> userPurchaseList = new ArrayList<>();
 
 //    @JsonIgnore
 //    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
@@ -73,35 +77,39 @@ public class User extends BaseEntity {
 //    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 //    private List<PaymentCard> paymentCardList = new ArrayList<>();
 
-    // cascade 유의
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-//    private List<Delivery> deliveryList = new ArrayList<>();
-//
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-//    private List<Buy> buyList = new ArrayList<>();
-
     //==시스템 정보==
     private Timestamp lastAccessTime;
     private Timestamp lastPasswordChangeTime;
     @Enumerated(EnumType.STRING)
     private Role role = Role.ROLE_NORMAL;
     @Enumerated(EnumType.STRING)
-    private Status status = Status.ENABLED;
+    private UserStatus status = UserStatus.ENABLED;
 
     @Builder
-    public User(String loginId, String password, String name, String email, String phoneNumber, Address address) {
-        this.loginId = loginId;
+    public User(String loginId, String password, String name, String email, String phoneNumber) {
+        this.loginId = loginIdFormatMatching(loginId);
         this.password = password;
         this.name = name;
         this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
+        this.phoneNumber = phoneNumberFormatMatching(phoneNumber);
     }
 
     public void updateLastAccessTime() {
         this.lastAccessTime = new Timestamp(System.currentTimeMillis());
+    }
+
+    public String loginIdFormatMatching(String loginId) {
+        if (loginId == null || !loginId.matches("^[\\da-zA-Z]{4,16}$")) {
+            throw new IllegalArgumentException("Invalid loginId");
+        }
+        return loginId;
+    }
+
+    public String phoneNumberFormatMatching(String phoneNumber) {
+        if (phoneNumber == null || !phoneNumber.matches("^010-\\d{3,4}-\\d{3,4}$")) {
+            throw new IllegalArgumentException("Invalid phone number");
+        }
+        return phoneNumber;
     }
 
     public User linkToPdtBoardLike(ProductBoardLike productBoardLike) {
@@ -119,8 +127,13 @@ public class User extends BaseEntity {
         return this;
     }
 
-    public User linkToDeliveryAddress(DeliveryAddress deliveryAddress) {
-        this.deliveryAddressList.add(deliveryAddress);
+    public User linkToDeliveryAddress(MyDeliveryAddress myDeliveryAddress) {
+        this.myDeliveryAddressList.add(myDeliveryAddress);
+        return this;
+    }
+
+    public User linkToUserPurchase(UserPurchase userPurchase) {
+        this.userPurchaseList.add(userPurchase);
         return this;
     }
 }

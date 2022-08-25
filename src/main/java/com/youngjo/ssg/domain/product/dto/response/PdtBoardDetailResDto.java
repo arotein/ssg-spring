@@ -1,8 +1,8 @@
 package com.youngjo.ssg.domain.product.dto.response;
 
 import com.youngjo.ssg.domain.product.domain.ProductBoard;
+import com.youngjo.ssg.domain.product.dto.PdtStaticDto;
 import com.youngjo.ssg.global.common.AddressConverter;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 @Getter
 @NoArgsConstructor
 public class PdtBoardDetailResDto {
-    private Long id;
+    private Long boardId;
     private String title;
     private String brand;
     private String salesSite;
@@ -46,16 +46,16 @@ public class PdtBoardDetailResDto {
     private Integer salesVol;
     private Long deliveryDate;
 
-    private ConsignmentSellerInfoDto consignmentSellerInfo;
-    private CtgL4Dto ctgL4;
+    private PdtStaticDto.ConsignmentSellerInfoResDto consignmentSellerInfo;
+    private PdtStaticDto.CtgL4Dto ctgL4;
     private Boolean boardLike;
-    private List<ProductImgDto> thumbImgList;
-    private List<ProductImgDto> detailImgList;
-    private List<MainProductDto> mainProductList;
-    private List<ProductRequiredInfoDto> productRequiredInfoList;
+    private List<PdtStaticDto.ProductImgResDto> thumbImgList;
+    private List<PdtStaticDto.ProductImgResDto> detailImgList;
+    private List<PdtStaticDto.MainProductResDto> mainProductList;
+    private List<PdtStaticDto.ProductRequiredInfoResDto> productRequiredInfoList;
 
     public PdtBoardDetailResDto(ProductBoard productBoard) {
-        this.id = productBoard.getId();
+        this.boardId = productBoard.getId();
         this.title = productBoard.getTitle();
         this.brand = productBoard.getBrand();
         this.salesSite = productBoard.getSalesSite().getValue();
@@ -82,20 +82,21 @@ public class PdtBoardDetailResDto {
         this.minPrice = productBoard.getMinPrice();
         this.salesVol = productBoard.getSalesVol();
         this.deliveryDate = productBoard.getDeliveryDate();
-        this.consignmentSellerInfo = new ConsignmentSellerInfoDto(
+        this.consignmentSellerInfo = new PdtStaticDto.ConsignmentSellerInfoResDto(
                 productBoard.getConsignmentSellerInfo().getName(),
                 AddressConverter.convertToString(productBoard.getConsignmentSellerInfo().getConsignmentSellerAddress()),
                 productBoard.getConsignmentSellerInfo().getMailOrderNum());
-        this.ctgL4 = new CtgL4Dto(productBoard.getCategoryL4().getId(),
+        this.ctgL4 = new PdtStaticDto.CtgL4Dto(productBoard.getCategoryL4().getId(),
                 productBoard.getCategoryL4().getName());
         this.thumbImgList = productBoard.getThumbImgList()
-                .stream().map(img -> new ProductImgDto(img.getImgPath()))
+                .stream().map(img -> new PdtStaticDto.ProductImgResDto(img.getImgPath()))
                 .collect(Collectors.toList());
         this.detailImgList = productBoard.getDetailImgList()
-                .stream().map(img -> new ProductImgDto(img.getImgPath()))
+                .stream().map(img -> new PdtStaticDto.ProductImgResDto(img.getImgPath()))
                 .collect(Collectors.toList());
         this.mainProductList = productBoard.getMainProductList()
-                .stream().map(pdt -> new MainProductDto(
+                .stream().map(pdt -> new PdtStaticDto.MainProductResDto(
+                        pdt.getId(),
                         pdt.getModelCode(),
                         pdt.getOptionName1(),
                         pdt.getOptionValue1(),
@@ -105,52 +106,12 @@ public class PdtBoardDetailResDto {
                         pdt.getStock()))
                 .collect(Collectors.toList());
         this.productRequiredInfoList = productBoard.getProductRequiredInfoList()
-                .stream().map(info -> new ProductRequiredInfoDto(info.getInfoTitle(), info.getInfoCnt()))
+                .stream().map(info -> new PdtStaticDto.ProductRequiredInfoResDto(info.getInfoTitle(), info.getInfoCnt()))
                 .collect(Collectors.toList());
     }
 
     public PdtBoardDetailResDto boardLike(Boolean bool) {
         this.boardLike = bool;
         return this;
-    }
-
-    @Getter
-    @AllArgsConstructor
-    class CtgL4Dto {
-        private Long id;
-        private String name;
-    }
-
-    @Getter
-    @AllArgsConstructor
-    class ConsignmentSellerInfoDto {
-        private String name;
-        private String consignmentSellerAddress;
-        private String mailOrderNum;
-    }
-
-    @Getter
-    @AllArgsConstructor
-    class ProductImgDto {
-        private String imgPath;
-    }
-
-    @Getter
-    @AllArgsConstructor
-    class MainProductDto {
-        private String modelCode;
-        private String optionName1;
-        private String optionValue1;
-        private String optionName2;
-        private String optionValue2;
-        private Long price;
-        private Integer stock;
-    }
-
-    @Getter
-    @AllArgsConstructor
-    class ProductRequiredInfoDto {
-        private String infoTitle;
-        private String infoCnt;
     }
 }

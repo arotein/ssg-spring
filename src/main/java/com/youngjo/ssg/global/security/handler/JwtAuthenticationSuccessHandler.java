@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.youngjo.ssg.domain.user.service.UserService;
 import com.youngjo.ssg.global.common.CommonResponse;
 import com.youngjo.ssg.global.security.auth.UserDetailsImpl;
-import com.youngjo.ssg.global.security.dto.SecurityLoginResDto;
 import com.youngjo.ssg.global.security.token.JwtAuthenticationToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -28,8 +27,7 @@ public class JwtAuthenticationSuccessHandler implements AuthenticationSuccessHan
         JwtAuthenticationToken token = (JwtAuthenticationToken) authentication;
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setHeader("Authentication", token.getJwt());
-        CommonResponse<SecurityLoginResDto> comRes = new CommonResponse<>();
-        objectMapper.writeValue(response.getWriter(), comRes);
+        objectMapper.writeValue(response.getWriter(), CommonResponse.builder().data("로그인이 완료되었습니다.").build());
 
         // 로그인 시간 갱신
         UserDetailsImpl userDetails = (UserDetailsImpl) token.getPrincipal();

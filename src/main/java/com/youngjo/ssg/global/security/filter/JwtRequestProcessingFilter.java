@@ -1,5 +1,7 @@
 package com.youngjo.ssg.global.security.filter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.youngjo.ssg.global.common.CommonResponse;
 import com.youngjo.ssg.global.enumeration.Role;
 import com.youngjo.ssg.global.security.auth.UserDetailsImpl;
 import com.youngjo.ssg.global.security.dto.ClientInfoDto;
@@ -10,7 +12,8 @@ import io.fusionauth.jwt.Verifier;
 import io.fusionauth.jwt.domain.JWT;
 import io.fusionauth.jwt.hmac.HMACVerifier;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.AccountExpiredException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
@@ -32,8 +35,6 @@ import java.util.Map;
 
 @Slf4j
 public class JwtRequestProcessingFilter extends AbstractAuthenticationProcessingFilter {
-    private final String SIGNER = System.getenv("SSG_JWT_SIGNER");
-
     public JwtRequestProcessingFilter(String defaultFilterProcessesUrl) {
         super(defaultFilterProcessesUrl);
     }
@@ -41,12 +42,13 @@ public class JwtRequestProcessingFilter extends AbstractAuthenticationProcessing
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse res = (HttpServletResponse) response;
         if (req.getHeader("Authentication") == null) {
-            chain.doFilter(request, response);
+            chain.doFilter(req, res);
         } else {
             try {
                 String encodedJwt = req.getHeader("Authentication").split(" ")[1];
-                Verifier verifier = HMACVerifier.newVerifier(SIGNER);
+                Verifier verifier = HMACVerifier.newVerifier(JwtAuthenticationToken.SIGNER);
                 JWT decodedJwt = JWT.getDecoder().decode(encodedJwt, verifier);
 
                 Map<String, Object> allClaims = decodedJwt.getAllClaims();
@@ -71,21 +73,33 @@ public class JwtRequestProcessingFilter extends AbstractAuthenticationProcessing
                 SecurityContext context = SecurityContextHolder.createEmptyContext();
                 context.setAuthentication(new JwtAuthenticationToken(new UserDetailsImpl(clientInfoDto, roles)));
                 SecurityContextHolder.setContext(context);
+                chain.doFilter(request, response);
             } catch (NullPointerException npe) {
                 log.error("NPE: {}", npe.getMessage());
             } catch (JWTExpiredException jwtEx) {
+                log.error("Expired Token, class: {}", jwtEx.getClass());
+                // 만료된 토큰
                 // refresh token 요청
                 // refresh token 인증 -> access token 재발급
                 // <재발급 코드>
                 // refresh token도 만료 -> 로그인 페이지 이동
-                throw new AccountExpiredException("Expired Token.");
+                ObjectMapper objectMapper = new ObjectMapper();
+                res.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                res.setStatus(HttpStatus.UNAUTHORIZED.value());
+                objectMapper.writeValue(res.getWriter(),
+                        CommonResponse.builder().errorCode(1).errorMessage("Expired Token").build());
             } catch (InvalidJWTSignatureException jwtSigEx) {
                 // 유효하지않은 토큰 -> 로그인 페이지로 이동
                 log.error("Invalid Signature, class: {}", jwtSigEx.getClass());
+                ObjectMapper objectMapper = new ObjectMapper();
+                res.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                res.setStatus(HttpStatus.UNAUTHORIZED.value());
+                objectMapper.writeValue(res.getWriter(),
+                        CommonResponse.builder().errorCode(2).errorMessage("Invalid Signature").build());
             } catch (Exception exception) {
                 log.error("Message: {}, class: {}", exception.getMessage(), exception.getClass());
             }
-            chain.doFilter(request, response);
+//            chain.doFilter(req, res);
         }
     }
 

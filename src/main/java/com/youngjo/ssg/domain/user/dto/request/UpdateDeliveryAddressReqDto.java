@@ -1,6 +1,6 @@
 package com.youngjo.ssg.domain.user.dto.request;
 
-import com.youngjo.ssg.domain.product.domain.Address;
+import com.youngjo.ssg.domain.user.dto.UserStaticDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -17,5 +17,5 @@ public class UpdateDeliveryAddressReqDto {
     @NotBlank
     private String phoneNumber;
     private String secondContactNumber;
-    private Address recipientAddress;
+    private UserStaticDto.AddressReqDto recipientAddress;
 }

@@ -25,13 +25,20 @@ import javax.validation.constraints.PositiveOrZero;
 @NoArgsConstructor
 public class BoardSortFilterReqDto {
     @Positive
-    private Integer page = 1;
+    private Integer page;
     @Positive
-    private Integer limit = 4;
+    private Integer limit;
     // == sort 조건 ==
-    private String sort = "추천순";
+    private String sort;
     @PositiveOrZero
     private Long minPrice;
     @Positive
     private Long maxPrice;
+
+    public BoardSortFilterReqDto setDefault() {
+        page = page == null ? 1 : page;
+        limit = limit == null ? 40 : limit;
+        sort = sort == null ? "추천순" : sort;
+        return this;
+    }
 }

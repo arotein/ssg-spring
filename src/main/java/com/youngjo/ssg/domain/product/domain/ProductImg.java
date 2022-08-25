@@ -1,5 +1,6 @@
 package com.youngjo.ssg.domain.product.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.youngjo.ssg.global.common.BaseEntity;
 import com.youngjo.ssg.global.common.FileNameGenerator;
 import lombok.AccessLevel;
@@ -25,10 +26,12 @@ public class ProductImg extends BaseEntity {
     private String imgPath;
 
     // == Mapping ==
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_board_thumb_id")
     private ProductBoard productBoardThumb;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_board_detail_id")
     private ProductBoard productBoardDetail;

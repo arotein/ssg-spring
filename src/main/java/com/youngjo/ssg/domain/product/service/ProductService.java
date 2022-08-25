@@ -7,7 +7,7 @@ import com.youngjo.ssg.domain.product.dto.response.PdtBoardDetailResDto;
 
 public interface ProductService {
     // == service code ==
-    void addPdtBoard(AddPdtBoardReqDto addPdtBoardReqDto);
+    Boolean addPdtBoard(AddPdtBoardReqDto addPdtBoardReqDto);
 
     PdtBoardDetailResDto getBoardById(Long id);
 
@@ -17,5 +17,5 @@ public interface ProductService {
 
     BoardListResDto getBoardListByL4Id(Long id, BoardSortFilterReqDto queryDto);
 
-    void pressBoardLike(Long id);
+    Boolean pressBoardLike(Long id);
 }

@@ -1,4 +1,4 @@
-package com.youngjo.ssg.domain.product.domain;
+package com.youngjo.ssg.domain.user.domain;
 
 import lombok.*;
 
@@ -36,6 +36,10 @@ public class Address {
         this.street = street;
         this.detail = detail;
         this.postalCode = postalCode;
+        return this;
+    }
+
+    public Address returnThis() {
         return this;
     }
 }

@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "c1de17cd-88f9-4163-a71f-d5b47e97b086",
-		"name": "read",
+		"_postman_id": "bae1a602-5707-4fa1-a8ee-3b48bca27992",
+		"name": "Read, Update, Delete",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "22411101"
 	},
@@ -36,7 +36,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:9001/api/ctg/all/ctgL2/1",
+							"raw": "http://localhost:9001/api/ctg/all/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -46,7 +46,6 @@
 								"api",
 								"ctg",
 								"all",
-								"ctgL2",
 								"1"
 							]
 						}
@@ -54,12 +53,12 @@
 					"response": []
 				},
 				{
-					"name": "/ctg/detail/nav/L2",
+					"name": "/ctg/nav2",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:9001/api/ctg/detail/nav/ctgL2",
+							"raw": "http://localhost:9001/api/ctg/nav2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -68,21 +67,19 @@
 							"path": [
 								"api",
 								"ctg",
-								"detail",
-								"nav",
-								"ctgL2"
+								"nav2"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "/ctg/detail/nav/L3",
+					"name": "/ctg/nav3",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:9001/api/ctg/detail/nav/ctgL3/1",
+							"raw": "http://localhost:9001/api/ctg/nav3/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -91,9 +88,7 @@
 							"path": [
 								"api",
 								"ctg",
-								"detail",
-								"nav",
-								"ctgL3",
+								"nav3",
 								"1"
 							]
 						}
@@ -101,12 +96,12 @@
 					"response": []
 				},
 				{
-					"name": "/ctg/detail/nav/L4",
+					"name": "/ctg/nav4",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:9001/api/ctg/detail/nav/ctgL4/1",
+							"raw": "http://localhost:9001/api/ctg/nav4/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -115,9 +110,7 @@
 							"path": [
 								"api",
 								"ctg",
-								"detail",
-								"nav",
-								"ctgL4",
+								"nav4",
 								"1"
 							]
 						}
@@ -125,12 +118,12 @@
 					"response": []
 				},
 				{
-					"name": "/ctg/detail/menu/L2",
+					"name": "/ctg/menu2",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:9001/api/ctg/detail/menu/ctgL2/1",
+							"raw": "http://localhost:9001/api/ctg/menu2/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -139,9 +132,7 @@
 							"path": [
 								"api",
 								"ctg",
-								"detail",
-								"menu",
-								"ctgL2",
+								"menu2",
 								"1"
 							]
 						}
@@ -149,12 +140,12 @@
 					"response": []
 				},
 				{
-					"name": "/ctg/detail/menu/L3",
+					"name": "/ctg/menu3",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:9001/api/ctg/detail/menu/ctgL3/1",
+							"raw": "http://localhost:9001/api/ctg/menu3/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -163,9 +154,7 @@
 							"path": [
 								"api",
 								"ctg",
-								"detail",
-								"menu",
-								"ctgL3",
+								"menu3",
 								"1"
 							]
 						}
@@ -173,12 +162,12 @@
 					"response": []
 				},
 				{
-					"name": "/ctg/detail/menu/L4",
+					"name": "/ctg/menu4",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:9001/api/ctg/detail/menu/ctgL4/1",
+							"raw": "http://localhost:9001/api/ctg/menu4/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -187,9 +176,7 @@
 							"path": [
 								"api",
 								"ctg",
-								"detail",
-								"menu",
-								"ctgL4",
+								"menu4",
 								"1"
 							]
 						}
@@ -364,7 +351,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "[1,2,3,4,5,6,7,8,9,10]",
+							"raw": "[1,2,3]",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -396,7 +383,7 @@
 						"header": [
 							{
 								"key": "Authentication",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjA3OTQ0NDUsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.3nsaQzztW1lwa5fvu7MDyqByqi0XBevcixlypmB4tg8",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjQ4MTcwNjQ5NDEsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.4PoUc8BE8k39vMIBO2tEfC9L6bY35Y2GI_jL4y2HmhQ",
 								"type": "text"
 							}
 						],
@@ -431,7 +418,7 @@
 						"header": [
 							{
 								"key": "Authentication",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjA3OTQ0NDUsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.3nsaQzztW1lwa5fvu7MDyqByqi0XBevcixlypmB4tg8",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjQ4MTcwNjQ5NDEsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.4PoUc8BE8k39vMIBO2tEfC9L6bY35Y2GI_jL4y2HmhQ",
 								"type": "text"
 							}
 						],
@@ -497,7 +484,7 @@
 					"response": []
 				},
 				{
-					"name": "user cart modify pdt",
+					"name": "user cart update pdt",
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -592,27 +579,18 @@
 					"response": []
 				},
 				{
-					"name": "add cart",
+					"name": "delivery address list",
 					"request": {
-						"method": "POST",
+						"method": "GET",
 						"header": [
 							{
 								"key": "Authentication",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjA3OTQ0NDUsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.3nsaQzztW1lwa5fvu7MDyqByqi0XBevcixlypmB4tg8",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjQ4MTcwNjQ5NDEsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.4PoUc8BE8k39vMIBO2tEfC9L6bY35Y2GI_jL4y2HmhQ",
 								"type": "text"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "[\r\n    {\r\n        \"pdtId\": 2,\r\n        \"pdtQty\": 1\r\n    },     {\r\n        \"pdtId\": 3,\r\n        \"pdtQty\": 4\r\n    },     {\r\n        \"pdtId\": 4,\r\n        \"pdtQty\": 1\r\n    },     {\r\n        \"pdtId\": 5,\r\n        \"pdtQty\": 1\r\n    }\r\n]",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "http://localhost:9001/api/cart/addPdt",
+							"raw": "http://localhost:9001/api/my/deliveryAddr",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -620,8 +598,190 @@
 							"port": "9001",
 							"path": [
 								"api",
-								"cart",
-								"addPdt"
+								"my",
+								"deliveryAddr"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delivery address update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authentication",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjEwOTI2ODYsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.xmGm7Sa4VVHjV2v2fxyqOlqemYYPGcmMX-jKMroGeJI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"deliveryAddrId\": 1,\r\n    \"alias\": \"차누집ㅋㅋ\",\r\n    \"recipientName\": \"차누링ㅋㅋ\",\r\n    \"phoneNumber\": \"010-0000-0000\",\r\n    \"secondContactNumber\": null,\r\n    \"recipientAddress\": {\r\n        \"city\": \"부산시ㅋㅋ\",\r\n        \"street\": \"부산 해운대구 APEC로 17\",\r\n        \"detail\": \"401호, 스파로스 아카데미\",\r\n        \"postalCode\": \"48060\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9001/api/my/deliveryAddr",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"my",
+								"deliveryAddr"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delivery address delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authentication",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjEwOTczNzMsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MiwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.c7stlBnCiCFvb8PGiQNjRUc_PSpTpbvTFbG6pGk27WI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"deliveryAddrId\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9001/api/my/deliveryAddr",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"my",
+								"deliveryAddr"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delivery address update main",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authentication",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjEwOTczNzMsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MiwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.c7stlBnCiCFvb8PGiQNjRUc_PSpTpbvTFbG6pGk27WI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"deliveryAddrId\": 6\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9001/api/my/deliveryAddr/main",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"my",
+								"deliveryAddr",
+								"main"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "search",
+			"item": [
+				{
+					"name": "board search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/api/search?query=나이키",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"api",
+								"search"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "나이키"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "purchase",
+			"item": [
+				{
+					"name": "purchase proceed",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authentication",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjQ4MTcwNjQ5NDEsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.4PoUc8BE8k39vMIBO2tEfC9L6bY35Y2GI_jL4y2HmhQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"myDeliAddrId\": 1,\r\n    \"pdtIdList\": [1,2,3,4,5,6,7,8,9]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9001/api/purchase/user/proceed",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"purchase",
+								"user",
+								"proceed"
 							]
 						}
 					},

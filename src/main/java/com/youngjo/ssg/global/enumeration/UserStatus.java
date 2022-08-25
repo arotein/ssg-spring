@@ -7,7 +7,7 @@ package com.youngjo.ssg.global.enumeration;
  * DELETED : 영구삭제됨
  */
 
-public enum Status {
+public enum UserStatus {
     ENABLED,
     DISABLED,
     BANNED,

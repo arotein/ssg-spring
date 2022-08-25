@@ -16,5 +16,5 @@ public interface CartService {
 
     void delPdtInUserCart(List<Long> pdtIdList);
 
-    void updatePdtInUserCart(PdtInCartReqDto pdtDto);
+    Boolean updatePdtInUserCart(PdtInCartReqDto pdtDto);
 }

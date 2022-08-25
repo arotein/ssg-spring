@@ -1,6 +1,6 @@
 package com.youngjo.ssg.domain.user.dto.request;
 
-import com.youngjo.ssg.domain.product.domain.Address;
+import com.youngjo.ssg.domain.user.dto.UserStaticDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -20,7 +20,7 @@ public class SignUpReqDto {
     private String name;
     @NotBlank
     private String phoneNum;
-    private Address address;
+    private UserStaticDto.AddressReqDto address;
 
     public SignUpReqDto setEncodedPassword(String encodedPassword) {
         this.password = encodedPassword;

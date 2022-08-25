@@ -21,11 +21,9 @@ public class JwtAuthenticationFailureHandler implements AuthenticationFailureHan
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        CommonResponse<String> comRes = new CommonResponse<>();
-        comRes.setData(exception.getMessage());
-        comRes.setSuccess(false);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
-        objectMapper.writeValue(response.getWriter(), comRes);
+        objectMapper.writeValue(response.getWriter(),
+                CommonResponse.builder().errorCode(4).errorMessage("ID or password is incorrect").build());
     }
 }

@@ -1,5 +1,6 @@
 package com.youngjo.ssg.domain.product.domain;
 
+import com.youngjo.ssg.domain.user.domain.Address;
 import com.youngjo.ssg.global.common.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Getter;

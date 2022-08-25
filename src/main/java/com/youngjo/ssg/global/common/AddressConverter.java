@@ -1,6 +1,6 @@
 package com.youngjo.ssg.global.common;
 
-import com.youngjo.ssg.domain.product.domain.Address;
+import com.youngjo.ssg.domain.user.domain.Address;
 
 public class AddressConverter {
     public static String convertToString(Address address) {

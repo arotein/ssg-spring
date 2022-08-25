@@ -31,7 +31,7 @@ public class CartServiceImpl implements CartService {
         List<NormalCart> myCartList = normalCartRepository.findAllNormalCartByUserId(clientInfoLoader.getUserId());
         List<Long> pdtIds = myCartList.stream().map(cart -> cart.getMainProduct().getId()).collect(Collectors.toList());
 
-        Map<Long, MainProduct> pdtMap = productRepository.findAllMainPdtByIds(
+        Map<Long, MainProduct> pdtMap = productRepository.findAllMainPdtMapByIds(
                 pdtDtoList.stream().map(PdtInCartReqDto::getPdtId).collect(Collectors.toList())
         );
 
@@ -52,9 +52,9 @@ public class CartServiceImpl implements CartService {
     @Override
     public List<PdtInCartResDto> getCartPdtListByPdtIds(List<Long> pdtIds) {
         // <pdt.id, board>
-        Map<Long, ProductBoard> boardMap = productRepository.findAllBoardByPdtIds(pdtIds);
+        Map<Long, ProductBoard> boardMap = productRepository.findAllBoardMapByPdtIds(pdtIds);
         // <pdt.id, pdt>
-        Map<Long, MainProduct> pdtMap = productRepository.findAllMainPdtByIds(pdtIds);
+        Map<Long, MainProduct> pdtMap = productRepository.findAllMainPdtMapByIds(pdtIds);
 
         return pdtIds.stream().distinct()
                 .map(pdtId -> new PdtInCartResDto(boardMap.get(pdtId), pdtMap.get(pdtId), null))
@@ -68,9 +68,9 @@ public class CartServiceImpl implements CartService {
         List<Long> pdtIds = myCartList.stream().map(cart -> cart.getMainProduct().getId()).collect(Collectors.toList());
 
         // <pdt.id, board>
-        Map<Long, ProductBoard> boardMap = productRepository.findAllBoardByPdtIds(pdtIds);
+        Map<Long, ProductBoard> boardMap = productRepository.findAllBoardMapByPdtIds(pdtIds);
         // <pdt.id, pdt>
-        Map<Long, MainProduct> pdtMap = productRepository.findAllMainPdtByIds(pdtIds);
+        Map<Long, MainProduct> pdtMap = productRepository.findAllMainPdtMapByIds(pdtIds);
 
         return myCartList.stream()
                 .map(cart -> new PdtInCartResDto(boardMap.get(cart.getMainProduct().getId()), pdtMap.get(cart.getMainProduct().getId()), cart))
@@ -88,10 +88,12 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void updatePdtInUserCart(PdtInCartReqDto pdtDto) {
+    public Boolean updatePdtInUserCart(PdtInCartReqDto pdtDto) {
         NormalCart cart = normalCartRepository.findPdtInUserCartByPdtId(pdtDto.getPdtId(), clientInfoLoader.getUserId());
-        if (cart != null) {
+        if (cart != null && cart.getMainProduct().getStock() >= pdtDto.getPdtQty()) {
             cart.setPdtQty(pdtDto.getPdtQty());
+            return true;
         }
+        return false;
     }
 }

@@ -1,6 +1,7 @@
 package com.youngjo.ssg.domain.product.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.youngjo.ssg.domain.user.domain.Address;
 import com.youngjo.ssg.global.common.BaseEntity;
 import com.youngjo.ssg.global.enumeration.SalesSite;
 import lombok.AccessLevel;
@@ -128,6 +129,7 @@ public class ProductBoard extends BaseEntity {
     @JsonIgnore
     @OneToMany(mappedBy = "productBoard", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MainProduct> mainProductList = new ArrayList<>();
+
     @JsonIgnore
     @OneToMany(mappedBy = "productBoard", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductRequiredInfo> productRequiredInfoList = new ArrayList<>();
@@ -138,15 +140,11 @@ public class ProductBoard extends BaseEntity {
 
     // 쿠폰 엔티티 연결(만들기)
 
-//    @JoinColumn(name = "buy_id")
-//    private Buy buy; -> n:m 이므로 중간테이블 만들기. review도 buy에 걸기? cart는 주문(buy)와 1:1 단방향
-
     @Builder
-    public ProductBoard(String title, String brand, SalesSite salesSite, List<Tag> tag, Boolean isEachShippingFee, Boolean isPremium, Boolean isCrossBorderShipping, Boolean isOnlineOnly, Integer shippingFee, Integer shippingFreeOver, Boolean availableDeliveryJeju, Boolean availableDeliveryIsland, Integer shippingFeeJeju, Integer shippingFeeIsland, String courierCompany, Long deliveryDate, String pdtName, Address returnAddress, Integer exchangeShippingFee, Integer returnShippingFee, Integer premiumExchangeShippingFee, Integer premiumReturnShippingFee, CategoryL4 categoryL4, ConsignmentSellerInfo consignmentSellerInfo, List<ProductRequiredInfo> productRequiredInfoList) {
+    public ProductBoard(String title, String brand, SalesSite salesSite, Boolean isEachShippingFee, Boolean isPremium, Boolean isCrossBorderShipping, Boolean isOnlineOnly, Integer shippingFee, Integer shippingFreeOver, Boolean availableDeliveryJeju, Boolean availableDeliveryIsland, Integer shippingFeeJeju, Integer shippingFeeIsland, String courierCompany, Long deliveryDate, String pdtName, Address returnAddress, Integer exchangeShippingFee, Integer returnShippingFee, Integer premiumExchangeShippingFee, Integer premiumReturnShippingFee) {
         this.title = title;
         this.brand = brand;
         this.salesSite = salesSite;
-        this.tag = tag;
         this.isEachShippingFee = isEachShippingFee;
         this.isPremium = isPremium;
         this.isCrossBorderShipping = isCrossBorderShipping;
@@ -165,12 +163,12 @@ public class ProductBoard extends BaseEntity {
         this.returnShippingFee = returnShippingFee;
         this.premiumExchangeShippingFee = premiumExchangeShippingFee;
         this.premiumReturnShippingFee = premiumReturnShippingFee;
-        this.categoryL4 = categoryL4;
-        this.consignmentSellerInfo = consignmentSellerInfo;
-        this.productRequiredInfoList = productRequiredInfoList;
+        this.totalReviewQty = 0;
+        this.totalScore = 0;
+        this.salesVol = 0;
     }
 
-    public ProductBoard linkToProductList(List<MainProduct> mainProductList) {
+    public ProductBoard linkToMainProductList(List<MainProduct> mainProductList) {
         this.mainProductList = mainProductList;
         long min = mainProductList.get(0).getPrice();
         for (MainProduct mainProduct : mainProductList) {
@@ -197,6 +195,7 @@ public class ProductBoard extends BaseEntity {
     }
 
     // 역방향 필요없어서 단방향으로만 연결됨
+
     public ProductBoard linkToProductThumbImgList(List<ProductImg> thumbImgList) {
         this.mainImgPath = thumbImgList.get(0).getImgPath();
         this.mainImgTitle = thumbImgList.get(0).getImgTitle();
@@ -204,8 +203,8 @@ public class ProductBoard extends BaseEntity {
         thumbImgList.forEach(img -> img.linkToProductBoardThumb(this));
         return this;
     }
-
     // 역방향 필요없어서 단방향으로만 연결됨
+
     public ProductBoard linkToProductDetailImgList(List<ProductImg> detailImgList) {
         this.detailImgList = detailImgList;
         detailImgList.forEach(img -> img.linkToProductBoardDetail(this));

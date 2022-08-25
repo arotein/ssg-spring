@@ -20,15 +20,18 @@ public class UserController {
 
     @PreAuthorize("isAnonymous()")
     @PostMapping("/signUp")
-    public CommonResponse<String> signUp(@Validated @RequestBody SignUpReqDto dto) {
+    public CommonResponse signUp(@Validated @RequestBody SignUpReqDto dto) {
         userService.signUp(dto);
-        return new CommonResponse<String>()
-                .setData("회원가입이 완료되었습니다.");
+        return CommonResponse.builder()
+                .data("회원가입이 완료되었습니다.")
+                .build();
     }
 
     // true: 중복임, false: 중복아님 -> 사용가능
     @PostMapping("/duplCheck/loginId")
-    public Boolean checkForLoginIdDuplicates(@Validated @RequestBody CheckDuplicate checkDuplicate) {
-        return userService.checkForLoginIdDuplicate(checkDuplicate.getLoginId());
+    public CommonResponse checkForLoginIdDuplicates(@Validated @RequestBody CheckDuplicate checkDuplicate) {
+        return CommonResponse.builder()
+                .data(userService.checkForLoginIdDuplicate(checkDuplicate.getLoginId()))
+                .build();
     }
 }

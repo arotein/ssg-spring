@@ -1,8 +1,6 @@
 package com.youngjo.ssg.domain.product.service;
 
-import com.youngjo.ssg.domain.product.domain.CategoryL4;
-import com.youngjo.ssg.domain.product.domain.ProductBoard;
-import com.youngjo.ssg.domain.product.domain.ProductBoardLike;
+import com.youngjo.ssg.domain.product.domain.*;
 import com.youngjo.ssg.domain.product.dto.request.BoardSortFilterReqDto;
 import com.youngjo.ssg.domain.product.dto.request.AddPdtBoardReqDto;
 import com.youngjo.ssg.domain.product.dto.response.BoardListResDto;
@@ -10,6 +8,7 @@ import com.youngjo.ssg.domain.product.dto.response.BoardResDto;
 import com.youngjo.ssg.domain.product.dto.response.PdtBoardDetailResDto;
 import com.youngjo.ssg.domain.product.repository.CategoryL4Repository;
 import com.youngjo.ssg.domain.product.repository.ProductRepository;
+import com.youngjo.ssg.domain.user.domain.Address;
 import com.youngjo.ssg.domain.user.repository.UserRepository;
 import com.youngjo.ssg.global.enumeration.SalesSite;
 import com.youngjo.ssg.global.security.bean.ClientInfoLoader;
@@ -31,7 +30,31 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public void addPdtBoard(AddPdtBoardReqDto addPdtBoardReqDto) {
+    public Boolean addPdtBoard(AddPdtBoardReqDto addPdtBoardReqDto) {
+        Address address = Address.builder()
+                .city(addPdtBoardReqDto.getReturnAddress().getCity())
+                .street(addPdtBoardReqDto.getReturnAddress().getStreet())
+                .detail(addPdtBoardReqDto.getReturnAddress().getDetail())
+                .postalCode(addPdtBoardReqDto.getReturnAddress().getPostalCode())
+                .build()
+                .returnThis();
+
+        List<Tag> tagList = addPdtBoardReqDto.getTagList().stream()
+                .map(tag -> Tag.builder().keyword(tag.getKeyword()).build())
+                .collect(Collectors.toList());
+
+        List<MainProduct> pdtList = addPdtBoardReqDto.getMainProductList().stream()
+                .map(pdt -> MainProduct.builder()
+                        .modelCode(pdt.getModelCode())
+                        .optionName1(pdt.getOptionName1())
+                        .optionName2(pdt.getOptionName2())
+                        .optionValue1(pdt.getOptionValue1())
+                        .optionValue2(pdt.getOptionValue2())
+                        .price(pdt.getPrice())
+                        .stock(pdt.getStock())
+                        .build())
+                .collect(Collectors.toList());
+
         CategoryL4 ctgL4 = categoryL4Repository.findById(addPdtBoardReqDto.getCtgL4Id()).plusPdtQty();
         ctgL4.getCategoryL3().plusPdtQty()
                 .getCategoryL2().plusPdtQty()
@@ -42,7 +65,6 @@ public class ProductServiceImpl implements ProductService {
                         .title(addPdtBoardReqDto.getTitle())
                         .brand(addPdtBoardReqDto.getBrand())
                         .salesSite(SalesSite.CONSTRUCT.findInstance(addPdtBoardReqDto.getSalesSite()))
-                        .tag(addPdtBoardReqDto.getTagList())
                         .isEachShippingFee(addPdtBoardReqDto.getIsEachShippingFee())
                         .isPremium(addPdtBoardReqDto.getIsPremium())
                         .isCrossBorderShipping(addPdtBoardReqDto.getIsCrossBorderShipping())
@@ -55,25 +77,23 @@ public class ProductServiceImpl implements ProductService {
                         .shippingFeeIsland(addPdtBoardReqDto.getShippingFeeIsland())
                         .courierCompany(addPdtBoardReqDto.getCourierCompany())
                         .pdtName(addPdtBoardReqDto.getPdtName())
-                        .returnAddress(addPdtBoardReqDto.getReturnAddress())
                         .exchangeShippingFee(addPdtBoardReqDto.getExchangeShippingFee())
                         .returnShippingFee(addPdtBoardReqDto.getReturnShippingFee())
                         .premiumExchangeShippingFee(addPdtBoardReqDto.getPremiumExchangeShippingFee())
                         .premiumReturnShippingFee(addPdtBoardReqDto.getPremiumReturnShippingFee())
-                        .consignmentSellerInfo(addPdtBoardReqDto.getConsignmentSellerInfo())
-                        .productRequiredInfoList(addPdtBoardReqDto.getRequiredInfoList())
 
                         .build()
 
                         .linkToProductThumbImgList(addPdtBoardReqDto.getThumbImgList())
                         .linkToProductDetailImgList(addPdtBoardReqDto.getDetailImgList())
-                        .linkToProductList(addPdtBoardReqDto.getMainProductList())
+                        .linkToMainProductList(pdtList)
                         .linkToCategoryL4(ctgL4)
-                        .linkToReturnAddress(addPdtBoardReqDto.getReturnAddress())
+                        .linkToReturnAddress(address)
                         .linkToProductRequiredInfoList(addPdtBoardReqDto.getRequiredInfoList())
                         .linkToConsignmentSellerInfo(addPdtBoardReqDto.getConsignmentSellerInfo())
-                        .linkToTagList(addPdtBoardReqDto.getTagList())
+                        .linkToTagList(tagList)
         );
+        return true;
     }
 
     // 상품 상세보기
@@ -168,7 +188,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void pressBoardLike(Long boardId) {
+    public Boolean pressBoardLike(Long boardId) {
         ProductBoardLike boardLike = productRepository.findBoardLikeByBoardIdAndUserId(boardId, clientInfoLoader.getUserId());
         if (boardLike != null) {
             boardLike.pressLike();
@@ -177,5 +197,6 @@ public class ProductServiceImpl implements ProductService {
                     .linkToProductBoard(productRepository.findBoardById(boardId))
                     .linkToUser(userRepository.findUserById(clientInfoLoader.getUserId())));
         }
+        return true;
     }
 }
