@@ -1,11 +1,13 @@
 package com.youngjo.ssg.domain.product.service;
 
 import com.youngjo.ssg.domain.product.domain.*;
-import com.youngjo.ssg.domain.product.dto.request.BoardSortFilterReqDto;
 import com.youngjo.ssg.domain.product.dto.request.AddPdtBoardReqDto;
+import com.youngjo.ssg.domain.product.dto.request.BoardSortFilterReqDto;
+import com.youngjo.ssg.domain.product.dto.request.PdtOption1ReqDto;
 import com.youngjo.ssg.domain.product.dto.response.BoardListResDto;
 import com.youngjo.ssg.domain.product.dto.response.BoardResDto;
 import com.youngjo.ssg.domain.product.dto.response.PdtBoardDetailResDto;
+import com.youngjo.ssg.domain.product.dto.response.PdtOption2ResDto;
 import com.youngjo.ssg.domain.product.repository.CategoryL4Repository;
 import com.youngjo.ssg.domain.product.repository.ProductRepository;
 import com.youngjo.ssg.domain.user.domain.Address;
@@ -16,7 +18,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,8 +51,6 @@ public class ProductServiceImpl implements ProductService {
         List<MainProduct> pdtList = addPdtBoardReqDto.getMainProductList().stream()
                 .map(pdt -> MainProduct.builder()
                         .modelCode(pdt.getModelCode())
-                        .optionName1(pdt.getOptionName1())
-                        .optionName2(pdt.getOptionName2())
                         .optionValue1(pdt.getOptionValue1())
                         .optionValue2(pdt.getOptionValue2())
                         .price(pdt.getPrice())
@@ -77,6 +80,8 @@ public class ProductServiceImpl implements ProductService {
                         .shippingFeeIsland(addPdtBoardReqDto.getShippingFeeIsland())
                         .courierCompany(addPdtBoardReqDto.getCourierCompany())
                         .pdtName(addPdtBoardReqDto.getPdtName())
+                        .optionName1(addPdtBoardReqDto.getOptionName1())
+                        .optionName2(addPdtBoardReqDto.getOptionName2())
                         .exchangeShippingFee(addPdtBoardReqDto.getExchangeShippingFee())
                         .returnShippingFee(addPdtBoardReqDto.getReturnShippingFee())
                         .premiumExchangeShippingFee(addPdtBoardReqDto.getPremiumExchangeShippingFee())
@@ -92,15 +97,31 @@ public class ProductServiceImpl implements ProductService {
                         .linkToProductRequiredInfoList(addPdtBoardReqDto.getRequiredInfoList())
                         .linkToConsignmentSellerInfo(addPdtBoardReqDto.getConsignmentSellerInfo())
                         .linkToTagList(tagList)
+
+                        .devCodeAddTotalReviewAndScore(addPdtBoardReqDto.getTotalReviewQty(), addPdtBoardReqDto.getTotalScore())
         );
         return true;
     }
 
     // 상품 상세보기
+    @Transactional(readOnly = true)
     @Override
     public PdtBoardDetailResDto getBoardById(Long boardId) {
-        return new PdtBoardDetailResDto(productRepository.findBoardById(boardId))
-                .boardLike(clientInfoLoader.getUserId() == null ? false : productRepository.findBoardLikeByBoardIdAndUserId(boardId, clientInfoLoader.getUserId()).getValue());
+        ProductBoard board = productRepository.findBoardById(boardId);
+        return new PdtBoardDetailResDto(board)
+                .addOption1Set(board.getMainProductList().stream().map(MainProduct::getOptionValue1).collect(Collectors.toSet()))
+                .boardLike(clientInfoLoader.getUserId() == null
+                        ? false
+                        : productRepository.findBoardLikeByBoardIdAndUserId(boardId, clientInfoLoader.getUserId()).getValue());
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<PdtOption2ResDto> getPdtOption2List(PdtOption1ReqDto reqDto) {
+        return productRepository.findAllMainProductByOption(reqDto.getBoardId(), reqDto.getOpt1Value())
+                .stream()
+                .map(pdt -> new PdtOption2ResDto(pdt.getId(), pdt.getOptionValue2(), pdt.getPrice(), pdt.getStock()))
+                .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
@@ -122,13 +143,19 @@ public class ProductServiceImpl implements ProductService {
             likeMap = new HashMap<>();
         }
 
+        // 총 검색 결과
+        Long boardCount = productRepository.countAllBoardByCtgId(
+                id, null, null,
+                queryDto.getMinPrice(),
+                queryDto.getMaxPrice());
+
         return boardList.size() > 0
                 ? new BoardListResDto(
-                boardList.get(0).getCategoryL4().getCategoryL3().getCategoryL2().getPdtQty(),
+                boardCount,
                 boardList.stream()
                         .map(board -> new BoardResDto(board, likeMap.getOrDefault(board.getId(), false)))
                         .collect(Collectors.toList()))
-                : new BoardListResDto(0, Arrays.asList());
+                : new BoardListResDto(0L, Arrays.asList());
     }
 
     @Transactional(readOnly = true)
@@ -150,13 +177,19 @@ public class ProductServiceImpl implements ProductService {
             likeMap = new HashMap<>();
         }
 
+        // 총 검색 결과
+        Long boardCount = productRepository.countAllBoardByCtgId(
+                null, id, null,
+                queryDto.getMinPrice(),
+                queryDto.getMaxPrice());
+
         return boardList.size() > 0
                 ? new BoardListResDto(
-                boardList.get(0).getCategoryL4().getCategoryL3().getPdtQty(),
+                boardCount,
                 boardList.stream()
                         .map(board -> new BoardResDto(board, likeMap.getOrDefault(board.getId(), false)))
                         .collect(Collectors.toList()))
-                : new BoardListResDto(0, Arrays.asList());
+                : new BoardListResDto(0L, Arrays.asList());
     }
 
     @Transactional(readOnly = true)
@@ -178,13 +211,19 @@ public class ProductServiceImpl implements ProductService {
             likeMap = new HashMap<>();
         }
 
+        // 총 검색 결과
+        Long boardCount = productRepository.countAllBoardByCtgId(
+                null, null, id,
+                queryDto.getMinPrice(),
+                queryDto.getMaxPrice());
+
         return boardList.size() > 0
                 ? new BoardListResDto(
-                boardList.get(0).getCategoryL4().getPdtQty(),
+                boardCount,
                 boardList.stream()
                         .map(board -> new BoardResDto(board, likeMap.getOrDefault(board.getId(), false)))
                         .collect(Collectors.toList()))
-                : new BoardListResDto(0, Arrays.asList());
+                : new BoardListResDto(0L, Arrays.asList());
     }
 
     @Override

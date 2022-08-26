@@ -27,8 +27,7 @@ public class PurchaseMiddleProduct {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "purchase_middle_product_id")
     private Long id;
-
-    public Integer pdtQty;
+    private Integer pdtQty;
     // == Delivery Info ==
     @Enumerated(EnumType.STRING)
     private DeliveryStatus nowDeliveryStatus;
@@ -46,10 +45,12 @@ public class PurchaseMiddleProduct {
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "main_product_id")
-    private MainProduct mainProductList;
+    private MainProduct mainProduct;
 
     @Builder
     public PurchaseMiddleProduct(Integer pdtQty) {
+        this.nowDeliveryStatus = DeliveryStatus.CHECKING_PAYMENT;
+        this.deliveryHistory.put(DeliveryStatus.CHECKING_PAYMENT, new Timestamp(System.currentTimeMillis()));
         this.pdtQty = pdtQty;
     }
 
@@ -67,9 +68,13 @@ public class PurchaseMiddleProduct {
         return this;
     }
 
-    public PurchaseMiddleProduct linkToMainProductList(MainProduct mainProductList) {
-        this.mainProductList = mainProductList;
-        mainProductList.linkToPurchaseMiddleProduct(this);
+    public PurchaseMiddleProduct linkToMainProduct(MainProduct mainProduct) {
+        this.mainProduct = mainProduct;
+        mainProduct.linkToPurchaseMiddleProduct(this);
+        return this;
+    }
+
+    public PurchaseMiddleProduct returnThis() {
         return this;
     }
 }

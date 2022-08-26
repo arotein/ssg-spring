@@ -1,5 +1,8 @@
 package com.youngjo.ssg.domain.purchase.dto.response;
 
+import com.youngjo.ssg.domain.purchase.domain.KakaoPayment;
+import com.youngjo.ssg.domain.purchase.domain.UserPurchase;
+import com.youngjo.ssg.global.common.AddressConverter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class PurchaseCompletedResDto {
-    private String nowDeliveryStatus;
+    private String purchaseStatus;
     // == Purchase Info ==
     private String buyerName;
     private String buyerPhoneNumber;
@@ -20,7 +23,7 @@ public class PurchaseCompletedResDto {
 
     // == Product Info ==
     // 생략
-    
+
     // == Delivery Address ==
     private String recipientName;
     private String phoneNumber;
@@ -34,4 +37,25 @@ public class PurchaseCompletedResDto {
     private String install_month;
     private String interest_free_install;
     private Integer total;
+
+    public PurchaseCompletedResDto(UserPurchase userPurchase) {
+        this.purchaseStatus = userPurchase.getPurchaseStatus().getValue();
+        this.buyerName = userPurchase.getBuyerName();
+        this.buyerPhoneNumber = userPurchase.getBuyerPhoneNumber();
+        this.buyerEmail = userPurchase.getBuyerEmail();
+        this.refundWay = userPurchase.getRefundWay();
+        this.requestMessage = userPurchase.getRequestMessage();
+        this.receiveWay = userPurchase.getReceiveWay();
+        this.recipientName = userPurchase.getRecipientName();
+        this.phoneNumber = userPurchase.getPhoneNumber();
+        this.secondContactNumber = userPurchase.getSecondContactNumber();
+        this.recipientAddress = AddressConverter.convertToString(userPurchase.getRecipientAddress());
+        KakaoPayment kakaoPayment = userPurchase.getKakaoPayment();
+        this.payment_method_type = kakaoPayment.getPayment_method_type();
+        this.purchase_corp = kakaoPayment.getPurchase_corp();
+        this.card_type = kakaoPayment.getCard_type();
+        this.install_month = kakaoPayment.getInstall_month();
+        this.interest_free_install = kakaoPayment.getInterest_free_install();
+        this.total = kakaoPayment.getTotal();
+    }
 }

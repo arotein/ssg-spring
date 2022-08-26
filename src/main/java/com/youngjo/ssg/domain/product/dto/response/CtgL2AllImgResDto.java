@@ -11,6 +11,6 @@ public class CtgL2AllImgResDto {
     private PdtStaticDto.CtgL2ImgResDto ctgL2;
 
     public CtgL2AllImgResDto(CategoryL2 ctgL2) {
-        this.ctgL2 = new PdtStaticDto.CtgL2ImgResDto(ctgL2.getId(), ctgL2.getName(), ctgL2.getImgUrl());
+        this.ctgL2 = new PdtStaticDto.CtgL2ImgResDto(ctgL2.getId(), ctgL2.getName(), ctgL2.getImgUrl(), ctgL2.getImgAlt());
     }
 }

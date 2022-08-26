@@ -23,6 +23,7 @@ public class CategoryL1 extends Category {
     @Column(unique = true)
     private String name;
     private String imgUrl;
+    private String imgAlt;
     private Integer pdtQty = 0; // Auto Count
 
     //==매핑==
@@ -33,7 +34,9 @@ public class CategoryL1 extends Category {
     @Builder
     public CategoryL1(String name, String imgUrl) {
         this.name = name;
+        this.imgAlt = name;
         this.imgUrl = imgUrl;
+
     }
 
     public void setImgUrl(String imgUrl) {

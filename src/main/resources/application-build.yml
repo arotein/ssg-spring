@@ -6,6 +6,11 @@ server:
       charset: UTF-8
       enable: true
       force: true
+  tomcat:
+    threads:
+      max: 100
+      min-spare: 50
+    accept-count: 50 # 작업 큐
 # 키 생성 커맨드
 # keytool -genkey -storetype PKCS12 -keyalg EC -sigalg SHA256withECDSA -groupname secp256r1 -validity 365 -keystore arotein-keystore.p12 -alias arotein-keystore
 #  ssl:
@@ -34,8 +39,8 @@ spring:
 
 logging.level:
   root: info
-  org.hibernate:
-    SQL: debug
+#  org.hibernate:
+#    SQL: debug
 
 global:
   jwt-token:

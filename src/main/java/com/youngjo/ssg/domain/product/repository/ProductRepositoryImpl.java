@@ -60,9 +60,16 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public List<MainProduct> findAllMainPdtByIds(List<Long> pdtIds) {
+    public List<MainProduct> findAllMainPdtWithBoardByIds(List<Long> pdtIds) {
         return queryFactory.selectFrom(mainProduct)
                 .join(mainProduct.productBoard, productBoard).fetchJoin()
+                .where(mainProduct.id.in(pdtIds))
+                .fetch();
+    }
+
+    @Override
+    public List<MainProduct> findAllMainPdtByIds(List<Long> pdtIds) {
+        return queryFactory.selectFrom(mainProduct)
                 .where(mainProduct.id.in(pdtIds))
                 .fetch();
     }
@@ -119,9 +126,9 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public List<ProductBoard> findBoardListByL2Id(Long id, Integer offset, Integer limit, String sort, Long minPrice, Long maxPrice) {
         return queryFactory.selectFrom(productBoard)
-                .join(productBoard.categoryL4, categoryL4).fetchJoin()
-                .join(categoryL4.categoryL3, categoryL3).fetchJoin()
-                .join(categoryL3.categoryL2, categoryL2).fetchJoin()
+                .join(productBoard.categoryL4, categoryL4)
+                .join(categoryL4.categoryL3, categoryL3)
+                .join(categoryL3.categoryL2, categoryL2)
                 .where(categoryL2.id.eq(id),
                         goeMinPrice(minPrice),
                         loeMaxPrice(maxPrice))
@@ -135,8 +142,8 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public List<ProductBoard> findBoardListByL3Id(Long id, Integer offset, Integer limit, String sort, Long minPrice, Long maxPrice) {
         return queryFactory.selectFrom(productBoard)
-                .join(productBoard.categoryL4, categoryL4).fetchJoin()
-                .join(categoryL4.categoryL3, categoryL3).fetchJoin()
+                .join(productBoard.categoryL4, categoryL4)
+                .join(categoryL4.categoryL3, categoryL3)
                 .where(categoryL3.id.eq(id),
                         goeMinPrice(minPrice),
                         loeMaxPrice(maxPrice))
@@ -150,7 +157,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public List<ProductBoard> findBoardListByL4Id(Long id, Integer offset, Integer limit, String sort, Long minPrice, Long maxPrice) {
         return queryFactory.selectFrom(productBoard)
-                .join(productBoard.categoryL4, categoryL4).fetchJoin()
+                .join(productBoard.categoryL4, categoryL4)
                 .where(categoryL4.id.eq(id),
                         goeMinPrice(minPrice),
                         loeMaxPrice(maxPrice))
@@ -159,6 +166,24 @@ public class ProductRepositoryImpl implements ProductRepository {
                 .limit(limit)
                 .distinct()
                 .fetch();
+    }
+
+    // 카테고리 검색 count(*) -> 일단 사용. 데이터 수가 많아지면 최적화 고민
+    @Override
+    public Long countAllBoardByCtgId(Long ctgL2Id, Long ctgL3Id, Long ctgL4Id, Long minPrice, Long maxPrice) {
+        return queryFactory.select(productBoard.count())
+                .from(productBoard)
+                .join(productBoard.categoryL4, categoryL4)
+                .join(categoryL4.categoryL3, categoryL3)
+                .join(categoryL3.categoryL2, categoryL2)
+                .where(eqCtgL2Id(ctgL2Id),
+                        eqCtgL3Id(ctgL3Id),
+                        eqCtgL4Id(ctgL4Id),
+                        goeMinPrice(minPrice),
+                        loeMaxPrice(maxPrice))
+                .distinct()
+                .fetchOne();
+
     }
 
     // 통합검색
@@ -178,12 +203,49 @@ public class ProductRepositoryImpl implements ProductRepository {
                 .fetch();
     }
 
+    // 통합검색 count(*) -> 일단 사용. 데이터 수가 많아지면 최적화 고민
+    @Override
+    public Long countAllBoardByQuery(String query, Long minPrice, Long maxPrice) {
+        return queryFactory.select(productBoard.count())
+                .from(productBoard)
+                .join(productBoard.tag, tag)
+                .where(tag.keyword.equalsIgnoreCase(query)
+                                .or(productBoard.title.containsIgnoreCase(query))
+                                .or(productBoard.pdtName.containsIgnoreCase(query)),
+                        goeMinPrice(minPrice),
+                        loeMaxPrice(maxPrice))
+                .distinct()
+                .fetchOne();
+    }
+
     @Override
     public MainProduct findMainProductById(Long id) {
         return queryFactory.selectFrom(mainProduct)
                 .where(mainProduct.id.eq(id))
-                .setLockMode(LockModeType.PESSIMISTIC_READ) // CUD Lock
+                .setLockMode(LockModeType.PESSIMISTIC_READ)
                 .fetchOne();
+    }
+
+    @Override
+    public List<MainProduct> findAllMainProductByOption(Long boardId, String option1) {
+        return queryFactory.selectFrom(mainProduct)
+                .join(mainProduct.productBoard, productBoard)
+                .where(productBoard.id.eq(boardId),
+                        mainProduct.optionValue1.eq(option1))
+                .orderBy(mainProduct.optionValue2.desc())
+                .fetch();
+    }
+
+    private BooleanExpression eqCtgL2Id(Long id) {
+        return id == null ? null : categoryL2.id.eq(id);
+    }
+
+    private BooleanExpression eqCtgL3Id(Long id) {
+        return id == null ? null : categoryL3.id.eq(id);
+    }
+
+    private BooleanExpression eqCtgL4Id(Long id) {
+        return id == null ? null : categoryL4.id.eq(id);
     }
 
     private BooleanExpression goeMinPrice(Long minPrice) {

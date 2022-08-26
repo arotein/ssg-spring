@@ -15,7 +15,7 @@ public class BoardResDto {
     //    private Integer discountRate; -> 나중에 구현
     // == Auto Count ==
     private Integer totalReviewQty;
-    private Integer totalScore;
+    private Float totalScore;
     private Boolean isSamePrice;
     private Long minPrice;
     // == ShippingInfo ==
@@ -32,7 +32,7 @@ public class BoardResDto {
         this.brand = productBoard.getBrand();
         this.salesSite = productBoard.getSalesSite().getValue();
         this.totalReviewQty = productBoard.getTotalReviewQty();
-        this.totalScore = productBoard.getTotalScore();
+        this.totalScore = productBoard.getTotalScore() / (Float) 10F;
         this.isSamePrice = productBoard.getIsSamePrice();
         this.minPrice = productBoard.getMinPrice();
         this.shippingFee = productBoard.getShippingFee();

@@ -5,7 +5,7 @@
 2. spring boot 2.6.8으로 작성되었습니다.
 
 ## 🍜 실행 순서
-1. application.yml -> DB설정 확인
+1. application.yml -> DB설정 및 환경변수 확인
 2. Gradle -> Tasks -> other -> compileQuerydsl 실행
 3. 애플리케이션 실행
 
@@ -18,7 +18,7 @@
 6. 장바구니(domain.user)
 7. 상품 검색(domain.search)
 8. 배송지 관리(domain.user)
-9. 상품 주문(domain.purchase) -> 예정
+9. 상품 주문(domain.purchase) -> 진행중
 
 ## 🍜 사용된 환경변수
 1. ${SSG_DB_USERNAME}

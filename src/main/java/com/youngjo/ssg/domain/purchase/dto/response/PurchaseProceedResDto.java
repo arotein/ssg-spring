@@ -22,7 +22,7 @@ import java.util.List;
 @NoArgsConstructor
 public class PurchaseProceedResDto {
     // == Delivery Address ==
-    private PurchaseStaticDto.DeliveryAddrDto deliveryAddress;
+    private PurchaseStaticDto.MyDeliAddrDto myDeliAddr;
 
     // == Buyer Info ==
     private String buyerName;
@@ -35,7 +35,7 @@ public class PurchaseProceedResDto {
     private List<PurchaseStaticDto.BoardResDto> pdtList = new ArrayList<>();
 
     public PurchaseProceedResDto(MyDeliveryAddress myDeliAddr, User user, List<MainProduct> pdtListWithBoard) {
-        this.deliveryAddress = new PurchaseStaticDto.DeliveryAddrDto(
+        this.myDeliAddr = new PurchaseStaticDto.MyDeliAddrDto(
                 myDeliAddr.getId(),
                 myDeliAddr.getAlias(),
                 myDeliAddr.getRecipientName(),

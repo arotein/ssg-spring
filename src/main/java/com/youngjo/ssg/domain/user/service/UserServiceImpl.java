@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void signUp(SignUpReqDto dto) {
+    public Boolean signUp(SignUpReqDto dto) {
         String rawPassword = dto.getPassword();
         if (rawPassword == null || !rawPassword.matches("^[\\w/\\{\\}\\[\\]\\/?.,;:|\\)*~`!^\\-+<>@\\#$%&\\\\\\=\\(\\'\\\"]{8,40}$")) {
             throw new IllegalArgumentException("Invalid password");
@@ -50,6 +50,7 @@ public class UserServiceImpl implements UserService {
                 .linkToUser(user);
 
         userRepository.saveUser(user);
+        return true;
     }
 
     @Transactional(readOnly = true)

@@ -6,6 +6,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+/***
+ * Propagation.MANDATORY : 부모 트랜잭션에 따름, 부모 트랜잭션 필수
+ * 상품 수정시 재고값이 아닌 증가량, 감소량을 받음.
+ * 상품 취소로직 -> increaseAmount -> 취소완료 후 PurchaseMiddleProduct.DeliveryStatus를 CANCELED로 설정
+ */
 @Component
 @Transactional(propagation = Propagation.MANDATORY, timeout = 5)
 @RequiredArgsConstructor

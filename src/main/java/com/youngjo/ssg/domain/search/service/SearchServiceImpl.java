@@ -28,7 +28,8 @@ public class SearchServiceImpl implements SearchService {
     @Override
     public BoardListResDto findSearchResult(String query, BoardSortFilterReqDto queryDto) {
         // 검색결과 리턴
-        List<ProductBoard> boardList = productRepository.findAllBoardByQuery(query,
+        List<ProductBoard> boardList = productRepository.findAllBoardByQuery(
+                query,
                 queryDto.getLimit() * (queryDto.getPage() - 1),
                 queryDto.getLimit(),
                 queryDto.getSort(),
@@ -52,7 +53,14 @@ public class SearchServiceImpl implements SearchService {
             search.plusFrequency();
         }
 
-        return new BoardListResDto(boardList.size(),
+        // 총 검색 결과
+        Long boardCount = productRepository.countAllBoardByQuery(
+                query,
+                queryDto.getMinPrice(),
+                queryDto.getMaxPrice());
+
+        return new BoardListResDto(
+                boardCount,
                 boardList.stream()
                         .map(board -> new BoardResDto(board, boardLikeMap.getOrDefault(board.getId(), null)))
                         .collect(Collectors.toList()));

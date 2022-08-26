@@ -1,6 +1,7 @@
 package com.youngjo.ssg.domain.purchase.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.youngjo.ssg.domain.purchase.dto.PurchaseStaticDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -60,7 +61,7 @@ public class KakaoPayment {
     private UserPurchase userPurchase;
 
     @Builder
-    public KakaoPayment(String aid, String tid, String cid, String sid, String partner_order_id, String partner_user_id, String payment_method_type, String item_name, String item_code, Integer quantity, Timestamp created_at, Timestamp approved_at, String payload, Integer total, Integer tax_free, Integer vat, Integer point, Integer discount, Integer green_deposit, String purchase_corp, String purchase_corp_code, String issuer_corp, String issuer_corp_code, String kakaopay_purchase_corp, String kakaopay_purchase_corp_code, String kakaopay_issuer_corp, String kakaopay_issuer_corp_code, String bin, String card_type, String install_month, String approved_id, String card_mid, String interest_free_install, String card_item_code, UserPurchase userPurchase) {
+    public KakaoPayment(String aid, String tid, String cid, String sid, String partner_order_id, String partner_user_id, String payment_method_type, String item_name, String item_code, Integer quantity, Timestamp created_at, Timestamp approved_at, String payload, Integer total, Integer tax_free, Integer vat, Integer point, Integer discount, Integer green_deposit, String purchase_corp, String purchase_corp_code, String issuer_corp, String issuer_corp_code, String kakaopay_purchase_corp, String kakaopay_purchase_corp_code, String kakaopay_issuer_corp, String kakaopay_issuer_corp_code, String bin, String card_type, String install_month, String approved_id, String card_mid, String interest_free_install, String card_item_code) {
         this.aid = aid;
         this.tid = tid;
         this.cid = cid;
@@ -95,11 +96,50 @@ public class KakaoPayment {
         this.card_mid = card_mid;
         this.interest_free_install = interest_free_install;
         this.card_item_code = card_item_code;
-        this.userPurchase = userPurchase;
     }
 
     public KakaoPayment linkToUserPurchase(UserPurchase purchase) {
         this.userPurchase = purchase;
+        return this;
+    }
+
+    public KakaoPayment addDataFromDto(PurchaseStaticDto.KakaoPaymentReqDto dto) {
+        this.aid = dto.getAid();
+        this.tid = dto.getTid();
+        this.cid = dto.getCid();
+        this.sid = dto.getSid();
+        this.partner_order_id = dto.getPartner_order_id();
+        this.partner_user_id = dto.getPartner_user_id();
+        this.payment_method_type = dto.getPayment_method_type();
+        this.item_name = dto.getItem_name();
+        this.item_code = dto.getItem_code();
+        this.quantity = dto.getQuantity();
+        this.created_at = dto.getCreated_at();
+        this.approved_at = dto.getApproved_at();
+        this.payload = dto.getPayload();
+        // amount
+        this.total = dto.getAmount().getTotal();
+        this.tax_free = dto.getAmount().getTax_free();
+        this.vat = dto.getAmount().getVat();
+        this.point = dto.getAmount().getPoint();
+        this.discount = dto.getAmount().getDiscount();
+        this.green_deposit = dto.getAmount().getGreen_deposit();
+        // card_info
+        this.purchase_corp = dto.getCard_info().getPurchase_corp();
+        this.purchase_corp_code = dto.getCard_info().getPurchase_corp_code();
+        this.issuer_corp = dto.getCard_info().getIssuer_corp();
+        this.issuer_corp_code = dto.getCard_info().getIssuer_corp_code();
+        this.kakaopay_purchase_corp = dto.getCard_info().getKakaopay_purchase_corp();
+        this.kakaopay_purchase_corp_code = dto.getCard_info().getKakaopay_purchase_corp_code();
+        this.kakaopay_issuer_corp = dto.getCard_info().getKakaopay_issuer_corp();
+        this.kakaopay_issuer_corp_code = dto.getCard_info().getKakaopay_issuer_corp_code();
+        this.bin = dto.getCard_info().getBin();
+        this.card_type = dto.getCard_info().getCard_type();
+        this.install_month = dto.getCard_info().getInstall_month();
+        this.approved_id = dto.getCard_info().getApproved_id();
+        this.card_mid = dto.getCard_info().getCard_mid();
+        this.interest_free_install = dto.getCard_info().getInterest_free_install();
+        this.card_item_code = dto.getCard_info().getCard_item_code();
         return this;
     }
 }

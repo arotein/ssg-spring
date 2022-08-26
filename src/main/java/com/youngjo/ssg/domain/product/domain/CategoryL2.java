@@ -26,6 +26,7 @@ public class CategoryL2 extends Category {
     @Column(unique = true)
     private String name;
     private String imgUrl;
+    private String imgAlt;
     private Integer pdtQty = 0; // Auto Count
 
     //==매핑==

@@ -6,10 +6,7 @@ import com.youngjo.ssg.domain.user.domain.MyDeliveryAddress;
 import com.youngjo.ssg.domain.user.domain.User;
 import com.youngjo.ssg.global.common.BaseEntity;
 import com.youngjo.ssg.global.enumeration.PurchaseStatus;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -24,10 +21,14 @@ import java.util.List;
  * phoneNumber : 수령인 휴대폰 010-0000-0000
  * secondContactNumber : 두번째 연락처 00(또는 000)-000(또는 0000)-0000
  * recipientAddress : 배송지
+ * ==
+ * PurchaseStatus : 구매요청 처리
+ * PurchaseMiddleProduct.DeliveryStatus : 구매처리 완료 후 배송처리
  */
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
+@ToString
 public class UserPurchase extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,6 +60,8 @@ public class UserPurchase extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "kakao_payment_id")
     private KakaoPayment kakaoPayment;
+
+//    private KakaoPaymentCanceled kakaoPaymentCanceled; -> 구현 생략
 
     // == etc. Mapping ==
     @JsonIgnore
@@ -102,6 +105,11 @@ public class UserPurchase extends BaseEntity {
         return this;
     }
 
+    public UserPurchase linkToRecipientAddress(Address address) {
+        this.recipientAddress = address;
+        return this;
+    }
+
     public UserPurchase setRecipientAddressFromMyDeliAddr(MyDeliveryAddress myDeliveryAddress) {
         this.recipientName = myDeliveryAddress.getRecipientName();
         this.phoneNumber = myDeliveryAddress.getPhoneNumber();
@@ -116,8 +124,17 @@ public class UserPurchase extends BaseEntity {
         return this;
     }
 
-    public UserPurchase linkToRecipientAddress(Address address) {
-        this.recipientAddress = address;
+    public UserPurchase setPurchaseStatusToComplete() {
+        this.purchaseStatus = PurchaseStatus.PURCHASE_COMPLETED;
+        return this;
+    }
+
+    public UserPurchase setPurchaseStatusToCanceled() {
+        this.purchaseStatus = PurchaseStatus.PURCHASE_CANCELED;
+        return this;
+    }
+
+    public UserPurchase returnThis() {
         return this;
     }
 }

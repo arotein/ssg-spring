@@ -67,8 +67,10 @@ public class ProductBoard extends BaseEntity {
     private String brand; // -> 목록 검색되게
 
     private SalesSite salesSite; // 판매 싸이트
-    private String mainImgPath; // 메인 썸네일 이미지
     private String mainImgTitle; // 메인 썸네일 이미지 파일명
+    private String mainImgPath; // 메인 썸네일 이미지
+    private String mainImgAlt; // 메인 썸네일 이미지 대체글
+
     @JsonIgnore
     @OneToMany(mappedBy = "productBoard", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Tag> tag = new ArrayList<>();
@@ -90,6 +92,11 @@ public class ProductBoard extends BaseEntity {
 
     // == Product Detail Information =
     private String pdtName;
+    private String optionName1;
+    private String optionName2;
+    @JsonIgnore
+    @OneToMany(mappedBy = "productBoard", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<MainProduct> mainProductList = new ArrayList<>();
 
 //    private List<InstallmentPlan> installmentPlan = new ArrayList<>(); // 할부 -> 카드 엔티티 연결해야할듯
 
@@ -106,7 +113,7 @@ public class ProductBoard extends BaseEntity {
 
     // == Auto Count ==
     private Integer totalReviewQty;
-    private Integer totalScore; // 1~50. 10을 나눠서 사용하면 됨.
+    private Integer totalScore; // 5~50. 10으로 나눠서 리턴
     private Boolean isSamePrice;
     private Long minPrice;
     private Integer salesVol;
@@ -126,9 +133,6 @@ public class ProductBoard extends BaseEntity {
     @JsonIgnore
     @OneToMany(mappedBy = "productBoardDetail", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductImg> detailImgList = new ArrayList<>();
-    @JsonIgnore
-    @OneToMany(mappedBy = "productBoard", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<MainProduct> mainProductList = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "productBoard", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -141,7 +145,7 @@ public class ProductBoard extends BaseEntity {
     // 쿠폰 엔티티 연결(만들기)
 
     @Builder
-    public ProductBoard(String title, String brand, SalesSite salesSite, Boolean isEachShippingFee, Boolean isPremium, Boolean isCrossBorderShipping, Boolean isOnlineOnly, Integer shippingFee, Integer shippingFreeOver, Boolean availableDeliveryJeju, Boolean availableDeliveryIsland, Integer shippingFeeJeju, Integer shippingFeeIsland, String courierCompany, Long deliveryDate, String pdtName, Address returnAddress, Integer exchangeShippingFee, Integer returnShippingFee, Integer premiumExchangeShippingFee, Integer premiumReturnShippingFee) {
+    public ProductBoard(String title, String brand, SalesSite salesSite, Boolean isEachShippingFee, Boolean isPremium, Boolean isCrossBorderShipping, Boolean isOnlineOnly, Integer shippingFee, Integer shippingFreeOver, Boolean availableDeliveryJeju, Boolean availableDeliveryIsland, Integer shippingFeeJeju, Integer shippingFeeIsland, String courierCompany, Long deliveryDate, String pdtName, String optionName1, String optionName2, Address returnAddress, Integer exchangeShippingFee, Integer returnShippingFee, Integer premiumExchangeShippingFee, Integer premiumReturnShippingFee) {
         this.title = title;
         this.brand = brand;
         this.salesSite = salesSite;
@@ -158,6 +162,9 @@ public class ProductBoard extends BaseEntity {
         this.courierCompany = courierCompany;
         this.deliveryDate = deliveryDate;
         this.pdtName = pdtName;
+        this.optionName1 = optionName1;
+        this.optionName2 = optionName2;
+        this.mainImgAlt = pdtName;
         this.returnAddress = returnAddress;
         this.exchangeShippingFee = exchangeShippingFee;
         this.returnShippingFee = returnShippingFee;
@@ -166,6 +173,12 @@ public class ProductBoard extends BaseEntity {
         this.totalReviewQty = 0;
         this.totalScore = 0;
         this.salesVol = 0;
+    }
+
+    public ProductBoard devCodeAddTotalReviewAndScore(Integer totalReviewQty, Integer totalScore) {
+        this.totalReviewQty = totalReviewQty;
+        this.totalScore = totalScore;
+        return this;
     }
 
     public ProductBoard linkToMainProductList(List<MainProduct> mainProductList) {
@@ -195,7 +208,6 @@ public class ProductBoard extends BaseEntity {
     }
 
     // 역방향 필요없어서 단방향으로만 연결됨
-
     public ProductBoard linkToProductThumbImgList(List<ProductImg> thumbImgList) {
         this.mainImgPath = thumbImgList.get(0).getImgPath();
         this.mainImgTitle = thumbImgList.get(0).getImgTitle();
@@ -203,8 +215,8 @@ public class ProductBoard extends BaseEntity {
         thumbImgList.forEach(img -> img.linkToProductBoardThumb(this));
         return this;
     }
-    // 역방향 필요없어서 단방향으로만 연결됨
 
+    // 역방향 필요없어서 단방향으로만 연결됨
     public ProductBoard linkToProductDetailImgList(List<ProductImg> detailImgList) {
         this.detailImgList = detailImgList;
         detailImgList.forEach(img -> img.linkToProductBoardDetail(this));

@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "bae1a602-5707-4fa1-a8ee-3b48bca27992",
+		"_postman_id": "71410ea5-e8e1-4092-94f4-2b2d1bce3f21",
 		"name": "Read, Update, Delete",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "22411101"
+		"_exporter_id": "19498058"
 	},
 	"item": [
 		{
@@ -218,18 +218,18 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:9001/api/pdtBoard/list/ctgL2/1?limit=80&maxPrice=100000",
+							"raw": "http://localhost:9000/api/pdtBoard/list/ctgL2/2?limit=80&maxPrice=500000",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "9001",
+							"port": "9000",
 							"path": [
 								"api",
 								"pdtBoard",
 								"list",
 								"ctgL2",
-								"1"
+								"2"
 							],
 							"query": [
 								{
@@ -238,7 +238,7 @@
 								},
 								{
 									"key": "maxPrice",
-									"value": "100000"
+									"value": "500000"
 								}
 							]
 						}
@@ -251,7 +251,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:9001/api/pdtBoard/list/ctgL3/1?limit=80&maxPrice=10000",
+							"raw": "http://localhost:9001/api/pdtBoard/list/ctgL3/1?limit=80&maxPrice=1000000",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -271,7 +271,7 @@
 								},
 								{
 									"key": "maxPrice",
-									"value": "10000"
+									"value": "1000000"
 								}
 							]
 						}
@@ -338,6 +338,43 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "pdt option2 list",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authentication",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjQ4MTcwOTU2NDQsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.DThsbQgbQkqzYYfLWMFjOuUUzTcuiH1_ZIsJgqHiDks",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"boardId\": 1,\r\n    \"opt1Value\":\"black\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9001/api/pdtBoard/detail/option2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"pdtBoard",
+								"detail",
+								"option2"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -359,12 +396,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:9001/api/cart",
+							"raw": "http://localhost:9000/api/cart",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "9001",
+							"port": "9000",
 							"path": [
 								"api",
 								"cart"
@@ -782,6 +819,43 @@
 								"purchase",
 								"user",
 								"proceed"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "purchase completed",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authentication",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjQ4MTcwOTY1NzEsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.yxp4yA8IQOTLZWfb_jfImpQLlIo6GB7jVbBi1SBQG0w",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"buyerName\": \"나\",\r\n    \"buyerPhoneNumber\": \"010-0000-0000\",\r\n    \"buyerEmail\": \"chau@chanu.com\",\r\n    \"refundWay\": \"환불 대충 ㅎ\",\r\n    \"requestMessage\": \"빨리 배송좀 ㅎ\",\r\n    \"receiveWay\": \"택배배송\",\r\n\r\n    \"myDeliAddrId\" : 1,\r\n\r\n    \"pdtIdMap\": {\r\n        \"1\":2,\r\n        \"2\":1,\r\n        \"3\":1\r\n    },\r\n    \"kakaoPayment\": {\r\n    \"cid\": \"TC0ONETIME\",\r\n    \"aid\": \"A5678901234567890123\",\r\n    \"tid\": \"T1234567890123456789\",\r\n    \"partner_user_id\": \"partner_user_id\",\r\n    \"partner_order_id\": \"partner_order_id\",\r\n    \"payment_method_type\": \"CARD\",\r\n    \"item_name\": \"카페아메리카노\",\r\n    \"quantity\": 1,\r\n    \"amount\": {\r\n        \"total\": 3200,\r\n        \"tax_free\": 0,\r\n        \"vat\": 0,\r\n        \"point\": 0,\r\n        \"discount\": 0,\r\n        \"green_deposit\": 0\r\n    },\r\n    \"card_info\": {\r\n        \"interest_free_install\": \"N\",\r\n        \"bin\": \"621640\",\r\n        \"card_type\": \"체크\",\r\n        \"card_mid\": \"123456789\",\r\n        \"approved_id\": \"12345678\",\r\n        \"install_month\": \"00\",\r\n        \"purchase_corp\": \"비씨카드\",\r\n        \"purchase_corp_code\": \"01\",\r\n        \"issuer_corp\": \"수협카드\",\r\n        \"issuer_corp_code\": \"13\",\r\n        \"kakaopay_purchase_corp\": \"비씨카드\",\r\n        \"kakaopay_purchase_corp_code\": \"104\",\r\n        \"kakaopay_issuer_corp\": \"수협은행\",\r\n        \"kakaopay_issuer_corp_code\": \"212\"\r\n    },\r\n    \"created_at\": \"2019-05-21T11:18:24\",\r\n    \"approved_at\": \"2019-05-21T11:18:32\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9001/api/purchase/user/completed",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"purchase",
+								"user",
+								"completed"
 							]
 						}
 					},

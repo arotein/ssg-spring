@@ -24,6 +24,7 @@ public class ProductImg extends BaseEntity {
     private Long id;
     private String imgTitle = FileNameGenerator.generate();
     private String imgPath;
+    private String imgAlt;
 
     // == Mapping ==
     @JsonIgnore
@@ -37,8 +38,9 @@ public class ProductImg extends BaseEntity {
     private ProductBoard productBoardDetail;
 
     @Builder
-    public ProductImg(String imgPath) {
+    public ProductImg(String imgPath, String imgAlt) {
         this.imgPath = imgPath;
+        this.imgAlt = imgAlt;
     }
 
     public ProductImg linkToProductBoardThumb(ProductBoard productBoard) {

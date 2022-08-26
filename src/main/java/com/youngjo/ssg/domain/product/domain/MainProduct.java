@@ -30,9 +30,9 @@ public class MainProduct extends BaseEntity {
 
     // 옵션이 2가지밖에 없다고 가정함
     // stock을 제외한 모든 필드는 수정불가.
-    private String optionName1;
+//    private String optionName1;
+//    private String optionName2;
     private String optionValue1;
-    private String optionName2;
     private String optionValue2;
 
     private Long price;
@@ -45,7 +45,7 @@ public class MainProduct extends BaseEntity {
     private ProductBoard productBoard;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "mainProductList", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "mainProduct", fetch = FetchType.LAZY)
     private List<PurchaseMiddleProduct> purchaseMiddleProductList = new ArrayList<>();
 
     @JsonIgnore
@@ -53,11 +53,9 @@ public class MainProduct extends BaseEntity {
     private List<NormalCart> normalCartList = new ArrayList<>();
 
     @Builder
-    public MainProduct(String modelCode, String optionName1, String optionValue1, String optionName2, String optionValue2, Long price, Integer stock) {
+    public MainProduct(String modelCode, String optionValue1, String optionValue2, Long price, Integer stock) {
         this.modelCode = modelCode;
-        this.optionName1 = optionName1;
         this.optionValue1 = optionValue1;
-        this.optionName2 = optionName2;
         this.optionValue2 = optionValue2;
         this.price = price;
         this.stock = stock;
@@ -83,7 +81,8 @@ public class MainProduct extends BaseEntity {
     }
 
     public MainProduct decreaseStock(Integer amount) {
-        if (stock - amount <= 0) {
+        if (stock - amount < 0) {
+            // 에러발생 시 텀을 두고 2~3번 추가요청 or 상품 부분결제취소 이벤트 발생
             throw new IllegalArgumentException("Stock cannot be negative");
         }
         stock -= amount;

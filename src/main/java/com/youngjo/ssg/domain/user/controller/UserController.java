@@ -21,9 +21,8 @@ public class UserController {
     @PreAuthorize("isAnonymous()")
     @PostMapping("/signUp")
     public CommonResponse signUp(@Validated @RequestBody SignUpReqDto dto) {
-        userService.signUp(dto);
         return CommonResponse.builder()
-                .data("회원가입이 완료되었습니다.")
+                .data(userService.signUp(dto))
                 .build();
     }
 

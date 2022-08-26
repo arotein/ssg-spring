@@ -36,6 +36,10 @@ public class AddPdtBoardReqDto {
 
     // Product Detail Information
     private String pdtName;
+    private String optionName1;
+    private String optionName2;
+    private Integer totalScore;
+    private Integer totalReviewQty;
 
     private List<ProductRequiredInfo> requiredInfoList; // 일단은 Dto없이 엔티티 클래스로 객체생성
 

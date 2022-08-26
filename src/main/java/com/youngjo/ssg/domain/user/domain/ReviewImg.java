@@ -19,6 +19,7 @@ public class ReviewImg extends BaseEntity {
     private Long id;
     private String imgTitle = FileNameGenerator.generate();
     private String imgPath;
+    private String imgAlt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "review_id")

@@ -27,6 +27,7 @@ public class PdtStaticDto {
         private Long id;
         private String name;
         private String imgUrl;
+        private String imgAlt;
     }
 
     @Getter
@@ -46,6 +47,7 @@ public class PdtStaticDto {
     @Getter
     @AllArgsConstructor
     public static class ConsignmentSellerInfoResDto {
+        private Long id;
         private String name;
         private String consignmentSellerAddress;
         private String mailOrderNum;
@@ -54,7 +56,9 @@ public class PdtStaticDto {
     @Getter
     @AllArgsConstructor
     public static class ProductImgResDto {
+        private Long id;
         private String imgPath;
+        private String imgAlt;
     }
 
     @Getter
@@ -85,6 +89,7 @@ public class PdtStaticDto {
     @Getter
     @AllArgsConstructor
     public static class ProductRequiredInfoResDto {
+        private Long id;
         private String infoTitle;
         private String infoCnt;
     }
@@ -93,5 +98,11 @@ public class PdtStaticDto {
     @NoArgsConstructor
     public static class TagReqDto {
         private String keyword;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    public static class OptionNameDto {
+        private String optValue;
     }
 }

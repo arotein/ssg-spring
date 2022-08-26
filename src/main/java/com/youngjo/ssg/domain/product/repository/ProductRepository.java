@@ -14,6 +14,8 @@ public interface ProductRepository {
 
     Map<Long, MainProduct> findAllMainPdtMapByIds(List<Long> pdtIds);
 
+    List<MainProduct> findAllMainPdtWithBoardByIds(List<Long> pdtIds);
+
     List<MainProduct> findAllMainPdtByIds(List<Long> pdtIds);
 
     Map<Long, ProductBoard> findAllBoardMapByPdtIds(List<Long> pdtIds);
@@ -32,7 +34,13 @@ public interface ProductRepository {
 
     List<ProductBoard> findBoardListByL4Id(Long id, Integer offset, Integer limit, String sort, Long minPrice, Long maxPrice);
 
+    Long countAllBoardByCtgId(Long ctgL2Id, Long ctgL3Id, Long ctgL4Id, Long minPrice, Long maxPrice);
+
     List<ProductBoard> findAllBoardByQuery(String query, Integer offset, Integer limit, String sort, Long minPrice, Long maxPrice);
 
+    Long countAllBoardByQuery(String query, Long minPrice, Long maxPrice);
+
     MainProduct findMainProductById(Long id);
+
+    List<MainProduct> findAllMainProductByOption(Long boardId, String option1);
 }

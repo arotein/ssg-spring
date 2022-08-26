@@ -44,6 +44,7 @@ public class User extends BaseEntity {
     private Address address;
 
     private Long point;
+    private String profileImgPath;
 
     @Enumerated(EnumType.STRING)
     private Grade grade = Grade.FRIENDS;
