@@ -7,5 +7,7 @@ public interface UserService {
 
     Boolean checkForLoginIdDuplicate(String loginId);
 
+    Boolean checkForEmailDuplicates(String email);
+
     void updateLastAccessTime(Long id);
 }

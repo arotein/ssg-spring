@@ -4,6 +4,7 @@ import com.youngjo.ssg.domain.user.domain.User;
 import com.youngjo.ssg.domain.user.repository.UserRepository;
 import com.youngjo.ssg.global.enumeration.UserStatus;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -28,6 +30,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = userRepository.findUserByLoginId(loginId);
         // 계정 검증
         if (user == null) {
+            log.info("Login request: The account does not exist.");
             throw new UsernameNotFoundException("아이디 혹은 비밀번호가 일치하지 않습니다.");
         }
         if (user.getStatus() == UserStatus.BANNED) {

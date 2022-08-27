@@ -1,6 +1,7 @@
 package com.youngjo.ssg.domain.user.controller;
 
-import com.youngjo.ssg.domain.user.dto.request.CheckDuplicate;
+import com.youngjo.ssg.domain.user.dto.request.CheckEmailDuplicateReqDto;
+import com.youngjo.ssg.domain.user.dto.request.CheckLoginIdDuplicateReqDto;
 import com.youngjo.ssg.domain.user.dto.request.SignUpReqDto;
 import com.youngjo.ssg.domain.user.service.UserService;
 import com.youngjo.ssg.global.common.CommonResponse;
@@ -28,9 +29,16 @@ public class UserController {
 
     // true: 중복임, false: 중복아님 -> 사용가능
     @PostMapping("/duplCheck/loginId")
-    public CommonResponse checkForLoginIdDuplicates(@Validated @RequestBody CheckDuplicate checkDuplicate) {
+    public CommonResponse checkForLoginIdDuplicates(@Validated @RequestBody CheckLoginIdDuplicateReqDto reqDto) {
         return CommonResponse.builder()
-                .data(userService.checkForLoginIdDuplicate(checkDuplicate.getLoginId()))
+                .data(userService.checkForLoginIdDuplicate(reqDto.getLoginId()))
+                .build();
+    }
+
+    @PostMapping("/duplCheck/email")
+    public CommonResponse checkForEmailDuplicates(@Validated @RequestBody CheckEmailDuplicateReqDto reqDto) {
+        return CommonResponse.builder()
+                .data(userService.checkForEmailDuplicates(reqDto.getEmail()))
                 .build();
     }
 }

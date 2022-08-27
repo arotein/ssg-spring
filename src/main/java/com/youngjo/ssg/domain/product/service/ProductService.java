@@ -2,7 +2,6 @@ package com.youngjo.ssg.domain.product.service;
 
 import com.youngjo.ssg.domain.product.dto.request.BoardSortFilterReqDto;
 import com.youngjo.ssg.domain.product.dto.request.AddPdtBoardReqDto;
-import com.youngjo.ssg.domain.product.dto.request.PdtOption1ReqDto;
 import com.youngjo.ssg.domain.product.dto.response.BoardListResDto;
 import com.youngjo.ssg.domain.product.dto.response.PdtBoardDetailResDto;
 import com.youngjo.ssg.domain.product.dto.response.PdtOption2ResDto;
@@ -15,7 +14,7 @@ public interface ProductService {
 
     PdtBoardDetailResDto getBoardById(Long id);
 
-    List<PdtOption2ResDto> getPdtOption2List(PdtOption1ReqDto reqDto);
+    List<PdtOption2ResDto> getPdtOption2List(Long boardId, String opt1Value);
 
     BoardListResDto getBoardListByL2Id(Long id, BoardSortFilterReqDto queryDto);
 

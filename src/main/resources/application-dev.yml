@@ -24,7 +24,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3307/ssgdev?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3306/ssgdev?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
     username: ${SSG_DB_USERNAME}
     password: ${SSG_DB_PASSWORD}
   jpa:
@@ -44,10 +44,10 @@ spring:
 
 #===================================================
 
-#logging.level:
-#  root: info
-#  org.hibernate:
-#    SQL: debug
+logging.level:
+  root: info
+  org.hibernate:
+    SQL: debug
 
 global:
   jwt-token:

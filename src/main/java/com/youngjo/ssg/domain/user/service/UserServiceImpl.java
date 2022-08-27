@@ -24,7 +24,6 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("Invalid password");
         }
 
-        // 임시 계정 생성
         User user = User.builder()
                 .loginId(dto.getLoginId())
                 .password(passwordEncoder.encode(dto.getPassword()))
@@ -57,6 +56,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public Boolean checkForLoginIdDuplicate(String loginId) {
         return userRepository.findUserByLoginId(loginId) != null ? true : false;
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Boolean checkForEmailDuplicates(String email) {
+        return userRepository.findUserByEmail(email) != null ? true : false;
     }
 
     @Override

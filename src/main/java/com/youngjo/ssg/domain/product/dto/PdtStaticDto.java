@@ -102,7 +102,8 @@ public class PdtStaticDto {
 
     @Getter
     @AllArgsConstructor
-    public static class OptionNameDto {
+    public static class OptionNameResDto {
+        private Integer id;
         private String optValue;
     }
 }

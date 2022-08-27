@@ -9,4 +9,6 @@ public interface UserPurchaseService {
     PurchaseProceedResDto proceedToPayment(PurchaseProceedReqDto reqDto);
 
     PurchaseCompletedResDto completedToPayment(PurchaseCompletedReqDto reqDto);
+
+    void purchaseList();
 }

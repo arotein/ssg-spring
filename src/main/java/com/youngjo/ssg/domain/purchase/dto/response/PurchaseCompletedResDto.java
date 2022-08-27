@@ -2,9 +2,14 @@ package com.youngjo.ssg.domain.purchase.dto.response;
 
 import com.youngjo.ssg.domain.purchase.domain.KakaoPayment;
 import com.youngjo.ssg.domain.purchase.domain.UserPurchase;
+import com.youngjo.ssg.domain.purchase.dto.PurchaseStaticDto;
 import com.youngjo.ssg.global.common.AddressConverter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /***
  * 사용쿠폰, 포인트 정보, 지역별 추가 배송비 등은 생략
@@ -22,7 +27,7 @@ public class PurchaseCompletedResDto {
     private String receiveWay;
 
     // == Product Info ==
-    // 생략
+    private List<PurchaseStaticDto.PurchaseCompletedPdtResDto> pdtList = new ArrayList<>();
 
     // == Delivery Address ==
     private String recipientName;
@@ -46,6 +51,17 @@ public class PurchaseCompletedResDto {
         this.refundWay = userPurchase.getRefundWay();
         this.requestMessage = userPurchase.getRequestMessage();
         this.receiveWay = userPurchase.getReceiveWay();
+
+        this.pdtList.addAll(userPurchase.getPurchaseMiddleProductList().stream()
+                .map(mid -> new PurchaseStaticDto.PurchaseCompletedPdtResDto(
+                        mid.getMainProduct().getProductBoard().getMainImgPath(),
+                        mid.getMainProduct().getProductBoard().getMainImgAlt(),
+                        mid.getMainProduct().getId(),
+                        mid.getMainProduct().getOptionValue1(),
+                        mid.getMainProduct().getOptionValue2(),
+                        mid.getMainProduct().getPrice(),
+                        mid.getPdtQty()))
+                .collect(Collectors.toList()));
         this.recipientName = userPurchase.getRecipientName();
         this.phoneNumber = userPurchase.getPhoneNumber();
         this.secondContactNumber = userPurchase.getSecondContactNumber();

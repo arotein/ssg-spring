@@ -83,7 +83,13 @@ public class UserPurchaseServiceImpl implements UserPurchaseService {
         // userPurchase, middleList 저장
         userPurchaseRepository.saveUserPurchase(userPurchase);
         // 이벤트 발행
-        eventPublisher.publishEvent(new PurchaseProcessEventDto(userPurchase.getId()));
+        eventPublisher.publishEvent(new PurchaseProcessEventDto(reqDto.getPdtIdMap()));
+
         return new PurchaseCompletedResDto(userPurchase);
+    }
+
+    @Override
+    public void purchaseList() {
+        // 주문조회 -> 생략
     }
 }

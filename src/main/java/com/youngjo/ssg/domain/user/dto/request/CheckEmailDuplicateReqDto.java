@@ -7,7 +7,7 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @NoArgsConstructor
-public class CheckDuplicate {
+public class CheckEmailDuplicateReqDto {
     @NotBlank
-    private String loginId;
+    private String email;
 }

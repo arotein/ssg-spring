@@ -2,7 +2,6 @@ package com.youngjo.ssg.domain.product.controller;
 
 import com.youngjo.ssg.domain.product.dto.request.AddPdtBoardReqDto;
 import com.youngjo.ssg.domain.product.dto.request.BoardSortFilterReqDto;
-import com.youngjo.ssg.domain.product.dto.request.PdtOption1ReqDto;
 import com.youngjo.ssg.domain.product.service.ProductService;
 import com.youngjo.ssg.global.common.CommonResponse;
 import lombok.RequiredArgsConstructor;
@@ -25,10 +24,11 @@ public class ProductController {
                 .build();
     }
 
-    @PostMapping("/detail/option2")
-    public CommonResponse getPdtOption2List(@Validated @RequestBody PdtOption1ReqDto reqDto) {
+    @GetMapping("/detail/opt2/{boardId}/{opt1Value}")
+    public CommonResponse getPdtOption2List(@PathVariable Long boardId,
+                                            @PathVariable String opt1Value) {
         return CommonResponse.builder()
-                .data(productService.getPdtOption2List(reqDto))
+                .data(productService.getPdtOption2List(boardId, opt1Value))
                 .build();
     }
 

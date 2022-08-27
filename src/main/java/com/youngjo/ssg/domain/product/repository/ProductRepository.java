@@ -40,7 +40,9 @@ public interface ProductRepository {
 
     Long countAllBoardByQuery(String query, Long minPrice, Long maxPrice);
 
-    MainProduct findMainProductById(Long id);
+    void increaseMainProductStock(Long pdtId, Integer amount);
+
+    void decreaseMainProductStock(Long pdtId, Integer amount);
 
     List<MainProduct> findAllMainProductByOption(Long boardId, String option1);
 }

@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import javax.persistence.LockModeType;
 import java.util.List;
 import java.util.Map;
 
@@ -219,14 +218,6 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public MainProduct findMainProductById(Long id) {
-        return queryFactory.selectFrom(mainProduct)
-                .where(mainProduct.id.eq(id))
-                .setLockMode(LockModeType.PESSIMISTIC_READ)
-                .fetchOne();
-    }
-
-    @Override
     public List<MainProduct> findAllMainProductByOption(Long boardId, String option1) {
         return queryFactory.selectFrom(mainProduct)
                 .join(mainProduct.productBoard, productBoard)
@@ -234,6 +225,22 @@ public class ProductRepositoryImpl implements ProductRepository {
                         mainProduct.optionValue1.eq(option1))
                 .orderBy(mainProduct.optionValue2.desc())
                 .fetch();
+    }
+
+    @Override
+    public void increaseMainProductStock(Long pdtId, Integer amount) {
+        queryFactory.update(mainProduct)
+                .set(mainProduct.stock, mainProduct.stock.add(amount))
+                .where(mainProduct.id.eq(pdtId))
+                .execute();
+    }
+
+    @Override
+    public void decreaseMainProductStock(Long pdtId, Integer amount) {
+        queryFactory.update(mainProduct)
+                .set(mainProduct.stock, mainProduct.stock.add(-amount))
+                .where(mainProduct.id.eq(pdtId))
+                .execute();
     }
 
     private BooleanExpression eqCtgL2Id(Long id) {

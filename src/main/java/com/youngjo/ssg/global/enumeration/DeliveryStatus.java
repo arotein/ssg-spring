@@ -5,9 +5,9 @@ package com.youngjo.ssg.global.enumeration;
  * DeliveryStatus : 구매처리 완료 후 배송처리
  */
 public enum DeliveryStatus {
-    CHECKING_PAYMENT("결제확인중"),
-    READY_TO_SHIP("발송준비"),
-    START_SHIPPING("배송시작"),
+    DEPOSIT_WAITING("입금대기"), // 현금결제시
+    COMPLETE_PAYMENT("결제완료"),
+    READY_TO_SHIP("상품준비중"),
     SHIPPING("배송중"),
     DELIVERY_COMPLETED("배송완료"),
     CONFIRMATION_OF_PURCHASE("구매확정"),
@@ -26,12 +26,12 @@ public enum DeliveryStatus {
 
     public DeliveryStatus findInstance(String str) {
         switch (str.strip()) {
-            case "결제확인중":
-                return DeliveryStatus.CHECKING_PAYMENT;
-            case "발송준비":
+            case "입금대기":
+                return DeliveryStatus.DEPOSIT_WAITING;
+            case "결제완료":
+                return DeliveryStatus.COMPLETE_PAYMENT;
+            case "상품준비중":
                 return DeliveryStatus.READY_TO_SHIP;
-            case "배송시작":
-                return DeliveryStatus.START_SHIPPING;
             case "배송중":
                 return DeliveryStatus.SHIPPING;
             case "배송완료":

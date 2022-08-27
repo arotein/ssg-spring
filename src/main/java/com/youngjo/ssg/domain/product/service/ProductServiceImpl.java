@@ -3,7 +3,6 @@ package com.youngjo.ssg.domain.product.service;
 import com.youngjo.ssg.domain.product.domain.*;
 import com.youngjo.ssg.domain.product.dto.request.AddPdtBoardReqDto;
 import com.youngjo.ssg.domain.product.dto.request.BoardSortFilterReqDto;
-import com.youngjo.ssg.domain.product.dto.request.PdtOption1ReqDto;
 import com.youngjo.ssg.domain.product.dto.response.BoardListResDto;
 import com.youngjo.ssg.domain.product.dto.response.BoardResDto;
 import com.youngjo.ssg.domain.product.dto.response.PdtBoardDetailResDto;
@@ -117,8 +116,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<PdtOption2ResDto> getPdtOption2List(PdtOption1ReqDto reqDto) {
-        return productRepository.findAllMainProductByOption(reqDto.getBoardId(), reqDto.getOpt1Value())
+    public List<PdtOption2ResDto> getPdtOption2List(Long boardId, String opt1Value) {
+        return productRepository.findAllMainProductByOption(boardId, opt1Value)
                 .stream()
                 .map(pdt -> new PdtOption2ResDto(pdt.getId(), pdt.getOptionValue2(), pdt.getPrice(), pdt.getStock()))
                 .collect(Collectors.toList());

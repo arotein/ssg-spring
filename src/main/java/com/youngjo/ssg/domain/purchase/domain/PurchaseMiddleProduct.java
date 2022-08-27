@@ -49,16 +49,16 @@ public class PurchaseMiddleProduct {
 
     @Builder
     public PurchaseMiddleProduct(Integer pdtQty) {
-        this.nowDeliveryStatus = DeliveryStatus.CHECKING_PAYMENT;
-        this.deliveryHistory.put(DeliveryStatus.CHECKING_PAYMENT, new Timestamp(System.currentTimeMillis()));
+        this.nowDeliveryStatus = DeliveryStatus.COMPLETE_PAYMENT;
+        this.deliveryHistory.put(DeliveryStatus.COMPLETE_PAYMENT, new Timestamp(System.currentTimeMillis()));
         this.pdtQty = pdtQty;
     }
 
     public PurchaseMiddleProduct startShipping(String deliveryCorp, String trackingNumber) {
         this.deliveryCorp = deliveryCorp;
         this.trackingNumber = trackingNumber;
-        this.nowDeliveryStatus = DeliveryStatus.START_SHIPPING;
-        this.deliveryHistory.put(DeliveryStatus.START_SHIPPING, new Timestamp(System.currentTimeMillis()));
+        this.nowDeliveryStatus = DeliveryStatus.SHIPPING;
+        this.deliveryHistory.put(DeliveryStatus.SHIPPING, new Timestamp(System.currentTimeMillis()));
         return this;
     }
 

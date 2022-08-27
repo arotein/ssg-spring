@@ -7,13 +7,10 @@ import com.youngjo.ssg.global.common.CommonResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/purchase/user")
+@RequestMapping("/api/purch/user")
 @RequiredArgsConstructor
 public class UserPurchaseController {
     private final UserPurchaseService userPurchaseService;
@@ -39,6 +36,21 @@ public class UserPurchaseController {
     }
 
     // 유저 구매목록 조회 -> 기간별 sort
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/list")
+    public CommonResponse purchaseList() {
+        userPurchaseService.purchaseList();
+        return CommonResponse.builder()
+                .data(true)
+                .build();
+    }
 
     // 단건 결제 상세정보 조회
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/{purchaseId}")
+    public CommonResponse purchaseDetail(@PathVariable Long purchaseId) {
+        return CommonResponse.builder()
+                .data(true)
+                .build();
+    }
 }

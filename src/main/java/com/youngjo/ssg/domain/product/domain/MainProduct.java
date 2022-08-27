@@ -8,16 +8,18 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /***
- * stock을 제외한 모든 필드는 수정불가
- * 엔티티 삭제불가 -> 유저의 구매이력 관리때문
- * -> 판매상태(isOnSale)로 관리 -> stock = 0으로 대체
+ * stock을 제외한 모든 필드는 수정불가 -> 값 update는 StockHandler를 이용
+ * 엔티티 삭제불가 -> 유저의 구매이력 관리때문 -> 삭제 대신 판매상태(isOnSale)로 관리 -> stock = 0으로 대체
+ * modelCode : 제조사에서 부여한 상품 모델명
  */
+@Slf4j
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -26,17 +28,15 @@ public class MainProduct extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "main_product_id")
     private Long id;
-    private String modelCode; // 제조사에서 부여한 상품 모델명
+    private String modelCode;
 
     // 옵션이 2가지밖에 없다고 가정함
-    // stock을 제외한 모든 필드는 수정불가.
-//    private String optionName1;
-//    private String optionName2;
     private String optionValue1;
     private String optionValue2;
 
     private Long price;
-    private Integer stock; // 값 update, delete는 StockHandler를 이용. 조회는 바로 DB조회
+    @Column(columnDefinition = "int unsigned")
+    private Integer stock;
 
     // == Mapping ==
     @JsonIgnore
@@ -72,20 +72,6 @@ public class MainProduct extends BaseEntity {
 
     public MainProduct linkToPurchaseMiddleProduct(PurchaseMiddleProduct purchaseMiddleProduct) {
         this.purchaseMiddleProductList.add(purchaseMiddleProduct);
-        return this;
-    }
-
-    public MainProduct increaseStock(Integer amount) {
-        stock += amount;
-        return this;
-    }
-
-    public MainProduct decreaseStock(Integer amount) {
-        if (stock - amount < 0) {
-            // 에러발생 시 텀을 두고 2~3번 추가요청 or 상품 부분결제취소 이벤트 발생
-            throw new IllegalArgumentException("Stock cannot be negative");
-        }
-        stock -= amount;
         return this;
     }
 

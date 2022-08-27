@@ -57,7 +57,7 @@ public class PdtBoardDetailResDto {
     private List<PdtStaticDto.ProductImgResDto> thumbImgList;
     private List<PdtStaticDto.ProductImgResDto> detailImgList;
     private List<PdtStaticDto.ProductRequiredInfoResDto> productRequiredInfoList;
-    private List<PdtStaticDto.OptionNameDto> option1List = new ArrayList<>();
+    private List<PdtStaticDto.OptionNameResDto> option1List = new ArrayList<>();
 
     public PdtBoardDetailResDto(ProductBoard productBoard) {
         this.boardId = productBoard.getId();
@@ -122,9 +122,14 @@ public class PdtBoardDetailResDto {
     }
 
     public PdtBoardDetailResDto addOption1Set(Set<String> optionSet) {
+        Integer tmpId = 0;
         TreeSet<String> set = new TreeSet<>();
         set.addAll(optionSet);
-        option1List.addAll(set.stream().map(e -> new PdtStaticDto.OptionNameDto(e)).collect(Collectors.toList()));
+
+        for (String e : set) {
+            tmpId++;
+            option1List.add(new PdtStaticDto.OptionNameResDto(tmpId, e));
+        }
         return this;
     }
 }

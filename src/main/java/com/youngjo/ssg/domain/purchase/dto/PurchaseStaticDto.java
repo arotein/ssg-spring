@@ -87,4 +87,16 @@ public class PurchaseStaticDto {
         private String interest_free_install;
         private String card_item_code;
     }
+
+    @Getter
+    @AllArgsConstructor
+    public static class PurchaseCompletedPdtResDto {
+        private String thumbImg;
+        private String thumbImgAlt;
+        private Long pdtId;
+        private String optionValue1;
+        private String optionValue2;
+        private Long price;
+        private Integer qty;
+    }
 }
