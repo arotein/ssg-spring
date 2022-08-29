@@ -4,7 +4,6 @@ import com.youngjo.ssg.global.common.CommonResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -19,12 +18,12 @@ public class ExceptionControllerAdvice {
 //                .body(CommonResponse.builder().errorCode(5).errorMessage(ex.getMessage()).build());
 //    }
 
-    @ExceptionHandler
-    public ResponseEntity accessDeniedExHandle(AccessDeniedException ex) {
-        log.error("Exception Name = {}, Message = {}", ex.getClass().getName(), ex.getMessage());
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body(CommonResponse.builder().errorCode(3).errorMessage(ex.getMessage()).build());
-    }
+//    @ExceptionHandler
+//    public ResponseEntity accessDeniedExHandle(AccessDeniedException ex) {
+//        log.error("Exception Name = {}, Message = {}", ex.getClass().getName(), ex.getMessage());
+//        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+//                .body(CommonResponse.builder().errorCode(3).errorMessage(ex.getMessage()).build());
+//    }
 
     @ExceptionHandler
     public ResponseEntity methodNotAllowedExHandle(HttpRequestMethodNotSupportedException ex) {

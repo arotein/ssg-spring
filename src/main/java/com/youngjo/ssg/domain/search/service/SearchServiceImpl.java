@@ -62,7 +62,7 @@ public class SearchServiceImpl implements SearchService {
         return new BoardListResDto(
                 boardCount,
                 boardList.stream()
-                        .map(board -> new BoardResDto(board, boardLikeMap.getOrDefault(board.getId(), null)))
+                        .map(board -> new BoardResDto(board, boardLikeMap.getOrDefault(board.getId(), false)))
                         .collect(Collectors.toList()));
     }
 }

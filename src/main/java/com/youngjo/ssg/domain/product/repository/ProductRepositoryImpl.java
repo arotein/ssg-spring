@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.querydsl.core.group.GroupBy.groupBy;
+import static com.youngjo.ssg.domain.product.domain.QCategoryL1.categoryL1;
 import static com.youngjo.ssg.domain.product.domain.QCategoryL2.categoryL2;
 import static com.youngjo.ssg.domain.product.domain.QCategoryL3.categoryL3;
 import static com.youngjo.ssg.domain.product.domain.QCategoryL4.categoryL4;
@@ -123,6 +124,23 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     // offset(index)은 0부터 시작
     @Override
+    public List<ProductBoard> findBoardListByL1Id(Long id, Integer offset, Integer limit, String sort, Long minPrice, Long maxPrice) {
+        return queryFactory.selectFrom(productBoard)
+                .join(productBoard.categoryL4, categoryL4)
+                .join(categoryL4.categoryL3, categoryL3)
+                .join(categoryL3.categoryL2, categoryL2)
+                .join(categoryL2.categoryL1, categoryL1)
+                .where(categoryL1.id.eq(id),
+                        goeMinPrice(minPrice),
+                        loeMaxPrice(maxPrice))
+                .orderBy(sortExpression(sort))
+                .offset(offset)
+                .limit(limit)
+                .distinct()
+                .fetch();
+    }
+
+    @Override
     public List<ProductBoard> findBoardListByL2Id(Long id, Integer offset, Integer limit, String sort, Long minPrice, Long maxPrice) {
         return queryFactory.selectFrom(productBoard)
                 .join(productBoard.categoryL4, categoryL4)
@@ -169,13 +187,15 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     // 카테고리 검색 count(*) -> 일단 사용. 데이터 수가 많아지면 최적화 고민
     @Override
-    public Long countAllBoardByCtgId(Long ctgL2Id, Long ctgL3Id, Long ctgL4Id, Long minPrice, Long maxPrice) {
+    public Long countAllBoardByCtgId(Long ctgL1Id, Long ctgL2Id, Long ctgL3Id, Long ctgL4Id, Long minPrice, Long maxPrice) {
         return queryFactory.select(productBoard.count())
                 .from(productBoard)
                 .join(productBoard.categoryL4, categoryL4)
                 .join(categoryL4.categoryL3, categoryL3)
                 .join(categoryL3.categoryL2, categoryL2)
-                .where(eqCtgL2Id(ctgL2Id),
+                .join(categoryL2.categoryL1, categoryL1)
+                .where(eqCtgL1Id(ctgL1Id),
+                        eqCtgL2Id(ctgL2Id),
                         eqCtgL3Id(ctgL3Id),
                         eqCtgL4Id(ctgL4Id),
                         goeMinPrice(minPrice),
@@ -241,6 +261,10 @@ public class ProductRepositoryImpl implements ProductRepository {
                 .set(mainProduct.stock, mainProduct.stock.add(-amount))
                 .where(mainProduct.id.eq(pdtId))
                 .execute();
+    }
+
+    private BooleanExpression eqCtgL1Id(Long id) {
+        return id == null ? null : categoryL1.id.eq(id);
     }
 
     private BooleanExpression eqCtgL2Id(Long id) {

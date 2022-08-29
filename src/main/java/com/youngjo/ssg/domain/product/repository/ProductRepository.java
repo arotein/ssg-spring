@@ -28,13 +28,15 @@ public interface ProductRepository {
 
     Map<Long, Boolean> findBoardLikeMapByBoardIdAndUserId(List<Long> boardIds, Long userId);
 
+    List<ProductBoard> findBoardListByL1Id(Long id, Integer offset, Integer limit, String sort, Long minPrice, Long maxPrice);
+
     List<ProductBoard> findBoardListByL2Id(Long id, Integer offset, Integer limit, String sort, Long minPrice, Long maxPrice);
 
     List<ProductBoard> findBoardListByL3Id(Long id, Integer offset, Integer limit, String sort, Long minPrice, Long maxPrice);
 
     List<ProductBoard> findBoardListByL4Id(Long id, Integer offset, Integer limit, String sort, Long minPrice, Long maxPrice);
 
-    Long countAllBoardByCtgId(Long ctgL2Id, Long ctgL3Id, Long ctgL4Id, Long minPrice, Long maxPrice);
+    Long countAllBoardByCtgId(Long ctgL1Id, Long ctgL2Id, Long ctgL3Id, Long ctgL4Id, Long minPrice, Long maxPrice);
 
     List<ProductBoard> findAllBoardByQuery(String query, Integer offset, Integer limit, String sort, Long minPrice, Long maxPrice);
 

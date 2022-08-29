@@ -58,12 +58,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:9001/api/ctg/nav2",
+							"raw": "http://121.145.206.143:9000/api/ctg/nav2",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"121",
+								"145",
+								"206",
+								"143"
 							],
-							"port": "9001",
+							"port": "9000",
 							"path": [
 								"api",
 								"ctg",
@@ -206,6 +209,36 @@
 					"response": []
 				},
 				{
+					"name": "/pdtBoard/list/ctgL1/{ctgL1Id}",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authentication",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjA3NTgxNjcsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.1S3vVjZdivUkU9KXj1MhK_4sc63dSqpAM-76RBvU3f0",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:9000/api/pdtBoard/list/ctgL1/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"api",
+								"pdtBoard",
+								"list",
+								"ctgL1",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "/pdtBoard/list/ctgL2/{ctgL2Id}",
 					"request": {
 						"method": "GET",
@@ -218,7 +251,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:9000/api/pdtBoard/list/ctgL2/2?limit=80&maxPrice=500000",
+							"raw": "http://localhost:9000/api/pdtBoard/list/ctgL2/4",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -229,17 +262,7 @@
 								"pdtBoard",
 								"list",
 								"ctgL2",
-								"2"
-							],
-							"query": [
-								{
-									"key": "limit",
-									"value": "80"
-								},
-								{
-									"key": "maxPrice",
-									"value": "500000"
-								}
+								"4"
 							]
 						}
 					},
@@ -251,28 +274,21 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:9001/api/pdtBoard/list/ctgL3/1?limit=80&maxPrice=1000000",
+							"raw": "http://121.145.206.143:9000/api/pdtBoard/list/ctgL3/1",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"121",
+								"145",
+								"206",
+								"143"
 							],
-							"port": "9001",
+							"port": "9000",
 							"path": [
 								"api",
 								"pdtBoard",
 								"list",
 								"ctgL3",
 								"1"
-							],
-							"query": [
-								{
-									"key": "limit",
-									"value": "80"
-								},
-								{
-									"key": "maxPrice",
-									"value": "1000000"
-								}
 							]
 						}
 					},
@@ -282,30 +298,29 @@
 					"name": "/pdtBoard/list/ctgL4/{ctgL4Id}",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authentication",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjQ4MTc0MjM0ODcsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.trU29ayWcTwlrcRTngEaMYteeKqbUNa8ygfkrwk0TBw",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "http://localhost:9001/api/pdtBoard/list/ctgL4/1?limit=80&maxPrice=10000",
+							"raw": "http://121.145.206.143:9000/api/pdtBoard/list/ctgL4/428",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"121",
+								"145",
+								"206",
+								"143"
 							],
-							"port": "9001",
+							"port": "9000",
 							"path": [
 								"api",
 								"pdtBoard",
 								"list",
 								"ctgL4",
-								"1"
-							],
-							"query": [
-								{
-									"key": "limit",
-									"value": "80"
-								},
-								{
-									"key": "maxPrice",
-									"value": "10000"
-								}
+								"428"
 							]
 						}
 					},
@@ -318,17 +333,20 @@
 						"header": [
 							{
 								"key": "Authentication",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjA3MzI4NDEsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.xuMxXSsHpODfMGkhLafaeOa27TRKnRHt5qoRJ0j0J-s",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjQ4MTc0MjM0ODcsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.trU29ayWcTwlrcRTngEaMYteeKqbUNa8ygfkrwk0TBw",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "http://localhost:9001/api/pdtBoard/pressLike/1",
+							"raw": "http://121.145.206.143:9000/api/pdtBoard/pressLike/1",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"121",
+								"145",
+								"206",
+								"143"
 							],
-							"port": "9001",
+							"port": "9000",
 							"path": [
 								"api",
 								"pdtBoard",
@@ -401,10 +419,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:9000/api/cart",
+							"raw": "http://121.145.206.143:9000/api/cart",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"121",
+								"145",
+								"206",
+								"143"
 							],
 							"port": "9000",
 							"path": [
@@ -606,12 +627,15 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:9001/api/login",
+							"raw": "http://121.145.206.143:9000/api/login",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"121",
+								"145",
+								"206",
+								"143"
 							],
-							"port": "9001",
+							"port": "9000",
 							"path": [
 								"api",
 								"login"
@@ -767,10 +791,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:9000/api/search?query=나이키",
+							"raw": "http://121.145.206.143:9000/api/search?query=나이키",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"121",
+								"145",
+								"206",
+								"143"
 							],
 							"port": "9000",
 							"path": [

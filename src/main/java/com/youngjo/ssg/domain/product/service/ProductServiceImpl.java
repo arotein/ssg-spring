@@ -125,6 +125,40 @@ public class ProductServiceImpl implements ProductService {
 
     @Transactional(readOnly = true)
     @Override
+    public BoardListResDto getBoardListByL1Id(Long id, BoardSortFilterReqDto queryDto) {
+        Long userId = clientInfoLoader.getUserId();
+        List<ProductBoard> boardList = productRepository.findBoardListByL1Id(id,
+                queryDto.getLimit() * (queryDto.getPage() - 1),
+                queryDto.getLimit(),
+                queryDto.getSort(),
+                queryDto.getMinPrice(),
+                queryDto.getMaxPrice());
+        Map<Long, Boolean> likeMap;
+        if (userId != null) {
+            likeMap = productRepository.findBoardLikeMapByBoardIdAndUserId(
+                    boardList.stream().map(ProductBoard::getId).collect(Collectors.toList()),
+                    userId);
+        } else {
+            likeMap = new HashMap<>();
+        }
+
+        // 총 검색 결과
+        Long boardCount = productRepository.countAllBoardByCtgId(
+                id, null, null, null,
+                queryDto.getMinPrice(),
+                queryDto.getMaxPrice());
+
+        return boardList.size() > 0
+                ? new BoardListResDto(
+                boardCount,
+                boardList.stream()
+                        .map(board -> new BoardResDto(board, likeMap.getOrDefault(board.getId(), false)))
+                        .collect(Collectors.toList()))
+                : new BoardListResDto(0L, Arrays.asList());
+    }
+
+    @Transactional(readOnly = true)
+    @Override
     public BoardListResDto getBoardListByL2Id(Long id, BoardSortFilterReqDto queryDto) {
         Long userId = clientInfoLoader.getUserId();
         List<ProductBoard> boardList = productRepository.findBoardListByL2Id(id,
@@ -144,7 +178,7 @@ public class ProductServiceImpl implements ProductService {
 
         // 총 검색 결과
         Long boardCount = productRepository.countAllBoardByCtgId(
-                id, null, null,
+                null, id, null, null,
                 queryDto.getMinPrice(),
                 queryDto.getMaxPrice());
 
@@ -178,7 +212,7 @@ public class ProductServiceImpl implements ProductService {
 
         // 총 검색 결과
         Long boardCount = productRepository.countAllBoardByCtgId(
-                null, id, null,
+                null, null, id, null,
                 queryDto.getMinPrice(),
                 queryDto.getMaxPrice());
 
@@ -212,7 +246,7 @@ public class ProductServiceImpl implements ProductService {
 
         // 총 검색 결과
         Long boardCount = productRepository.countAllBoardByCtgId(
-                null, null, id,
+                null, null, null, id,
                 queryDto.getMinPrice(),
                 queryDto.getMaxPrice());
 
@@ -227,6 +261,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Boolean pressBoardLike(Long boardId) {
+        System.out.println("boardId = " + boardId);
+        System.out.println("clientInfoLoader.getUserId() = " + clientInfoLoader.getUserId());
         ProductBoardLike boardLike = productRepository.findBoardLikeByBoardIdAndUserId(boardId, clientInfoLoader.getUserId());
         if (boardLike != null) {
             boardLike.pressLike();

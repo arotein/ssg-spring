@@ -24,12 +24,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:9001/api/signUp",
+							"raw": "http://localhost:9000/api/signUp",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "9001",
+							"port": "9000",
 							"path": [
 								"api",
 								"signUp"
@@ -156,12 +156,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:9001/api/pdtBoard/add",
+							"raw": "http://localhost:9000/api/pdtBoard/add",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "9001",
+							"port": "9000",
 							"path": [
 								"api",
 								"pdtBoard",

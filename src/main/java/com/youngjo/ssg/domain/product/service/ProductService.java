@@ -16,6 +16,8 @@ public interface ProductService {
 
     List<PdtOption2ResDto> getPdtOption2List(Long boardId, String opt1Value);
 
+    BoardListResDto getBoardListByL1Id(Long id, BoardSortFilterReqDto queryDto);
+
     BoardListResDto getBoardListByL2Id(Long id, BoardSortFilterReqDto queryDto);
 
     BoardListResDto getBoardListByL3Id(Long id, BoardSortFilterReqDto queryDto);

@@ -32,6 +32,13 @@ public class ProductController {
                 .build();
     }
 
+    @GetMapping("/list/ctgL1/{ctgL1Id}")
+    public CommonResponse getBoardListByL1Id(@PathVariable Long ctgL1Id, @Validated BoardSortFilterReqDto sortDto) {
+        return CommonResponse.builder()
+                .data(productService.getBoardListByL1Id(ctgL1Id, sortDto.setDefault()))
+                .build();
+    }
+
     @GetMapping("/list/ctgL2/{ctgL2Id}")
     public CommonResponse getBoardListByL2Id(@PathVariable Long ctgL2Id, @Validated BoardSortFilterReqDto sortDto) {
         return CommonResponse.builder()

@@ -39,6 +39,6 @@ public class BoardResDto {
         this.isPremium = productBoard.getIsPremium();
         this.isCrossBorderShipping = productBoard.getIsCrossBorderShipping();
         this.isOnlineOnly = productBoard.getIsOnlineOnly();
-        this.boardLike = boardLike;
+        this.boardLike = boardLike != null ? boardLike : false;
     }
 }
