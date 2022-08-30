@@ -12,6 +12,9 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class AddPdtBoardReqDto {
+    private String ctgL2;
+    private String ctgL3;
+    private String ctgL4;
     @NotBlank
     private String title;
     @NotBlank
@@ -41,7 +44,7 @@ public class AddPdtBoardReqDto {
     private Integer totalScore;
     private Integer totalReviewQty;
 
-    private List<ProductRequiredInfo> requiredInfoList; // 일단은 Dto없이 엔티티 클래스로 객체생성
+    private List<ProductRequiredInfo> requiredInfoList;
 
     // == Exchange Refund ==
     private UserStaticDto.AddressReqDto returnAddress;
@@ -50,7 +53,7 @@ public class AddPdtBoardReqDto {
     private Integer premiumExchangeShippingFee;
     private Integer premiumReturnShippingFee;
 
-    private ConsignmentSellerInfo consignmentSellerInfo; // 일단은 Dto없이 엔티티 클래스로 객체생성
+    private ConsignmentSellerInfo consignmentSellerInfo;
     // == Mapping ==
     @NotBlank
     private Long ctgL4Id;

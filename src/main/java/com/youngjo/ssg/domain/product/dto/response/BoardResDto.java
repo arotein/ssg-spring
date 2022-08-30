@@ -1,12 +1,13 @@
 package com.youngjo.ssg.domain.product.dto.response;
 
 import com.youngjo.ssg.domain.product.domain.ProductBoard;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Getter
+@Data
 @NoArgsConstructor
 public class BoardResDto {
+    private Integer listIndex;
     private Long boardId;
     private String mainImgUrl;
     private String title;

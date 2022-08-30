@@ -1,6 +1,7 @@
 package com.youngjo.ssg.domain.user.controller;
 
 import com.youngjo.ssg.domain.user.dto.request.PdtInCartReqDto;
+import com.youngjo.ssg.domain.user.dto.response.PdtInCartResDto;
 import com.youngjo.ssg.domain.user.service.CartService;
 import com.youngjo.ssg.global.common.CommonResponse;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +23,10 @@ public class CartController {
     @PreAuthorize("isAnonymous()")
     @PostMapping("")
     public CommonResponse anonymousCartList(@RequestBody List<Long> pdtIdList) {
+        List<PdtInCartResDto> pdtCartList = cartService.getCartPdtListByPdtIds(pdtIdList);
+        pdtCartList.forEach(e -> e.setListIndex(pdtCartList.indexOf(e)));
         return CommonResponse.builder()
-                .data(cartService.getCartPdtListByPdtIds(pdtIdList))
+                .data(pdtCartList)
                 .build();
     }
 

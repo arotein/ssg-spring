@@ -35,6 +35,13 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Boolean addPdtBoard(AddPdtBoardReqDto addPdtBoardReqDto) {
+        if (addPdtBoardReqDto.getTitle() == "null" ||
+                addPdtBoardReqDto.getBrand() == "null" ||
+                addPdtBoardReqDto.getSalesSite() == "null"
+        ) {
+            return false;
+        }
+
         Address address = Address.builder()
                 .city(addPdtBoardReqDto.getReturnAddress().getCity())
                 .street(addPdtBoardReqDto.getReturnAddress().getStreet())
@@ -57,7 +64,11 @@ public class ProductServiceImpl implements ProductService {
                         .build())
                 .collect(Collectors.toList());
 
-        CategoryL4 ctgL4 = categoryL4Repository.findById(addPdtBoardReqDto.getCtgL4Id()).plusPdtQty();
+        CategoryL4 ctgL4 = categoryL4Repository.findByL2L3L4Name(
+                addPdtBoardReqDto.getCtgL2(),
+                addPdtBoardReqDto.getCtgL3(),
+                addPdtBoardReqDto.getCtgL4()).plusPdtQty();
+
         ctgL4.getCategoryL3().plusPdtQty()
                 .getCategoryL2().plusPdtQty()
                 .getCategoryL1().plusPdtQty();
@@ -134,7 +145,7 @@ public class ProductServiceImpl implements ProductService {
                 queryDto.getMinPrice(),
                 queryDto.getMaxPrice());
         Map<Long, Boolean> likeMap;
-        if (userId != null) {
+        if (boardList.size() > 0 && userId != null) {
             likeMap = productRepository.findBoardLikeMapByBoardIdAndUserId(
                     boardList.stream().map(ProductBoard::getId).collect(Collectors.toList()),
                     userId);
@@ -261,8 +272,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Boolean pressBoardLike(Long boardId) {
-        System.out.println("boardId = " + boardId);
-        System.out.println("clientInfoLoader.getUserId() = " + clientInfoLoader.getUserId());
         ProductBoardLike boardLike = productRepository.findBoardLikeByBoardIdAndUserId(boardId, clientInfoLoader.getUserId());
         if (boardLike != null) {
             boardLike.pressLike();

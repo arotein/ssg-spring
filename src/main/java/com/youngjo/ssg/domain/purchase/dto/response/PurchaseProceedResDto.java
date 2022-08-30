@@ -61,5 +61,6 @@ public class PurchaseProceedResDto {
                     pdt.getPrice()
             ));
         });
+        this.pdtList.forEach(e -> e.setListIndex(this.pdtList.indexOf(e)));
     }
 }

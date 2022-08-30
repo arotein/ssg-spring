@@ -1,15 +1,16 @@
 package com.youngjo.ssg.domain.purchase.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 
 public class PurchaseStaticDto {
-    @Getter
-    @AllArgsConstructor
+    @Data
     public static class BoardResDto {
+        private Integer listIndex;
         private Long boardId;
         private String title;
         private String brand;
@@ -25,6 +26,21 @@ public class PurchaseStaticDto {
         private String optionValue1;
         private String optionValue2;
         private Long price;
+
+        public BoardResDto(Long boardId, String title, String brand, String salesSite, Boolean isEachShippingFee, Integer shippingFee, Integer shippingFreeOver, String thumbImg, Long pdtId, String optionValue1, String optionValue2, Long price) {
+            this.boardId = boardId;
+            this.title = title;
+            this.brand = brand;
+            this.salesSite = salesSite;
+            this.isEachShippingFee = isEachShippingFee;
+            this.shippingFee = shippingFee;
+            this.shippingFreeOver = shippingFreeOver;
+            this.thumbImg = thumbImg;
+            this.pdtId = pdtId;
+            this.optionValue1 = optionValue1;
+            this.optionValue2 = optionValue2;
+            this.price = price;
+        }
     }
 
     @Getter
@@ -88,9 +104,9 @@ public class PurchaseStaticDto {
         private String card_item_code;
     }
 
-    @Getter
-    @AllArgsConstructor
+    @Data
     public static class PurchaseCompletedPdtResDto {
+        private Integer listIndex;
         private String thumbImg;
         private String thumbImgAlt;
         private Long pdtId;
@@ -98,5 +114,15 @@ public class PurchaseStaticDto {
         private String optionValue2;
         private Long price;
         private Integer qty;
+
+        public PurchaseCompletedPdtResDto(String thumbImg, String thumbImgAlt, Long pdtId, String optionValue1, String optionValue2, Long price, Integer qty) {
+            this.thumbImg = thumbImg;
+            this.thumbImgAlt = thumbImgAlt;
+            this.pdtId = pdtId;
+            this.optionValue1 = optionValue1;
+            this.optionValue2 = optionValue2;
+            this.price = price;
+            this.qty = qty;
+        }
     }
 }

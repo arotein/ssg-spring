@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -21,74 +22,91 @@ public class CategoryController {
     // 카테고리 목록페이지
     @GetMapping("/main")
     public CommonResponse getCtgMain() {
+        List<CtgMainResDto> list = categoryService.getCtgL1All().stream()
+                .map(ctg -> new CtgMainResDto(ctg))
+                .collect(Collectors.toList());
+        list.forEach(e -> e.setListIndex(list.indexOf(e)));
         return CommonResponse.builder()
-                .data(categoryService.getCtgL1All().stream()
-                        .map(ctg -> new CtgMainResDto(ctg))
-                        .collect(Collectors.toList()))
+                .data(list)
                 .build();
     }
 
     // L2 전체보기 -> L2 목록(id, name, imgUrl)
     @GetMapping("/all/{ctgL2Id}")
     public CommonResponse getAllCtgL2ByIdWithImg(@PathVariable Long ctgL2Id) {
+        List<CtgL2AllImgResDto> list = categoryService.getCtgL2AllById(ctgL2Id).stream()
+                .map(ctg -> new CtgL2AllImgResDto(ctg))
+                .collect(Collectors.toList());
+        list.forEach(e -> e.setListIndex(list.indexOf(e)));
         return CommonResponse.builder()
-                .data(categoryService.getCtgL2AllById(ctgL2Id).stream()
-                        .map(ctg -> new CtgL2AllImgResDto(ctg))
-                        .collect(Collectors.toList()))
+                .data(list)
                 .build();
     }
 
     @GetMapping("/nav2")
     public CommonResponse getCtgL2DetailNav() {
+        List<CtgL1ToL2ResDto> list = categoryService.getCtgL1All().stream()
+                .map(ctg -> new CtgL1ToL2ResDto(ctg, ctg.getCategoryL2List()))
+                .collect(Collectors.toList());
+        list.forEach(e -> e.setListIndex(list.indexOf(e)));
         return CommonResponse.builder()
-                .data(categoryService.getCtgL1All().stream()
-                        .map(ctg -> new CtgL1ToL2ResDto(ctg, ctg.getCategoryL2List()))
-                        .collect(Collectors.toList()))
+                .data(list)
                 .build();
     }
 
     @GetMapping("/nav3/{ctgL3Id}")
     public CommonResponse getCtgL3DetailNav(@PathVariable Long ctgL3Id) {
+        List<CtgL2ToL3ResDto> list = categoryService.getCtgL2AllByL3Id(ctgL3Id).stream()
+                .map(ctg -> new CtgL2ToL3ResDto(ctg))
+                .collect(Collectors.toList());
+        list.forEach(e -> e.setListIndex(list.indexOf(e)));
         return CommonResponse.builder()
-                .data(categoryService.getCtgL2AllByL3Id(ctgL3Id).stream()
-                        .map(ctg -> new CtgL2ToL3ResDto(ctg))
-                        .collect(Collectors.toList()))
+                .data(list)
                 .build();
     }
 
     @GetMapping("/nav4/{ctgL4Id}")
     public CommonResponse getCtgL4DetailNav(@PathVariable Long ctgL4Id) {
+        List<CtgL3ToL4ResDto> list = categoryService.getCtgL3AllByL4Id(ctgL4Id).stream()
+                .map(ctg -> new CtgL3ToL4ResDto(ctg))
+                .collect(Collectors.toList());
+        list.forEach(e -> e.setListIndex(list.indexOf(e)));
         return CommonResponse.builder()
-                .data(categoryService.getCtgL3AllByL4Id(ctgL4Id).stream()
-                        .map(ctg -> new CtgL3ToL4ResDto(ctg))
-                        .collect(Collectors.toList()))
+                .data(list)
                 .build();
     }
 
     @GetMapping("/menu2/{ctgL2Id}")
     public CommonResponse getCtgL2DetailMenu(@PathVariable Long ctgL2Id) {
+        List<CtgL2ToL3ResDto> list = categoryService.getCtgL2AllById(ctgL2Id).stream()
+                .map(ctg -> new CtgL2ToL3ResDto(ctg))
+                .collect(Collectors.toList());
+        list.forEach(e -> e.setListIndex(list.indexOf(e)));
         return CommonResponse.builder()
-                .data(categoryService.getCtgL2AllById(ctgL2Id).stream()
-                        .map(ctg -> new CtgL2ToL3ResDto(ctg))
-                        .collect(Collectors.toList()))
+                .data(list)
                 .build();
     }
 
     @GetMapping("/menu3/{ctgL3Id}")
     public CommonResponse getCtgL3DetailMenu(@PathVariable Long ctgL3Id) {
+        List<CtgL3ToL4ResDto> list = categoryService.getCtgL3AllById(ctgL3Id).stream()
+                .map(ctg -> new CtgL3ToL4ResDto(ctg))
+                .collect(Collectors.toList());
+        list.forEach(e -> e.setListIndex(list.indexOf(e)));
         return CommonResponse.builder()
-                .data(categoryService.getCtgL3AllById(ctgL3Id).stream()
-                        .map(ctg -> new CtgL3ToL4ResDto(ctg))
-                        .collect(Collectors.toList()))
+                .data(list)
                 .build();
     }
 
     @GetMapping("/menu4/{ctgL4Id}")
     public CommonResponse getCtgL4DetailMenu(@PathVariable Long ctgL4Id) {
+        List<CtgL4ResDto> list = categoryService.getCtgL4AllById(ctgL4Id).stream()
+                .map(ctg -> new CtgL4ResDto(ctg))
+                .collect(Collectors.toList());
+        list.forEach(e -> e.setListIndex(list.indexOf(e)));
+
         return CommonResponse.builder()
-                .data(categoryService.getCtgL4AllById(ctgL4Id).stream()
-                        .map(ctg -> new CtgL4ResDto(ctg))
-                        .collect(Collectors.toList()))
+                .data(list)
                 .build();
     }
 

@@ -8,10 +8,7 @@ import com.youngjo.ssg.global.common.CommonResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
@@ -39,6 +36,13 @@ public class UserController {
     public CommonResponse checkForEmailDuplicates(@Validated @RequestBody CheckEmailDuplicateReqDto reqDto) {
         return CommonResponse.builder()
                 .data(userService.checkForEmailDuplicates(reqDto.getEmail()))
+                .build();
+    }
+
+    @GetMapping("/user/test")
+    public CommonResponse test() {
+        return CommonResponse.builder()
+                .data(true)
                 .build();
     }
 }

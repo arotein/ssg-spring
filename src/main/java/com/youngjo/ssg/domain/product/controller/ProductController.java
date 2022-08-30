@@ -2,6 +2,7 @@ package com.youngjo.ssg.domain.product.controller;
 
 import com.youngjo.ssg.domain.product.dto.request.AddPdtBoardReqDto;
 import com.youngjo.ssg.domain.product.dto.request.BoardSortFilterReqDto;
+import com.youngjo.ssg.domain.product.dto.response.PdtOption2ResDto;
 import com.youngjo.ssg.domain.product.service.ProductService;
 import com.youngjo.ssg.global.common.CommonResponse;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -27,8 +30,10 @@ public class ProductController {
     @GetMapping("/detail/opt2/{boardId}/{opt1Value}")
     public CommonResponse getPdtOption2List(@PathVariable Long boardId,
                                             @PathVariable String opt1Value) {
+        List<PdtOption2ResDto> list = productService.getPdtOption2List(boardId, opt1Value);
+        list.forEach(e -> e.setListIndex(list.indexOf(e)));
         return CommonResponse.builder()
-                .data(productService.getPdtOption2List(boardId, opt1Value))
+                .data(list)
                 .build();
     }
 

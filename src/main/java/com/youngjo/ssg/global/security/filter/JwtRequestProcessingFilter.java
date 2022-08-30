@@ -91,11 +91,15 @@ public class JwtRequestProcessingFilter extends AbstractAuthenticationProcessing
             } catch (InvalidJWTSignatureException jwtSigEx) {
                 // 유효하지않은 토큰 -> 로그인 페이지로 이동
                 log.error("Invalid Signature, class: {}", jwtSigEx.getClass());
-                ObjectMapper objectMapper = new ObjectMapper();
-                res.setContentType(MediaType.APPLICATION_JSON_VALUE);
-                res.setStatus(HttpStatus.UNAUTHORIZED.value());
-                objectMapper.writeValue(res.getWriter(),
-                        CommonResponse.builder().errorCode(2).errorMessage("Invalid Signature").build());
+                chain.doFilter(req, res);
+//                ObjectMapper objectMapper = new ObjectMapper();
+//                res.setContentType(MediaType.APPLICATION_JSON_VALUE);
+//                res.setStatus(HttpStatus.UNAUTHORIZED.value());
+//                objectMapper.writeValue(res.getWriter(),
+//                        CommonResponse.builder().errorCode(2).errorMessage("Invalid Signature").build());
+            } catch (ArrayIndexOutOfBoundsException exception) {
+                log.error("Invalid Token, class: {}", exception.getClass());
+                chain.doFilter(req, res);
             } catch (Exception exception) {
                 log.error("Message: {}, class: {}", exception.getMessage(), exception.getClass());
             }

@@ -164,7 +164,7 @@ public class ProductBoard extends BaseEntity {
         this.pdtName = pdtName;
         this.optionName1 = optionName1;
         this.optionName2 = optionName2;
-        this.mainImgAlt = pdtName;
+        this.mainImgAlt = title;
         this.returnAddress = returnAddress;
         this.exchangeShippingFee = exchangeShippingFee;
         this.returnShippingFee = returnShippingFee;

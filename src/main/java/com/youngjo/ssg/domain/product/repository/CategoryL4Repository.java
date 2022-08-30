@@ -11,6 +11,8 @@ public interface CategoryL4Repository {
 
     CategoryL4 findByName(String name);
 
+    CategoryL4 findByL2L3L4Name(String ctgL2Name, String ctgL3Name, String ctgL4Name);
+
     List<CategoryL4> getAll();
 
     List<CategoryL4> getAllByIdSameL3(Long id);

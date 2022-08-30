@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 @Data
 @NoArgsConstructor
 public class CtgL3ToL4ResDto {
+    private Integer listIndex;
     private PdtStaticDto.CtgL3Dto ctgL3;
     private List<PdtStaticDto.CtgL4Dto> ctgL4List = new ArrayList<>();
 
@@ -20,5 +21,6 @@ public class CtgL3ToL4ResDto {
         this.ctgL4List = ctgL3.getCategoryL4List().stream()
                 .map(ctg -> new PdtStaticDto.CtgL4Dto(ctg.getId(), ctg.getName()))
                 .collect(Collectors.toList());
+        this.ctgL4List.forEach(e -> e.setListIndex(this.ctgL4List.indexOf(e)));
     }
 }

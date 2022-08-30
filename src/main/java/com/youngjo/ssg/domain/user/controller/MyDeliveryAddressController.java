@@ -3,12 +3,15 @@ package com.youngjo.ssg.domain.user.controller;
 import com.youngjo.ssg.domain.user.dto.request.AddDeliveryAddressReqDto;
 import com.youngjo.ssg.domain.user.dto.request.DeliveryAddressIdReqDto;
 import com.youngjo.ssg.domain.user.dto.request.UpdateDeliveryAddressReqDto;
+import com.youngjo.ssg.domain.user.dto.response.MyDeliveryAddressResDto;
 import com.youngjo.ssg.domain.user.service.MyDeliveryAddressService;
 import com.youngjo.ssg.global.common.CommonResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/my/deliveryAddr")
@@ -30,8 +33,10 @@ public class MyDeliveryAddressController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("")
     public CommonResponse getDeliveryAddress() {
+        List<MyDeliveryAddressResDto> resList = myDeliveryAddressService.getMyDeliveryAddressList();
+        resList.forEach(e -> e.setListIndex(resList.indexOf(e)));
         return CommonResponse.builder()
-                .data(myDeliveryAddressService.getMyDeliveryAddressList())
+                .data(resList)
                 .build();
     }
 

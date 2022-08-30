@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import java.util.List;
 
+import static com.youngjo.ssg.domain.product.domain.QCategoryL2.categoryL2;
+import static com.youngjo.ssg.domain.product.domain.QCategoryL3.categoryL3;
 import static com.youngjo.ssg.domain.product.domain.QCategoryL4.categoryL4;
 
 @Repository
@@ -41,6 +43,18 @@ public class CategoryL4RepositoryImpl implements CategoryL4Repository {
     public CategoryL4 findByName(String name) {
         return queryFactory.selectFrom(categoryL4)
                 .where(categoryL4.name.eq(name))
+                .fetchOne();
+    }
+
+    @Override
+    public CategoryL4 findByL2L3L4Name(String ctgL2Name, String ctgL3Name, String ctgL4Name) {
+        return queryFactory.selectFrom(categoryL4)
+                .join(categoryL4.categoryL3, categoryL3)
+                .join(categoryL3.categoryL2, categoryL2)
+                .where(categoryL4.name.eq(ctgL4Name),
+                        categoryL3.name.eq(ctgL3Name),
+                        categoryL2.name.eq(ctgL2Name)
+                )
                 .fetchOne();
     }
 

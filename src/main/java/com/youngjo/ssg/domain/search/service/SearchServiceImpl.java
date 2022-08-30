@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,7 @@ public class SearchServiceImpl implements SearchService {
 
     @Override
     public BoardListResDto findSearchResult(String query, BoardSortFilterReqDto queryDto) {
+        Long userId = clientInfoLoader.getUserId();
         // 검색결과 리턴
         List<ProductBoard> boardList = productRepository.findAllBoardByQuery(
                 query,
@@ -36,17 +38,17 @@ public class SearchServiceImpl implements SearchService {
                 queryDto.getMinPrice(),
                 queryDto.getMaxPrice());
 
-        Map<Long, Boolean> boardLikeMap;
-        if (boardList.size() > 0 && clientInfoLoader.getUserId() != null) {
-            boardLikeMap = productRepository.findBoardLikeMapByBoardIdAndUserId(
-                    boardList.stream().map(board -> board.getId()).collect(Collectors.toList()),
-                    clientInfoLoader.getUserId());
+        Map<Long, Boolean> likeMap;
+        if (boardList.size() > 0 && userId != null) {
+            likeMap = productRepository.findBoardLikeMapByBoardIdAndUserId(
+                    boardList.stream().map(ProductBoard::getId).collect(Collectors.toList()),
+                    userId);
         } else {
-            boardLikeMap = new HashMap<>();
+            likeMap = new HashMap<>();
         }
 
-        // 검색어 저장
         Search search = searchRepository.findSearch(query);
+        // 검색어 저장
         if (boardList.size() > 0 && search == null) {
             searchRepository.saveSearch(Search.builder().query(query).build().plusFrequency());
         } else if (boardList.size() > 0 && search != null) {
@@ -59,10 +61,12 @@ public class SearchServiceImpl implements SearchService {
                 queryDto.getMinPrice(),
                 queryDto.getMaxPrice());
 
-        return new BoardListResDto(
+        return boardList.size() > 0
+                ? new BoardListResDto(
                 boardCount,
                 boardList.stream()
-                        .map(board -> new BoardResDto(board, boardLikeMap.getOrDefault(board.getId(), false)))
-                        .collect(Collectors.toList()));
+                        .map(board -> new BoardResDto(board, likeMap.getOrDefault(board.getId(), false)))
+                        .collect(Collectors.toList()))
+                : new BoardListResDto(0L, Arrays.asList());
     }
 }

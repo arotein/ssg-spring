@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class CtgL4ResDto {
+    private Integer listIndex;
     private PdtStaticDto.CtgL4Dto ctgL4;
 
     public CtgL4ResDto(CategoryL4 ctgL4) {

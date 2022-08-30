@@ -9,6 +9,12 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class PdtInCartResDto {
+    private Integer listIndex;
+
+    public void setListIndex(Integer listIndex) {
+        this.listIndex = listIndex;
+    }
+
     // == Board Info ==
     private Long boardId;
     private String title;

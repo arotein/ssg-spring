@@ -73,5 +73,7 @@ public class PurchaseCompletedResDto {
         this.install_month = kakaoPayment.getInstall_month();
         this.interest_free_install = kakaoPayment.getInterest_free_install();
         this.total = kakaoPayment.getTotal();
+
+        this.pdtList.forEach(e -> e.setListIndex(this.pdtList.indexOf(e)));
     }
 }

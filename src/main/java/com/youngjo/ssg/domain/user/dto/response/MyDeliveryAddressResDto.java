@@ -8,6 +8,12 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class MyDeliveryAddressResDto {
+    private Integer listIndex;
+
+    public void setListIndex(Integer listIndex) {
+        this.listIndex = listIndex;
+    }
+
     private Long id;
     private String alias;
     private String recipientName;
