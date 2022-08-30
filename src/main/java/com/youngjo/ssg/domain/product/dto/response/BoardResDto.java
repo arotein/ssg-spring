@@ -10,6 +10,7 @@ public class BoardResDto {
     private Integer listIndex;
     private Long boardId;
     private String mainImgUrl;
+    private String mainImgAlt;
     private String title;
     private String brand;
     private String salesSite;
@@ -29,6 +30,7 @@ public class BoardResDto {
     public BoardResDto(ProductBoard productBoard, Boolean boardLike) {
         this.boardId = productBoard.getId();
         this.mainImgUrl = productBoard.getMainImgPath();
+        this.mainImgAlt = productBoard.getMainImgAlt();
         this.title = productBoard.getTitle();
         this.brand = productBoard.getBrand();
         this.salesSite = productBoard.getSalesSite().getValue();

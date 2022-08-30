@@ -1,5 +1,6 @@
 package com.youngjo.ssg.domain.product.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,7 @@ public class PdtStaticDto {
 
     @Data
     @AllArgsConstructor
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class CtgL1Dto {
         private Integer listIndex;
         private Long id;
@@ -21,6 +23,7 @@ public class PdtStaticDto {
 
     @Data
     @AllArgsConstructor
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class CtgL2Dto {
         private Integer listIndex;
         private Long id;
@@ -34,6 +37,7 @@ public class PdtStaticDto {
 
     @Data
     @AllArgsConstructor
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class CtgL2ImgResDto {
         private Integer listIndex;
         private Long id;
@@ -51,6 +55,7 @@ public class PdtStaticDto {
 
     @Data
     @AllArgsConstructor
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class CtgL3Dto {
         private Integer listIndex;
         private Long id;
@@ -64,6 +69,7 @@ public class PdtStaticDto {
 
     @Data
     @AllArgsConstructor
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class CtgL4Dto {
         private Integer listIndex;
         private Long id;

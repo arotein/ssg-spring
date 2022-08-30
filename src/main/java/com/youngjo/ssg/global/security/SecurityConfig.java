@@ -56,6 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public RoleHierarchyImpl roleHierarchy() {
+        System.out.println("LOGIN_PROCESSING_URL = " + LOGIN_PROCESSING_URL);
         RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
         roleHierarchy.setHierarchy(String.format("%s > %s", Role.ROLE_ADMIN, Role.ROLE_NORMAL));
         return roleHierarchy;
