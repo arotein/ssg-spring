@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CtgL2AllImgResDto {
     private Integer listIndex;
-    private PdtStaticDto.CtgL2ImgResDto ctgL2;
+    private PdtStaticDto.CtgL2ImgResDto categoryImg;
 
-    public CtgL2AllImgResDto(CategoryL2 ctgL2) {
-        this.ctgL2 = new PdtStaticDto.CtgL2ImgResDto(ctgL2.getId(), ctgL2.getName(), ctgL2.getImgUrl(), ctgL2.getImgAlt());
+    public CtgL2AllImgResDto(CategoryL2 categoryImg) {
+        this.categoryImg = new PdtStaticDto.CtgL2ImgResDto(categoryImg.getId(), categoryImg.getName(), categoryImg.getImgUrl(), categoryImg.getImgAlt());
     }
 }

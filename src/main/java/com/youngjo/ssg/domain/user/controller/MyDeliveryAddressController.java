@@ -60,10 +60,10 @@ public class MyDeliveryAddressController {
 
     // 내 배송지 삭제
     @PreAuthorize("isAuthenticated()")
-    @DeleteMapping("")
-    public CommonResponse delDeliveryAddress(@Validated @RequestBody DeliveryAddressIdReqDto dto) {
+    @DeleteMapping("/{addrId}")
+    public CommonResponse delDeliveryAddress(@PathVariable Long addrId) {
         return CommonResponse.builder()
-                .data(myDeliveryAddressService.delDeliveryAddress(dto))
+                .data(myDeliveryAddressService.delDeliveryAddress(addrId))
                 .build();
     }
 }

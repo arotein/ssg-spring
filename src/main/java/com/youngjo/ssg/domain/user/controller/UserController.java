@@ -43,7 +43,7 @@ public class UserController {
     @GetMapping("/user/test")
     public CommonResponse test() {
         return CommonResponse.builder()
-                .data("이이잉 기묘링")
+                .data("20초 기다려라ㅋ")
                 .build();
     }
 }

@@ -16,5 +16,5 @@ public interface MyDeliveryAddressService {
 
     Boolean switchingMainDeliveryAddress(DeliveryAddressIdReqDto deliveryAddressDto);
 
-    Boolean delDeliveryAddress(DeliveryAddressIdReqDto deliveryAddressDto);
+    Boolean delDeliveryAddress(Long addrId);
 }

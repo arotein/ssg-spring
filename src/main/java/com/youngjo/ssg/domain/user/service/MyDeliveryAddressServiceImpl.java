@@ -80,8 +80,8 @@ public class MyDeliveryAddressServiceImpl implements MyDeliveryAddressService {
     }
 
     @Override
-    public Boolean delDeliveryAddress(DeliveryAddressIdReqDto deliveryAddressDto) {
-        myDeliveryAddressRepository.removeMyDeliveryAddressById(clientInfoLoader.getUserId(), deliveryAddressDto.getDeliveryAddrId());
+    public Boolean delDeliveryAddress(Long addrId) {
+        myDeliveryAddressRepository.removeMyDeliveryAddressById(clientInfoLoader.getUserId(), addrId);
         return true;
     }
 }

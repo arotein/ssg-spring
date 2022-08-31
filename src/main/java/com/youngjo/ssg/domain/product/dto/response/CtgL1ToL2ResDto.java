@@ -14,14 +14,14 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class CtgL1ToL2ResDto {
     private Integer listIndex;
-    private PdtStaticDto.CtgL1Dto ctgL1;
-    private List<PdtStaticDto.CtgL2Dto> ctgL2List = new ArrayList<>();
+    private PdtStaticDto.CtgL1Dto category;
+    private List<PdtStaticDto.CtgL2Dto> subCategoryList = new ArrayList<>();
 
     public CtgL1ToL2ResDto(CategoryL1 ctgL1, List<CategoryL2> ctgL2List) {
-        this.ctgL1 = new PdtStaticDto.CtgL1Dto(ctgL1.getId(), ctgL1.getName());
-        this.ctgL2List = ctgL2List.stream()
+        this.category = new PdtStaticDto.CtgL1Dto(ctgL1.getId(), ctgL1.getName());
+        this.subCategoryList = ctgL2List.stream()
                 .map(ctg -> new PdtStaticDto.CtgL2Dto(ctg.getId(), ctg.getName()))
                 .collect(Collectors.toList());
-        this.ctgL2List.forEach(e -> e.setListIndex(this.ctgL2List.indexOf(e)));
+        this.subCategoryList.forEach(e -> e.setListIndex(this.subCategoryList.indexOf(e)));
     }
 }

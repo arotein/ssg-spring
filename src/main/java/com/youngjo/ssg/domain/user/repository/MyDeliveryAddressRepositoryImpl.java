@@ -55,11 +55,11 @@ public class MyDeliveryAddressRepositoryImpl implements MyDeliveryAddressReposit
     }
 
     @Override
-    public void removeMyDeliveryAddressById(Long userId, Long deliveryAddrId) {
+    public void removeMyDeliveryAddressById(Long userId, Long addrId) {
         entityManager.remove(
                 queryFactory.selectFrom(myDeliveryAddress)
                         .join(myDeliveryAddress.user, user).on(user.id.eq(userId))
-                        .where(myDeliveryAddress.id.eq(deliveryAddrId),
+                        .where(myDeliveryAddress.id.eq(addrId),
                                 myDeliveryAddress.isMain.isFalse())
                         .fetchOne());
     }

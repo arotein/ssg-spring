@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CtgL4ResDto {
     private Integer listIndex;
-    private PdtStaticDto.CtgL4Dto ctgL4;
+    private PdtStaticDto.CtgL4Dto category;
 
-    public CtgL4ResDto(CategoryL4 ctgL4) {
-        this.ctgL4 = new PdtStaticDto.CtgL4Dto(ctgL4.getId(), ctgL4.getName());
+    public CtgL4ResDto(CategoryL4 category) {
+        this.category = new PdtStaticDto.CtgL4Dto(category.getId(), category.getName());
     }
 }

@@ -13,5 +13,5 @@ public interface MyDeliveryAddressRepository {
 
     MyDeliveryAddress findMainMyDeliveryAddressById(Long userId);
 
-    void removeMyDeliveryAddressById(Long userId, Long deliveryAddrId);
+    void removeMyDeliveryAddressById(Long userId, Long addrId);
 }

@@ -58,15 +58,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://121.145.206.143:9000/api/ctg/nav2",
+							"raw": "http://localhost:9001/api/ctg/nav2",
 							"protocol": "http",
 							"host": [
-								"121",
-								"145",
-								"206",
-								"143"
+								"localhost"
 							],
-							"port": "9000",
+							"port": "9001",
 							"path": [
 								"api",
 								"ctg",
@@ -215,16 +212,19 @@
 						"header": [
 							{
 								"key": "Authentication",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjA3NTgxNjcsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.1S3vVjZdivUkU9KXj1MhK_4sc63dSqpAM-76RBvU3f0",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjQ4MTc0MjY5MDIsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.W0rDLolr_8eUf0petrMIl4XUhecjez_8Y2c5fDTerXQ",
 								"type": "text",
 								"disabled": true
 							}
 						],
 						"url": {
-							"raw": "http://localhost:9000/api/pdtBoard/list/ctgL1/1",
+							"raw": "http://121.145.206.143:9000/api/pdtBoard/list/ctgL1/1",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"121",
+								"145",
+								"206",
+								"143"
 							],
 							"port": "9000",
 							"path": [
@@ -245,13 +245,12 @@
 						"header": [
 							{
 								"key": "Authentication",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjA3NTgxNjcsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.1S3vVjZdivUkU9KXj1MhK_4sc63dSqpAM-76RBvU3f0",
-								"type": "text",
-								"disabled": true
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjQ4MTc0MjY5MDIsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.W0rDLolr_8eUf0petrMIl4XUhecjez_8Y2c5fDTerXQ",
+								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "http://localhost:9000/api/pdtBoard/list/ctgL2/4",
+							"raw": "http://localhost:9000/api/pdtBoard/list/ctgL2/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -262,7 +261,7 @@
 								"pdtBoard",
 								"list",
 								"ctgL2",
-								"4"
+								"1"
 							]
 						}
 					},
@@ -333,25 +332,22 @@
 						"header": [
 							{
 								"key": "Authentication",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjQ4MTc0MjM0ODcsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.trU29ayWcTwlrcRTngEaMYteeKqbUNa8ygfkrwk0TBw",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjQ4MTc0MjY5MDIsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.W0rDLolr_8eUf0petrMIl4XUhecjez_8Y2c5fDTerXQ",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "http://121.145.206.143:9000/api/pdtBoard/pressLike/1",
+							"raw": "http://localhost:9000/api/pdtBoard/pressLike/3",
 							"protocol": "http",
 							"host": [
-								"121",
-								"145",
-								"206",
-								"143"
+								"localhost"
 							],
 							"port": "9000",
 							"path": [
 								"api",
 								"pdtBoard",
 								"pressLike",
-								"1"
+								"3"
 							]
 						}
 					},
@@ -419,13 +415,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://121.145.206.143:9000/api/cart",
+							"raw": "http://localhost:9000/api/cart",
 							"protocol": "http",
 							"host": [
-								"121",
-								"145",
-								"206",
-								"143"
+								"localhost"
 							],
 							"port": "9000",
 							"path": [
@@ -446,7 +439,7 @@
 						"header": [
 							{
 								"key": "Authentication",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjQ4MTcwNjQ5NDEsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.4PoUc8BE8k39vMIBO2tEfC9L6bY35Y2GI_jL4y2HmhQ",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjQ4MTc1ODIzMDAsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.uYgXzqe8geL6yiiqRatNGTBpdsH2QDdLD-tTnO_PY2s",
 								"type": "text"
 							}
 						],
@@ -460,12 +453,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:9001/api/cart",
+							"raw": "http://localhost:9000/api/cart",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "9001",
+							"port": "9000",
 							"path": [
 								"api",
 								"cart"
@@ -523,7 +516,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[\r\n    1,2\r\n]",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -531,7 +524,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:9001/api/cart/pdt",
+							"raw": "http://localhost:9001/api/cart/pdt/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -540,7 +533,8 @@
 							"path": [
 								"api",
 								"cart",
-								"pdt"
+								"pdt",
+								"1"
 							]
 						}
 					},
@@ -553,13 +547,13 @@
 						"header": [
 							{
 								"key": "Authentication",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjA3OTQ0NDUsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.3nsaQzztW1lwa5fvu7MDyqByqi0XBevcixlypmB4tg8",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjQ4MTc1ODIzMDAsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.uYgXzqe8geL6yiiqRatNGTBpdsH2QDdLD-tTnO_PY2s",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"pdtId\" : 1,\r\n    \"pdtQty\": 10\r\n}",
+							"raw": "{\r\n    \"pdtId\" : 2,\r\n    \"pdtQty\": 10\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -567,12 +561,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:9001/api/cart/pdt",
+							"raw": "http://localhost:9000/api/cart/pdt",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "9001",
+							"port": "9000",
 							"path": [
 								"api",
 								"cart",
@@ -627,13 +621,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://121.145.206.143:9000/api/login",
+							"raw": "http://localhost:9000/api/login",
 							"protocol": "http",
 							"host": [
-								"121",
-								"145",
-								"206",
-								"143"
+								"localhost"
 							],
 							"port": "9000",
 							"path": [
@@ -720,7 +711,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"deliveryAddrId\": 10\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -728,7 +719,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:9001/api/my/deliveryAddr",
+							"raw": "http://localhost:9001/api/my/deliveryAddr/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -737,7 +728,8 @@
 							"path": [
 								"api",
 								"my",
-								"deliveryAddr"
+								"deliveryAddr",
+								"1"
 							]
 						}
 					},
@@ -789,15 +781,18 @@
 					"name": "board search",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authentication",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjQ4MTc0MjY5MDIsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.W0rDLolr_8eUf0petrMIl4XUhecjez_8Y2c5fDTerXQ",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "http://121.145.206.143:9000/api/search?query=나이키",
+							"raw": "http://localhost:9000/api/search?query=나이키",
 							"protocol": "http",
 							"host": [
-								"121",
-								"145",
-								"206",
-								"143"
+								"localhost"
 							],
 							"port": "9000",
 							"path": [
