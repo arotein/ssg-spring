@@ -83,8 +83,8 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void delPdtInUserCart(List<Long> pdtIdList) {
-        normalCartRepository.removePdtInUserCart(pdtIdList, clientInfoLoader.getUserId());
+    public void delPdtInUserCart(Long pdtId) {
+        normalCartRepository.removePdtInUserCart(pdtId, clientInfoLoader.getUserId());
     }
 
     @Override

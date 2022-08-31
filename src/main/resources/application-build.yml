@@ -11,15 +11,6 @@ server:
       max: 100
       min-spare: 25
     accept-count: 50 # 작업 큐
-# 키 생성 커맨드
-# keytool -genkey -storetype PKCS12 -keyalg EC -sigalg SHA256withECDSA -groupname secp256r1 -validity 365 -keystore arotein-keystore.p12 -alias arotein-keystore
-#  ssl:
-#    key-store: arotein-keystore.p12
-#    key-store-type: PKCS12
-#    key-store-password: ${SSL_PASSWORD}
-#    key-alias: arotein-keystore
-#    enabled-protocols: TLSv1.2, TLSv1.3
-#  http2.enabled: true
 
 spring:
   datasource:

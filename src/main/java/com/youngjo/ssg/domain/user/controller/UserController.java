@@ -39,10 +39,11 @@ public class UserController {
                 .build();
     }
 
+    // ==== Dev Code ====
     @GetMapping("/user/test")
     public CommonResponse test() {
         return CommonResponse.builder()
-                .data(true)
+                .data("이이잉 기묘링")
                 .build();
     }
 }

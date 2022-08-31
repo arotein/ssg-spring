@@ -23,10 +23,10 @@ public class CartController {
     @PreAuthorize("isAnonymous()")
     @PostMapping("")
     public CommonResponse anonymousCartList(@RequestBody List<Long> pdtIdList) {
-        List<PdtInCartResDto> pdtCartList = cartService.getCartPdtListByPdtIds(pdtIdList);
-        pdtCartList.forEach(e -> e.setListIndex(pdtCartList.indexOf(e)));
+        List<PdtInCartResDto> list = cartService.getCartPdtListByPdtIds(pdtIdList);
+        list.forEach(e -> e.setListIndex(list.indexOf(e)));
         return CommonResponse.builder()
-                .data(pdtCartList)
+                .data(list)
                 .build();
     }
 
@@ -45,8 +45,10 @@ public class CartController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("")
     public CommonResponse userCartList() {
+        List<PdtInCartResDto> list = cartService.getUserPdtListInCart();
+        list.forEach(e -> e.setListIndex(list.indexOf(e)));
         return CommonResponse.builder()
-                .data(cartService.getUserPdtListInCart())
+                .data(list)
                 .build();
     }
 
@@ -62,9 +64,9 @@ public class CartController {
 
     // 선택 상품 삭제
     @PreAuthorize("isAuthenticated()")
-    @DeleteMapping("/pdt")
-    public CommonResponse delPdtInUserCart(@RequestBody List<Long> pdtIdList) {
-        cartService.delPdtInUserCart(pdtIdList);
+    @DeleteMapping("/pdt/{pdtId}")
+    public CommonResponse delPdtInUserCart(@PathVariable Long pdtId) {
+        cartService.delPdtInUserCart(pdtId);
         return CommonResponse.builder()
                 .data(true)
                 .build();

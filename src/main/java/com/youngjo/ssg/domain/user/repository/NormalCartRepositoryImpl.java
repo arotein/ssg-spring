@@ -40,11 +40,11 @@ public class NormalCartRepositoryImpl implements NormalCartRepository {
     }
 
     @Override
-    public void removePdtInUserCart(List<Long> pdtIds, Long userId) {
+    public void removePdtInUserCart(Long pdtId, Long userId) {
         queryFactory.selectFrom(normalCart)
                 .join(normalCart.user, user)
                 .join(normalCart.mainProduct, mainProduct)
-                .where(mainProduct.id.in(pdtIds), user.id.eq(userId))
+                .where(mainProduct.id.eq(pdtId), user.id.eq(userId))
                 .distinct()
                 .fetch()
                 .forEach(entityManager::remove);

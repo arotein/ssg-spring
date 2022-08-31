@@ -9,7 +9,7 @@ public interface NormalCartRepository {
 
     List<NormalCart> findAllNormalCartByUserId(Long userId);
 
-    void removePdtInUserCart(List<Long> pdtIdList, Long userId);
+    void removePdtInUserCart(Long pdtId, Long userId);
 
     void removeSoldOutPdtInUserCart(Long userId);
 
