@@ -3,6 +3,7 @@ package com.youngjo.ssg.domain.purchase.controller;
 import com.youngjo.ssg.domain.purchase.dto.request.PurchaseCompletedReqDto;
 import com.youngjo.ssg.domain.purchase.dto.request.PurchaseProceedReqDto;
 import com.youngjo.ssg.domain.purchase.service.UserPurchaseService;
+import com.youngjo.ssg.domain.user.service.MyDeliveryAddressService;
 import com.youngjo.ssg.global.common.CommonResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,12 +15,16 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserPurchaseController {
     private final UserPurchaseService userPurchaseService;
+    private final MyDeliveryAddressService myDeliveryAddressService;
 
     // 결제 진행창 -> 장바구니로 접속 or 바로구매로 접속
     // response dto 최적화 생략
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/proceed")
     public CommonResponse proceedToPayment(@Validated @RequestBody PurchaseProceedReqDto reqDto) {
+        if (reqDto.getMyDeliAddrId() == null) {
+            reqDto.setMyDeliAddrId(myDeliveryAddressService.getMyMainDeliveryAddress().getId());
+        }
         return CommonResponse.builder()
                 .data(userPurchaseService.proceedToPayment(reqDto))
                 .build();
