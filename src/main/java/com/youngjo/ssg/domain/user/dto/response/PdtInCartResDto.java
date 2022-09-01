@@ -30,6 +30,7 @@ public class PdtInCartResDto {
     private Integer shippingFeeIsland;
 
     private String thumbImg;
+    private String thumbImgAlt;
 
     // == Product Info ==
     private Long pdtId;
@@ -54,6 +55,7 @@ public class PdtInCartResDto {
         this.shippingFeeJeju = board.getShippingFeeJeju();
         this.shippingFeeIsland = board.getShippingFeeIsland();
         this.thumbImg = board.getMainImgPath();
+        this.thumbImgAlt = board.getMainImgAlt();
 
         this.pdtId = pdt.getId();
         this.optionValue1 = pdt.getOptionValue1();

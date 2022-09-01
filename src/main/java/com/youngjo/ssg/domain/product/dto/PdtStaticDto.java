@@ -84,18 +84,10 @@ public class PdtStaticDto {
     @Data
     @AllArgsConstructor
     public static class ConsignmentSellerInfoResDto {
-        private Integer listIndex;
         private Long id;
         private String name;
         private String consignmentSellerAddress;
         private String mailOrderNum;
-
-        public ConsignmentSellerInfoResDto(Long id, String name, String consignmentSellerAddress, String mailOrderNum) {
-            this.id = id;
-            this.name = name;
-            this.consignmentSellerAddress = consignmentSellerAddress;
-            this.mailOrderNum = mailOrderNum;
-        }
     }
 
     @Data

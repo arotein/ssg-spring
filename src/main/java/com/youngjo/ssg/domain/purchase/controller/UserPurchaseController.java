@@ -22,7 +22,7 @@ public class UserPurchaseController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/proceed")
     public CommonResponse proceedToPayment(@Validated @RequestBody PurchaseProceedReqDto reqDto) {
-        if (reqDto.getMyDeliAddrId() == null) {
+        if (reqDto.getMyDeliAddrId() == -1L) {
             reqDto.setMyDeliAddrId(myDeliveryAddressService.getMyMainDeliveryAddress().getId());
         }
         return CommonResponse.builder()

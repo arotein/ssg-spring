@@ -2,9 +2,7 @@ package com.youngjo.ssg.domain.purchase.dto.request;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.lang.Nullable;
 
-import javax.validation.constraints.Positive;
 import java.util.List;
 
 /***
@@ -14,8 +12,6 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class PurchaseProceedReqDto {
-    @Positive
-    @Nullable
-    private Long myDeliAddrId;
+    private Long myDeliAddrId = -1L;
     private List<Long> pdtIdList;
 }

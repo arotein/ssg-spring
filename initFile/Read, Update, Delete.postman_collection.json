@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "6d02c2e9-81b4-4821-a71c-968a06aad688",
+		"_postman_id": "5f6ac4a1-a0d9-4b8e-b18f-0fece92cd4ab",
 		"name": "Read, Update, Delete",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "22411101"
+		"_exporter_id": "19498058"
 	},
 	"item": [
 		{
@@ -15,12 +15,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:9001/api/ctg/main",
+							"raw": "http://121.145.206.143:9000/api/ctg/main",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"121",
+								"145",
+								"206",
+								"143"
 							],
-							"port": "9001",
+							"port": "9000",
 							"path": [
 								"api",
 								"ctg",
@@ -36,12 +39,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:9001/api/ctg/all/1",
+							"raw": "http://121.145.206.143:9000/api/ctg/all/1",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"121",
+								"145",
+								"206",
+								"143"
 							],
-							"port": "9001",
+							"port": "9000",
 							"path": [
 								"api",
 								"ctg",
@@ -123,12 +129,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:9001/api/ctg/menu2/1",
+							"raw": "http://121.145.206.143:9000/api/ctg/menu2/1",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"121",
+								"145",
+								"206",
+								"143"
 							],
-							"port": "9001",
+							"port": "9000",
 							"path": [
 								"api",
 								"ctg",
@@ -189,36 +198,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:9001/api/pdtBoard/detail/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "9001",
-							"path": [
-								"api",
-								"pdtBoard",
-								"detail",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "/pdtBoard/list/ctgL1/{ctgL1Id}",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authentication",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjQ4MTc0MjY5MDIsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.W0rDLolr_8eUf0petrMIl4XUhecjez_8Y2c5fDTerXQ",
-								"type": "text",
-								"disabled": true
-							}
-						],
-						"url": {
-							"raw": "http://121.145.206.143:9000/api/pdtBoard/list/ctgL1/1",
+							"raw": "http://121.145.206.143:9000/api/pdtBoard/detail/1",
 							"protocol": "http",
 							"host": [
 								"121",
@@ -230,8 +210,7 @@
 							"path": [
 								"api",
 								"pdtBoard",
-								"list",
-								"ctgL1",
+								"detail",
 								"1"
 							]
 						}
@@ -245,12 +224,13 @@
 						"header": [
 							{
 								"key": "Authentication",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjQ4MTc0MjY5MDIsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.W0rDLolr_8eUf0petrMIl4XUhecjez_8Y2c5fDTerXQ",
-								"type": "text"
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjA3NTgxNjcsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.1S3vVjZdivUkU9KXj1MhK_4sc63dSqpAM-76RBvU3f0",
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"url": {
-							"raw": "http://localhost:9000/api/pdtBoard/list/ctgL2/1",
+							"raw": "http://localhost:9000/api/pdtBoard/list/ctgL2/2?limit=80&maxPrice=500000",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -261,7 +241,17 @@
 								"pdtBoard",
 								"list",
 								"ctgL2",
-								"1"
+								"2"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "80"
+								},
+								{
+									"key": "maxPrice",
+									"value": "500000"
+								}
 							]
 						}
 					},
@@ -273,21 +263,28 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://121.145.206.143:9000/api/pdtBoard/list/ctgL3/1",
+							"raw": "http://localhost:9001/api/pdtBoard/list/ctgL3/1?limit=80&maxPrice=1000000",
 							"protocol": "http",
 							"host": [
-								"121",
-								"145",
-								"206",
-								"143"
+								"localhost"
 							],
-							"port": "9000",
+							"port": "9001",
 							"path": [
 								"api",
 								"pdtBoard",
 								"list",
 								"ctgL3",
 								"1"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "80"
+								},
+								{
+									"key": "maxPrice",
+									"value": "1000000"
+								}
 							]
 						}
 					},
@@ -297,29 +294,30 @@
 					"name": "/pdtBoard/list/ctgL4/{ctgL4Id}",
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authentication",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjQ4MTc0MjM0ODcsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.trU29ayWcTwlrcRTngEaMYteeKqbUNa8ygfkrwk0TBw",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"url": {
-							"raw": "http://121.145.206.143:9000/api/pdtBoard/list/ctgL4/428",
+							"raw": "http://localhost:9001/api/pdtBoard/list/ctgL4/1?limit=80&maxPrice=10000",
 							"protocol": "http",
 							"host": [
-								"121",
-								"145",
-								"206",
-								"143"
+								"localhost"
 							],
-							"port": "9000",
+							"port": "9001",
 							"path": [
 								"api",
 								"pdtBoard",
 								"list",
 								"ctgL4",
-								"428"
+								"1"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "80"
+								},
+								{
+									"key": "maxPrice",
+									"value": "10000"
+								}
 							]
 						}
 					},
@@ -332,22 +330,22 @@
 						"header": [
 							{
 								"key": "Authentication",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjQ4MTc0MjY5MDIsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.W0rDLolr_8eUf0petrMIl4XUhecjez_8Y2c5fDTerXQ",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjA3MzI4NDEsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.xuMxXSsHpODfMGkhLafaeOa27TRKnRHt5qoRJ0j0J-s",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "http://localhost:9000/api/pdtBoard/pressLike/3",
+							"raw": "http://localhost:9001/api/pdtBoard/pressLike/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "9000",
+							"port": "9001",
 							"path": [
 								"api",
 								"pdtBoard",
 								"pressLike",
-								"3"
+								"1"
 							]
 						}
 					},
@@ -415,10 +413,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:9000/api/cart",
+							"raw": "http://121.145.206.143:9000/api/cart",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"121",
+								"145",
+								"206",
+								"143"
 							],
 							"port": "9000",
 							"path": [
@@ -439,7 +440,7 @@
 						"header": [
 							{
 								"key": "Authentication",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjQ4MTc1ODIzMDAsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.uYgXzqe8geL6yiiqRatNGTBpdsH2QDdLD-tTnO_PY2s",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjQ4MTc2OTc3MDksInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.NztLmLDVP1FlYCdriUufQa6LHN17Mdajsjz2YeFnSEs",
 								"type": "text"
 							}
 						],
@@ -453,10 +454,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:9000/api/cart",
+							"raw": "http://121.145.206.143:9000/api/cart",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"121",
+								"145",
+								"206",
+								"143"
 							],
 							"port": "9000",
 							"path": [
@@ -516,7 +520,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "[\r\n    1,2\r\n]",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -524,7 +528,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:9001/api/cart/pdt/1",
+							"raw": "http://localhost:9001/api/cart/pdt",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -533,8 +537,7 @@
 							"path": [
 								"api",
 								"cart",
-								"pdt",
-								"1"
+								"pdt"
 							]
 						}
 					},
@@ -547,13 +550,13 @@
 						"header": [
 							{
 								"key": "Authentication",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjQ4MTc1ODIzMDAsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.uYgXzqe8geL6yiiqRatNGTBpdsH2QDdLD-tTnO_PY2s",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjQ4MTc2OTc3MDksInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.NztLmLDVP1FlYCdriUufQa6LHN17Mdajsjz2YeFnSEs",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"pdtId\" : 2,\r\n    \"pdtQty\": 10\r\n}",
+							"raw": "{\r\n    \"pdtId\" : 1,\r\n    \"pdtQty\": 10\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -561,10 +564,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:9000/api/cart/pdt",
+							"raw": "http://121.145.206.143:9000/api/cart/pdt",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"121",
+								"145",
+								"206",
+								"143"
 							],
 							"port": "9000",
 							"path": [
@@ -621,10 +627,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:9000/api/login",
+							"raw": "http://121.145.206.143:9000/api/login",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"121",
+								"145",
+								"206",
+								"143"
 							],
 							"port": "9000",
 							"path": [
@@ -642,17 +651,20 @@
 						"header": [
 							{
 								"key": "Authentication",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjQ4MTcwNjQ5NDEsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.4PoUc8BE8k39vMIBO2tEfC9L6bY35Y2GI_jL4y2HmhQ",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjQ4MTc2OTc3MDksInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.NztLmLDVP1FlYCdriUufQa6LHN17Mdajsjz2YeFnSEs",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "http://localhost:9001/api/my/deliveryAddr",
+							"raw": "http://121.145.206.143:9000/api/my/deliveryAddr",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"121",
+								"145",
+								"206",
+								"143"
 							],
-							"port": "9001",
+							"port": "9000",
 							"path": [
 								"api",
 								"my",
@@ -711,7 +723,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\r\n    \"deliveryAddrId\": 10\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -719,7 +731,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:9001/api/my/deliveryAddr/1",
+							"raw": "http://localhost:9001/api/my/deliveryAddr",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -728,8 +740,7 @@
 							"path": [
 								"api",
 								"my",
-								"deliveryAddr",
-								"1"
+								"deliveryAddr"
 							]
 						}
 					},
@@ -781,13 +792,7 @@
 					"name": "board search",
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authentication",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjQ4MTc0MjY5MDIsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.W0rDLolr_8eUf0petrMIl4XUhecjez_8Y2c5fDTerXQ",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"url": {
 							"raw": "http://localhost:9000/api/search?query=나이키",
 							"protocol": "http",
@@ -821,13 +826,13 @@
 						"header": [
 							{
 								"key": "Authentication",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjQ4MTcwNjQ5NDEsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.4PoUc8BE8k39vMIBO2tEfC9L6bY35Y2GI_jL4y2HmhQ",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjQ4MTc2ODUzMjgsInNlcnZlciI6InlvdW5nam8iLCJpZCI6MSwibmFtZSI6IuywqOuIhCIsImVtYWlsIjoiY2hhbnVAY2hhbnUuY29tIiwicm9sZSI6IlJPTEVfTk9STUFMIn0.n8UPrp-jDu2xuQ6pF8TWKmqDnudG1ywklujov_pIiUE",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"myDeliAddrId\": 1,\r\n    \"pdtIdList\": [1,2,3,4,5,6,7,8,9]\r\n}",
+							"raw": "{\r\n    \"pdtIdList\": [1,2,3,4,5,6,7,8,9]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -835,15 +840,18 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:9001/api/purchase/user/proceed",
+							"raw": "http://121.145.206.143:9000/api/purch/user/proceed",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"121",
+								"145",
+								"206",
+								"143"
 							],
-							"port": "9001",
+							"port": "9000",
 							"path": [
 								"api",
-								"purchase",
+								"purch",
 								"user",
 								"proceed"
 							]
@@ -864,7 +872,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"buyerName\": \"나\",\r\n    \"buyerPhoneNumber\": \"010-0000-0000\",\r\n    \"buyerEmail\": \"chau@chanu.com\",\r\n    \"refundWay\": \"환불 대충 ㅎ\",\r\n    \"requestMessage\": \"빨리 배송좀 ㅎ\",\r\n    \"receiveWay\": \"택배배송\",\r\n\r\n    \"myDeliAddrId\" : 1,\r\n\r\n    \"pdtIdMap\": {\r\n        \"1\":1,\r\n        \"2\":1,\r\n        \"3\":1\r\n    },\r\n    \"kakaoPayment\": {\r\n    \"cid\": \"TC0ONETIME\",\r\n    \"aid\": \"A5678901234567890123\",\r\n    \"tid\": \"T1234567890123456789\",\r\n    \"partner_user_id\": \"partner_user_id\",\r\n    \"partner_order_id\": \"partner_order_id\",\r\n    \"payment_method_type\": \"CARD\",\r\n    \"item_name\": \"카페아메리카노\",\r\n    \"quantity\": 1,\r\n    \"amount\": {\r\n        \"total\": 3200,\r\n        \"tax_free\": 0,\r\n        \"vat\": 0,\r\n        \"point\": 0,\r\n        \"discount\": 0,\r\n        \"green_deposit\": 0\r\n    },\r\n    \"card_info\": {\r\n        \"interest_free_install\": \"N\",\r\n        \"bin\": \"621640\",\r\n        \"card_type\": \"체크\",\r\n        \"card_mid\": \"123456789\",\r\n        \"approved_id\": \"12345678\",\r\n        \"install_month\": \"00\",\r\n        \"purchase_corp\": \"비씨카드\",\r\n        \"purchase_corp_code\": \"01\",\r\n        \"issuer_corp\": \"수협카드\",\r\n        \"issuer_corp_code\": \"13\",\r\n        \"kakaopay_purchase_corp\": \"비씨카드\",\r\n        \"kakaopay_purchase_corp_code\": \"104\",\r\n        \"kakaopay_issuer_corp\": \"수협은행\",\r\n        \"kakaopay_issuer_corp_code\": \"212\"\r\n    },\r\n    \"created_at\": \"2019-05-21T11:18:24\",\r\n    \"approved_at\": \"2019-05-21T11:18:32\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"buyerName\": \"나\",\r\n    \"buyerPhoneNumber\": \"010-0000-0000\",\r\n    \"buyerEmail\": \"chau@chanu.com\",\r\n    \"refundWay\": \"환불 대충 ㅎ\",\r\n    \"requestMessage\": \"빨리 배송좀 ㅎ\",\r\n    \"receiveWay\": \"택배배송\",\r\n\r\n    \"myDeliAddrId\" : 1,\r\n\r\n    \"pdtIdMap\": {\r\n        \"1\":1,\r\n        \"2\":2,\r\n        \"3\":2\r\n    },\r\n    \"kakaoPayment\": {\r\n    \"cid\": \"TC0ONETIME\",\r\n    \"aid\": \"A5678901234567890123\",\r\n    \"tid\": \"T1234567890123456789\",\r\n    \"partner_user_id\": \"partner_user_id\",\r\n    \"partner_order_id\": \"partner_order_id\",\r\n    \"payment_method_type\": \"CARD\",\r\n    \"item_name\": \"카페아메리카노\",\r\n    \"quantity\": 1,\r\n    \"amount\": {\r\n        \"total\": 3200,\r\n        \"tax_free\": 0,\r\n        \"vat\": 0,\r\n        \"point\": 0,\r\n        \"discount\": 0,\r\n        \"green_deposit\": 0\r\n    },\r\n    \"card_info\": {\r\n        \"interest_free_install\": \"N\",\r\n        \"bin\": \"621640\",\r\n        \"card_type\": \"체크\",\r\n        \"card_mid\": \"123456789\",\r\n        \"approved_id\": \"12345678\",\r\n        \"install_month\": \"00\",\r\n        \"purchase_corp\": \"비씨카드\",\r\n        \"purchase_corp_code\": \"01\",\r\n        \"issuer_corp\": \"수협카드\",\r\n        \"issuer_corp_code\": \"13\",\r\n        \"kakaopay_purchase_corp\": \"비씨카드\",\r\n        \"kakaopay_purchase_corp_code\": \"104\",\r\n        \"kakaopay_issuer_corp\": \"수협은행\",\r\n        \"kakaopay_issuer_corp_code\": \"212\"\r\n    },\r\n    \"created_at\": \"2019-05-21T11:18:24\",\r\n    \"approved_at\": \"2019-05-21T11:18:32\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -901,7 +909,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"buyerName\": \"나\",\r\n    \"buyerPhoneNumber\": \"010-0000-0000\",\r\n    \"buyerEmail\": \"chau@chanu.com\",\r\n    \"refundWay\": \"환불 대충 ㅎ\",\r\n    \"requestMessage\": \"빨리 배송좀 ㅎ\",\r\n    \"receiveWay\": \"택배배송\",\r\n\r\n    \"myDeliAddrId\" : 1,\r\n\r\n    \"pdtIdMap\": {\r\n        \"1\":10,\r\n        \"2\":1,\r\n        \"3\":1\r\n    },\r\n    \"kakaoPayment\": {\r\n    \"cid\": \"TC0ONETIME\",\r\n    \"aid\": \"A5678901234567890123\",\r\n    \"tid\": \"T1234567890123456789\",\r\n    \"partner_user_id\": \"partner_user_id\",\r\n    \"partner_order_id\": \"partner_order_id\",\r\n    \"payment_method_type\": \"CARD\",\r\n    \"item_name\": \"카페아메리카노\",\r\n    \"quantity\": 1,\r\n    \"amount\": {\r\n        \"total\": 3200,\r\n        \"tax_free\": 0,\r\n        \"vat\": 0,\r\n        \"point\": 0,\r\n        \"discount\": 0,\r\n        \"green_deposit\": 0\r\n    },\r\n    \"card_info\": {\r\n        \"interest_free_install\": \"N\",\r\n        \"bin\": \"621640\",\r\n        \"card_type\": \"체크\",\r\n        \"card_mid\": \"123456789\",\r\n        \"approved_id\": \"12345678\",\r\n        \"install_month\": \"00\",\r\n        \"purchase_corp\": \"비씨카드\",\r\n        \"purchase_corp_code\": \"01\",\r\n        \"issuer_corp\": \"수협카드\",\r\n        \"issuer_corp_code\": \"13\",\r\n        \"kakaopay_purchase_corp\": \"비씨카드\",\r\n        \"kakaopay_purchase_corp_code\": \"104\",\r\n        \"kakaopay_issuer_corp\": \"수협은행\",\r\n        \"kakaopay_issuer_corp_code\": \"212\"\r\n    },\r\n    \"created_at\": \"2019-05-21T11:18:24\",\r\n    \"approved_at\": \"2019-05-21T11:18:32\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"buyerName\": \"나\",\r\n    \"buyerPhoneNumber\": \"010-0000-0000\",\r\n    \"buyerEmail\": \"chau@chanu.com\",\r\n    \"refundWay\": \"환불 대충 ㅎ\",\r\n    \"requestMessage\": \"빨리 배송좀 ㅎ\",\r\n    \"receiveWay\": \"택배배송\",\r\n\r\n    \"myDeliAddrId\" : 1,\r\n\r\n    \"pdtIdMap\": {\r\n        \"1\":10,\r\n        \"2\":2,\r\n        \"3\":2\r\n    },\r\n    \"kakaoPayment\": {\r\n    \"cid\": \"TC0ONETIME\",\r\n    \"aid\": \"A5678901234567890123\",\r\n    \"tid\": \"T1234567890123456789\",\r\n    \"partner_user_id\": \"partner_user_id\",\r\n    \"partner_order_id\": \"partner_order_id\",\r\n    \"payment_method_type\": \"CARD\",\r\n    \"item_name\": \"카페아메리카노\",\r\n    \"quantity\": 1,\r\n    \"amount\": {\r\n        \"total\": 3200,\r\n        \"tax_free\": 0,\r\n        \"vat\": 0,\r\n        \"point\": 0,\r\n        \"discount\": 0,\r\n        \"green_deposit\": 0\r\n    },\r\n    \"card_info\": {\r\n        \"interest_free_install\": \"N\",\r\n        \"bin\": \"621640\",\r\n        \"card_type\": \"체크\",\r\n        \"card_mid\": \"123456789\",\r\n        \"approved_id\": \"12345678\",\r\n        \"install_month\": \"00\",\r\n        \"purchase_corp\": \"비씨카드\",\r\n        \"purchase_corp_code\": \"01\",\r\n        \"issuer_corp\": \"수협카드\",\r\n        \"issuer_corp_code\": \"13\",\r\n        \"kakaopay_purchase_corp\": \"비씨카드\",\r\n        \"kakaopay_purchase_corp_code\": \"104\",\r\n        \"kakaopay_issuer_corp\": \"수협은행\",\r\n        \"kakaopay_issuer_corp_code\": \"212\"\r\n    },\r\n    \"created_at\": \"2019-05-21T11:18:24\",\r\n    \"approved_at\": \"2019-05-21T11:18:32\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

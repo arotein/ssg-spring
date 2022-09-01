@@ -96,24 +96,35 @@ public class PdtBoardDetailResDto {
                 productBoard.getConsignmentSellerInfo().getMailOrderNum());
         this.ctgL4 = new PdtStaticDto.CtgL4Dto(productBoard.getCategoryL4().getId(),
                 productBoard.getCategoryL4().getName());
-        this.thumbImgList = productBoard.getThumbImgList()
+
+
+        List<PdtStaticDto.ProductImgResDto> list1 = productBoard.getThumbImgList()
                 .stream().map(img -> new PdtStaticDto.ProductImgResDto(
                         img.getId(),
                         img.getImgPath(),
                         img.getImgAlt()))
                 .collect(Collectors.toList());
-        this.detailImgList = productBoard.getDetailImgList()
+        list1.forEach(e -> e.setListIndex(list1.indexOf(e)));
+        this.thumbImgList = list1;
+
+
+        List<PdtStaticDto.ProductImgResDto> list2 = productBoard.getDetailImgList()
                 .stream().map(img -> new PdtStaticDto.ProductImgResDto(
                         img.getId(),
                         img.getImgPath(),
                         img.getImgAlt()))
                 .collect(Collectors.toList());
-        this.productRequiredInfoList = productBoard.getProductRequiredInfoList()
+        list2.forEach(e -> e.setListIndex(list2.indexOf(e)));
+        this.detailImgList = list2;
+
+        List<PdtStaticDto.ProductRequiredInfoResDto> list3 = productBoard.getProductRequiredInfoList()
                 .stream().map(info -> new PdtStaticDto.ProductRequiredInfoResDto(
                         info.getId(),
                         info.getInfoTitle(),
                         info.getInfoCnt()))
                 .collect(Collectors.toList());
+        list3.forEach(e -> e.setListIndex(list3.indexOf(e)));
+        this.productRequiredInfoList = list3;
     }
 
     public PdtBoardDetailResDto boardLike(Boolean bool) {
@@ -130,6 +141,7 @@ public class PdtBoardDetailResDto {
             tmpId++;
             option1List.add(new PdtStaticDto.OptionNameResDto(tmpId, e));
         }
+        this.option1List.forEach(e -> e.setListIndex(this.option1List.indexOf(e)));
         return this;
     }
 }
