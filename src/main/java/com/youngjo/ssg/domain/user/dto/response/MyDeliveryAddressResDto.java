@@ -1,5 +1,6 @@
 package com.youngjo.ssg.domain.user.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.youngjo.ssg.domain.user.domain.MyDeliveryAddress;
 import com.youngjo.ssg.global.common.AddressConverter;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class MyDeliveryAddressResDto {
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer listIndex;
 
     public void setListIndex(Integer listIndex) {

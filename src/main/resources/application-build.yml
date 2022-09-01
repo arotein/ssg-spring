@@ -11,6 +11,7 @@ server:
       max: 100
       min-spare: 25
     accept-count: 50 # 작업 큐
+  shutdown: graceful
 
 spring:
   datasource:

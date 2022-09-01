@@ -20,6 +20,15 @@ public class MyDeliveryAddressController {
     private final MyDeliveryAddressService myDeliveryAddressService;
 
     // == User 전용 기능 ==
+    // 기본배송지 하나만 리턴
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("")
+    public CommonResponse getMainAddress() {
+        return CommonResponse.builder()
+                .data(myDeliveryAddressService.getMyMainDeliveryAddress())
+                .build();
+    }
+
     // 내 배송지 추가
     @PreAuthorize("isAuthenticated()")
     @PostMapping("")
@@ -29,9 +38,9 @@ public class MyDeliveryAddressController {
                 .build();
     }
 
-    // 내 배송지 조회
+    // 내 배송지들 조회
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("")
+    @GetMapping("/list")
     public CommonResponse getDeliveryAddress() {
         List<MyDeliveryAddressResDto> resList = myDeliveryAddressService.getMyDeliveryAddressList();
         resList.forEach(e -> e.setListIndex(resList.indexOf(e)));

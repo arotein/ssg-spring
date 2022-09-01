@@ -10,6 +10,8 @@ import java.util.List;
 public interface MyDeliveryAddressService {
     Boolean addDeliveryAddress(AddDeliveryAddressReqDto deliveryAddress);
 
+    MyDeliveryAddressResDto getMyMainDeliveryAddress();
+
     List<MyDeliveryAddressResDto> getMyDeliveryAddressList();
 
     Boolean updateDeliveryAddress(UpdateDeliveryAddressReqDto deliveryAddressDto);

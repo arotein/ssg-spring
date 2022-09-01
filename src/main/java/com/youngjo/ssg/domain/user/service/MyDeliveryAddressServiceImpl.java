@@ -46,6 +46,12 @@ public class MyDeliveryAddressServiceImpl implements MyDeliveryAddressService {
 
     @Transactional(readOnly = true)
     @Override
+    public MyDeliveryAddressResDto getMyMainDeliveryAddress() {
+        return new MyDeliveryAddressResDto(myDeliveryAddressRepository.findMainMyDeliveryAddressById(clientInfoLoader.getUserId()));
+    }
+
+    @Transactional(readOnly = true)
+    @Override
     public List<MyDeliveryAddressResDto> getMyDeliveryAddressList() {
         return myDeliveryAddressRepository.findAllMyDeliveryAddress(clientInfoLoader.getUserId()).stream()
                 .map(MyDeliveryAddressResDto::new)
