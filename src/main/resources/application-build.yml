@@ -1,6 +1,6 @@
 # build
 server:
-  port: 9009
+  port: 9000
   servlet:
     encoding:
       charset: UTF-8
@@ -26,12 +26,18 @@ spring:
         query.in_clause_parameter_padding: true
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect
-    hibernate.ddl-auto: update
+    hibernate.ddl-auto: validate
 #===================================================
 
 logging:
   level:
     root: info
+#    org.hibernate:
+#        SQL: debug
+#  file:
+#    name: log_build
+#    max-size: 10MB
+#    path: ../../logging
 
 global:
   jwt-token:

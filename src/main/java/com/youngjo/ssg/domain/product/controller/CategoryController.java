@@ -43,8 +43,8 @@ public class CategoryController {
                 .build();
     }
 
-    @GetMapping("/nav2")
-    public CommonResponse getCtgL2DetailNav() {
+    @GetMapping("/nav2/{ctgL2Id}")
+    public CommonResponse getCtgL2DetailNav(@PathVariable(required = false) String ctgL2Id) {
         List<CtgL1ToL2ResDto> list = categoryService.getCtgL1All().stream()
                 .map(ctg -> new CtgL1ToL2ResDto(ctg, ctg.getCategoryL2List()))
                 .collect(Collectors.toList());

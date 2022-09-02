@@ -38,4 +38,12 @@ public class UserController {
                 .data(userService.checkForEmailDuplicates(reqDto.getEmail()))
                 .build();
     }
+
+    // ===== Dev Code =====
+    @GetMapping("/test")
+    public CommonResponse jenkinsBuildTest() {
+        return CommonResponse.builder()
+                .data("0조 백엔드 박찬우 입니다.")
+                .build();
+    }
 }
