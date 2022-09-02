@@ -32,12 +32,9 @@ spring:
 logging:
   level:
     root: info
-#    org.hibernate:
-#        SQL: debug
-#  file:
-#    name: log_build
-#    max-size: 10MB
-#    path: ../../logging
+  file:
+    name: ../logging/log_build.log
+    max-size: 10MB
 
 global:
   jwt-token:

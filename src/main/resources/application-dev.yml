@@ -25,7 +25,7 @@ spring:
         query.in_clause_parameter_padding: true
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect
-    hibernate.ddl-auto: update
+    hibernate.ddl-auto: validate
 #  security:
 #    oauth2.client.registration:
 #      google:
