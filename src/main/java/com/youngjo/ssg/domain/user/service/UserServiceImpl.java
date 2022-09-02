@@ -6,6 +6,7 @@ import com.youngjo.ssg.domain.user.domain.User;
 import com.youngjo.ssg.domain.user.dto.request.SignUpReqDto;
 import com.youngjo.ssg.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,8 +48,11 @@ public class UserServiceImpl implements UserService {
                 .build()
                 .linkToRecipientAddress(user.getAddress())
                 .linkToUser(user);
-
-        userRepository.saveUser(user);
+        try {
+            userRepository.saveUser(user);
+        } catch (ConstraintViolationException ex) {
+            throw new IllegalArgumentException("중복된 ID 또는 Email 또는 Phone Number가 있습니다.");
+        }
         return true;
     }
 

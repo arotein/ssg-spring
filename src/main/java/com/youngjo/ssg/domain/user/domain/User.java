@@ -29,13 +29,9 @@ public class User extends BaseEntity {
 
     @Column(unique = true)
     private String loginId;
-
     private String password;
     private String name;
-
-    @Column(unique = true)
     private String email;
-    @Column(unique = true)
     private String phoneNumber;
 
     @JsonIgnore

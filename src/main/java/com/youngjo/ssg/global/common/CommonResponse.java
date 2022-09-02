@@ -16,8 +16,7 @@ public class CommonResponse<T> {
  * 1 : Expired Token
  * 2 : Invalid Signature
  * 3 : Access Denied
- * 4 : ID or password is incorrect
- * 5 :
+ * 4 : 잘못된 값
  * 400 : 400 BAD_REQUEST
  * 405 : 405 METHOD_NOT_ALLOWED
  */

@@ -2,6 +2,7 @@ package com.youngjo.ssg.global.exception;
 
 import com.youngjo.ssg.global.common.CommonResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -37,5 +38,12 @@ public class ExceptionControllerAdvice {
         log.error("Exception Name = {}, Message = {}", ex.getClass().getName(), ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(CommonResponse.builder().errorCode(400).errorMessage(ex.getMessage()).build());
+    }
+
+    @ExceptionHandler
+    public ResponseEntity constraintViolationExceptionExceptionExHandle(ConstraintViolationException ex) {
+        log.error("Exception Name = {}, Message = {}", ex.getClass().getName(), ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(CommonResponse.builder().errorCode(5).errorMessage("중복된 값입니다.").build());
     }
 }
