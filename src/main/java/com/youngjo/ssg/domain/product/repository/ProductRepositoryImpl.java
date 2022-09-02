@@ -105,7 +105,8 @@ public class ProductRepositoryImpl implements ProductRepository {
         return queryFactory.selectFrom(productBoardLike)
                 .join(productBoardLike.productBoard, productBoard)
                 .join(productBoardLike.user, user)
-                .where(productBoard.id.eq(boardId), user.id.eq(userId))
+                .where(productBoard.id.eq(boardId),
+                        eqUserId(userId))
                 .distinct()
                 .fetchOne();
     }
@@ -261,6 +262,10 @@ public class ProductRepositoryImpl implements ProductRepository {
                 .set(mainProduct.stock, mainProduct.stock.add(-amount))
                 .where(mainProduct.id.eq(pdtId))
                 .execute();
+    }
+
+    private BooleanExpression eqUserId(Long id) {
+        return id == null ? null : user.id.eq(id);
     }
 
     private BooleanExpression eqCtgL1Id(Long id) {

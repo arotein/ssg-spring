@@ -35,9 +35,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Boolean addPdtBoard(AddPdtBoardReqDto addPdtBoardReqDto) {
-        if (addPdtBoardReqDto.getTitle() == "null" ||
-                addPdtBoardReqDto.getBrand() == "null" ||
-                addPdtBoardReqDto.getSalesSite() == "null"
+        if (addPdtBoardReqDto.getTitle().equals("null") ||
+                addPdtBoardReqDto.getBrand().equals("null") ||
+                addPdtBoardReqDto.getSalesSite().equals("null")
         ) {
             return false;
         }
@@ -120,9 +120,8 @@ public class ProductServiceImpl implements ProductService {
         ProductBoard board = productRepository.findBoardById(boardId);
         return new PdtBoardDetailResDto(board)
                 .addOption1Set(board.getMainProductList().stream().map(MainProduct::getOptionValue1).collect(Collectors.toSet()))
-                .boardLike(clientInfoLoader.getUserId() == null
-                        ? false
-                        : productRepository.findBoardLikeByBoardIdAndUserId(boardId, clientInfoLoader.getUserId()).getValue());
+                .boardLike(productRepository.findBoardLikeByBoardIdAndUserId(boardId, clientInfoLoader.getUserId()) != null
+                        && productRepository.findBoardLikeByBoardIdAndUserId(boardId, clientInfoLoader.getUserId()).getValue());
     }
 
     @Transactional(readOnly = true)
