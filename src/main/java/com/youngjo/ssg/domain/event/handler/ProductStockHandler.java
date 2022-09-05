@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 /***
  * 상품 수정시 재고값이 아닌 증가량, 감소량을 받음.
- * increaseAmount -> out of stock 문제발생  -> 상품 취소로직 -> 취소완료 후 PurchaseMiddleProduct.DeliveryStatus를 CANCELED로 설정
  */
 @Component
 @Transactional(propagation = Propagation.REQUIRES_NEW)

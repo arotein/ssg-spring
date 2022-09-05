@@ -39,6 +39,13 @@ public class UserController {
                 .build();
     }
 
+    @GetMapping("/my/myPage")
+    public CommonResponse myPageInfo() {
+        return CommonResponse.builder()
+                .data(userService.myPageInfo())
+                .build();
+    }
+
     // ===== Dev Code =====
     @GetMapping("/test")
     public CommonResponse jenkinsBuildTest() {

@@ -4,7 +4,9 @@ import com.youngjo.ssg.domain.user.domain.Address;
 import com.youngjo.ssg.domain.user.domain.MyDeliveryAddress;
 import com.youngjo.ssg.domain.user.domain.User;
 import com.youngjo.ssg.domain.user.dto.request.SignUpReqDto;
+import com.youngjo.ssg.domain.user.dto.response.MyPageInfoResDto;
 import com.youngjo.ssg.domain.user.repository.UserRepository;
+import com.youngjo.ssg.global.security.bean.ClientInfoLoader;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
+    private final ClientInfoLoader clientInfoLoader;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -66,6 +69,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public Boolean checkForEmailDuplicates(String email) {
         return userRepository.findUserByEmail(email) != null ? true : false;
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public MyPageInfoResDto myPageInfo() {
+        User user = userRepository.findUserById(clientInfoLoader.getUserId());
+        return new MyPageInfoResDto(user.getName(), user.getGrade().toString());
     }
 
     @Override
