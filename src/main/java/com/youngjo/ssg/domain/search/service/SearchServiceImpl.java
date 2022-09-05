@@ -38,6 +38,7 @@ public class SearchServiceImpl implements SearchService {
                 queryDto.getMinPrice(),
                 queryDto.getMaxPrice());
 
+        // 유저의 좋아요
         Map<Long, Boolean> likeMap;
         if (boardList.size() > 0 && userId != null) {
             likeMap = productRepository.findBoardLikeMapByBoardIdAndUserId(
@@ -47,15 +48,15 @@ public class SearchServiceImpl implements SearchService {
             likeMap = new HashMap<>();
         }
 
-        Search search = searchRepository.findSearch(query);
         // 검색어 저장
+        Search search = searchRepository.findSearch(query);
         if (boardList.size() > 0 && search == null) {
             searchRepository.saveSearch(Search.builder().query(query).build().plusFrequency());
-        } else if (boardList.size() > 0 && search != null) {
+        } else if (boardList.size() > 0) {
             search.plusFrequency();
         }
 
-        // 총 검색 결과
+        // 총 검색 결과 개수
         Long boardCount = productRepository.countAllBoardByQuery(
                 query,
                 queryDto.getMinPrice(),

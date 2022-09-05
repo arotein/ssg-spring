@@ -30,10 +30,10 @@ public class CartServiceImpl implements CartService {
     public void addProductToCart(List<PdtInCartReqDto> pdtDtoList) {
         List<NormalCart> myCartList = normalCartRepository.findAllNormalCartByUserId(clientInfoLoader.getUserId());
         List<Long> pdtIds = myCartList.stream().map(cart -> cart.getMainProduct().getId()).collect(Collectors.toList());
-
         Map<Long, MainProduct> pdtMap = productRepository.findAllMainPdtMapByIds(
                 pdtDtoList.stream().map(PdtInCartReqDto::getPdtId).collect(Collectors.toList())
         );
+        Map<MainProduct, List<NormalCart>> pdtCartMap = myCartList.stream().collect(Collectors.groupingBy(NormalCart::getMainProduct));
 
         pdtDtoList.forEach(pdt -> {
                     if (!pdtIds.contains(pdt.getPdtId())) {
@@ -43,6 +43,9 @@ public class CartServiceImpl implements CartService {
                                         .build()
                                         .linkToMainProduct(pdtMap.get(pdt.getPdtId()))
                                         .linkToUser(userRepository.findUserById(clientInfoLoader.getUserId())));
+                    } else {
+                        List<NormalCart> normalCartListByMap = pdtCartMap.get(pdtMap.get(pdt.getPdtId()));
+                        normalCartListByMap.get(0).addPdtQty(pdt.getPdtQty());
                     }
                 }
         );

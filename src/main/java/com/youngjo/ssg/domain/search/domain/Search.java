@@ -19,6 +19,7 @@ public class Search extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "search_id")
     private Long id;
+    @Column(unique = true)
     private String query;
     // == Auto Count ==
     private Integer frequency;

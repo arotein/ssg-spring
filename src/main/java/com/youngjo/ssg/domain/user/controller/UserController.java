@@ -43,7 +43,7 @@ public class UserController {
     @GetMapping("/test")
     public CommonResponse jenkinsBuildTest() {
         return CommonResponse.builder()
-                .data("0조 백엔드 박찬우 입니다.")
+                .data("0조 백엔드 박찬우입니다 ^_^")
                 .build();
     }
 }

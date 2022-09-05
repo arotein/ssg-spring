@@ -52,4 +52,9 @@ public class NormalCart extends BaseEntity {
         this.pdtQty = pdtQty;
         return this;
     }
+
+    public NormalCart addPdtQty(Integer pdtQtyAmount) {
+        this.pdtQty += pdtQtyAmount;
+        return this;
+    }
 }
