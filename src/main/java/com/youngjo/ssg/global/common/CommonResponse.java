@@ -17,6 +17,7 @@ public class CommonResponse<T> {
  * 2 : Invalid Signature
  * 3 : Access Denied
  * 4 : 잘못된 값
+ * 5 : 중복된 값
  * 400 : 400 BAD_REQUEST
  * 405 : 405 METHOD_NOT_ALLOWED
  */

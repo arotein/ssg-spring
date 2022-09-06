@@ -76,9 +76,9 @@ public class JwtRequestProcessingFilter extends AbstractAuthenticationProcessing
                 SecurityContextHolder.setContext(context);
                 chain.doFilter(request, response);
             } catch (NullPointerException npe) {
-                log.error("NPE: {}", npe.getMessage());
+                log.warn("NPE: {}", npe.getMessage());
             } catch (JWTExpiredException jwtEx) {
-                log.error("Expired Token, class: {}", jwtEx.getClass());
+                log.warn("Expired Token, class: {}", jwtEx.getClass());
                 // 만료된 토큰
                 // refresh token 요청
                 // refresh token 인증 -> access token 재발급
@@ -90,13 +90,13 @@ public class JwtRequestProcessingFilter extends AbstractAuthenticationProcessing
                 objectMapper.writeValue(res.getWriter(),
                         CommonResponse.builder().errorCode(1).errorMessage("Expired Token").build());
             } catch (InvalidJWTSignatureException jwtSigEx) {
-                log.error("Invalid Signature Token, class: {}", jwtSigEx.getClass());
+                log.warn("Invalid Signature Token, class: {}", jwtSigEx.getClass());
                 chain.doFilter(req, res);
             } catch (InvalidJWTException exception) {
-                log.error("Invalid Token, class: {}", exception.getClass());
+                log.warn("Invalid Token, class: {}", exception.getClass());
                 chain.doFilter(req, res);
             } catch (ArrayIndexOutOfBoundsException exception) {
-                log.error("Invalid Token, class: {}", exception.getClass());
+                log.warn("Invalid Token, class: {}", exception.getClass());
                 chain.doFilter(req, res);
             } catch (Exception exception) {
                 log.error("Message: {}, class: {}", exception.getMessage(), exception.getClass());

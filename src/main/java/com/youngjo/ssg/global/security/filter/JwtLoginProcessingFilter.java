@@ -30,14 +30,14 @@ public class JwtLoginProcessingFilter extends AbstractAuthenticationProcessingFi
         log.info("{} {} Login Request", request.getMethod(), request.getRequestURI());
         // request type 검증
         if (!isJson(request) || !request.getMethod().equalsIgnoreCase("POST")) {
-            log.info("Login request: Method & Type error");
+            log.warn("Login request: Wrong Method or Type");
             throw new AuthenticationServiceException("JSON과 POST타입만 지원됩니다.");
         }
 
         SecurityLoginReqDto loginReqDto = objectMapper.readValue(request.getReader(), SecurityLoginReqDto.class);
         // request parameter 검증
         if (!StringUtils.hasText(loginReqDto.getLoginId()) || !StringUtils.hasText(loginReqDto.getPassword())) {
-            log.info("Login request: Null arguments error");
+            log.warn("Login request: Null arguments");
             throw new IllegalArgumentException("loginId 또는 password가 공백입니다.");
         }
 

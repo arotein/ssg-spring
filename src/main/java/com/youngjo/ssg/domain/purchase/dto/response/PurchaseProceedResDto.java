@@ -54,6 +54,7 @@ public class PurchaseProceedResDto {
                     pdt.getProductBoard().getShippingFee(),
                     pdt.getProductBoard().getShippingFreeOver(),
                     pdt.getProductBoard().getMainImgPath(),
+                    pdt.getProductBoard().getMainImgAlt(),
 
                     pdt.getId(),
                     pdt.getOptionValue1(),

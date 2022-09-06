@@ -22,28 +22,28 @@ public class ExceptionControllerAdvice {
 
     @ExceptionHandler
     public ResponseEntity accessDeniedExHandle(AccessDeniedException ex) {
-        log.error("Exception Name = {}, Message = {}", ex.getClass().getName(), ex.getMessage());
+        log.warn("Exception Name = {}, Message = {}", ex.getClass().getName(), ex.getMessage());
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(CommonResponse.builder().errorCode(3).errorMessage(ex.getMessage()).build());
     }
 
     @ExceptionHandler
     public ResponseEntity methodNotAllowedExHandle(HttpRequestMethodNotSupportedException ex) {
-        log.error("Exception Name = {}, Message = {}", ex.getClass().getName(), ex.getMessage());
+        log.warn("Exception Name = {}, Message = {}", ex.getClass().getName(), ex.getMessage());
         return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED)
                 .body(CommonResponse.builder().errorCode(405).errorMessage(ex.getMessage()).build());
     }
 
     @ExceptionHandler
     public ResponseEntity illegalArgumentExceptionExHandle(IllegalArgumentException ex) {
-        log.error("Exception Name = {}, Message = {}", ex.getClass().getName(), ex.getMessage());
+        log.warn("Exception Name = {}, Message = {}", ex.getClass().getName(), ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(CommonResponse.builder().errorCode(400).errorMessage(ex.getMessage()).build());
     }
 
     @ExceptionHandler
     public ResponseEntity constraintViolationExceptionExceptionExHandle(ConstraintViolationException ex) {
-        log.error("Exception Name = {}, Message = {}", ex.getClass().getName(), ex.getMessage());
+        log.warn("Exception Name = {}, Message = {}", ex.getClass().getName(), ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(CommonResponse.builder().errorCode(5).errorMessage("중복된 값입니다.").build());
     }

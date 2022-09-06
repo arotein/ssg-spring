@@ -30,14 +30,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = userRepository.findUserByLoginId(loginId);
         // 계정 검증
         if (user == null) {
-            log.info("Login request: The account does not exist.");
-            throw new UsernameNotFoundException("아이디 혹은 비밀번호가 일치하지 않습니다.");
+            log.warn("Login request: ID does not exist or incorrect password");
+            throw new UsernameNotFoundException("존재하지 않는 아이디 혹은 잘못된 비밀번호");
         }
         if (user.getStatus() == UserStatus.BANNED) {
-            throw new LockedException("사용할 수 없는 계정입니다. 관리자에게 문의하세요.");
+            log.warn("Login request: Account not available");
+            throw new LockedException("사용할 수 없는 계정");
         }
         if (user.getStatus() == UserStatus.DISABLED) {
-            throw new DisabledException("일시적으로 비활성화된 계정입니다.");
+            log.warn("Login request: Temporarily disabled account");
+            throw new DisabledException("일시적으로 비활성화된 계정");
         }
         // 계정 권한
         List<GrantedAuthority> roles = new ArrayList<>();

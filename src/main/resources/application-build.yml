@@ -14,6 +14,7 @@ server:
   shutdown: graceful
 
 spring:
+  profiles.include: prodLogging
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://121.145.206.143:3306/ssgbuild?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
@@ -28,13 +29,6 @@ spring:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate.ddl-auto: validate
 #===================================================
-
-logging:
-  level:
-    root: info
-  file:
-    name: ../logging/log_build.log
-    max-size: 10MB
 
 global:
   jwt-token:

@@ -8,11 +8,13 @@ import com.youngjo.ssg.domain.user.dto.response.MyPageInfoResDto;
 import com.youngjo.ssg.domain.user.repository.UserRepository;
 import com.youngjo.ssg.global.security.bean.ClientInfoLoader;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -25,7 +27,8 @@ public class UserServiceImpl implements UserService {
     public Boolean signUp(SignUpReqDto dto) {
         String rawPassword = dto.getPassword();
         if (rawPassword == null || !rawPassword.matches("^[\\w/\\{\\}\\[\\]\\/?.,;:|\\)*~`!^\\-+<>@\\#$%&\\\\\\=\\(\\'\\\"]{8,40}$")) {
-            throw new IllegalArgumentException("Invalid password");
+            log.warn("Mismatched passwords");
+            throw new IllegalArgumentException("Mismatched passwords");
         }
 
         User user = User.builder()
@@ -54,7 +57,8 @@ public class UserServiceImpl implements UserService {
         try {
             userRepository.saveUser(user);
         } catch (ConstraintViolationException ex) {
-            throw new IllegalArgumentException("중복된 ID 또는 Email 또는 Phone Number가 있습니다.");
+            log.warn("Duplicate ID or Email or Phone Number");
+            throw new IllegalArgumentException("중복된 ID 또는 Email 또는 Phone Number");
         }
         return true;
     }

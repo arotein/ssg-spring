@@ -1,11 +1,6 @@
 package com.youngjo.ssg.domain.purchase.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
-import java.sql.Timestamp;
+import lombok.*;
 
 public class PurchaseStaticDto {
     @Data
@@ -21,13 +16,14 @@ public class PurchaseStaticDto {
         private Integer shippingFreeOver;
 
         private String thumbImg;
+        private String thumbImgAlt;
 
         private Long pdtId;
         private String optionValue1;
         private String optionValue2;
         private Long price;
 
-        public BoardResDto(Long boardId, String title, String brand, String salesSite, Boolean isEachShippingFee, Integer shippingFee, Integer shippingFreeOver, String thumbImg, Long pdtId, String optionValue1, String optionValue2, Long price) {
+        public BoardResDto(Long boardId, String title, String brand, String salesSite, Boolean isEachShippingFee, Integer shippingFee, Integer shippingFreeOver, String thumbImg, String thumbImgAlt, Long pdtId, String optionValue1, String optionValue2, Long price) {
             this.boardId = boardId;
             this.title = title;
             this.brand = brand;
@@ -36,6 +32,7 @@ public class PurchaseStaticDto {
             this.shippingFee = shippingFee;
             this.shippingFreeOver = shippingFreeOver;
             this.thumbImg = thumbImg;
+            this.thumbImgAlt = thumbImgAlt;
             this.pdtId = pdtId;
             this.optionValue1 = optionValue1;
             this.optionValue2 = optionValue2;
@@ -55,26 +52,27 @@ public class PurchaseStaticDto {
 
     @Getter
     @NoArgsConstructor
+    @ToString
     public static class KakaoPaymentReqDto {
         private String aid;
         private String tid;
         private String cid;
-        private String sid;
         private String partner_order_id;
         private String partner_user_id;
         private String payment_method_type;
         private String item_name;
-        private String item_code;
+//        private String item_code;
         private Integer quantity;
-        private Timestamp created_at; // Json 직렬화
-        private Timestamp approved_at; // Json 직렬화
-        private String payload;
+        private String created_at;
+        private String approved_at;
+//        private String payload;
         private KakaoPaymentAmountReqDto amount;
         private KakaoPaymentCardInfoReqDto card_info;
     }
 
     @Getter
     @NoArgsConstructor
+    @ToString
     public static class KakaoPaymentAmountReqDto {
         private Integer total;
         private Integer tax_free;
@@ -86,6 +84,7 @@ public class PurchaseStaticDto {
 
     @Getter
     @NoArgsConstructor
+    @ToString
     public static class KakaoPaymentCardInfoReqDto {
         private String purchase_corp;
         private String purchase_corp_code;
@@ -101,7 +100,7 @@ public class PurchaseStaticDto {
         private String approved_id;
         private String card_mid;
         private String interest_free_install;
-        private String card_item_code;
+//        private String card_item_code;
     }
 
     @Data

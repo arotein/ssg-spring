@@ -33,7 +33,7 @@ public class PurchaseCompletedResDto {
     private String recipientName;
     private String phoneNumber;
     private String secondContactNumber;
-    private String recipientAddress; // -> String
+    private String deliveryAddress;
 
     // == Payment ==
     private String payment_method_type;
@@ -65,7 +65,7 @@ public class PurchaseCompletedResDto {
         this.recipientName = userPurchase.getRecipientName();
         this.phoneNumber = userPurchase.getPhoneNumber();
         this.secondContactNumber = userPurchase.getSecondContactNumber();
-        this.recipientAddress = AddressConverter.convertToString(userPurchase.getRecipientAddress());
+        this.deliveryAddress = AddressConverter.convertToString(userPurchase.getRecipientAddress());
         KakaoPayment kakaoPayment = userPurchase.getKakaoPayment();
         this.payment_method_type = kakaoPayment.getPayment_method_type();
         this.purchase_corp = kakaoPayment.getPurchase_corp();

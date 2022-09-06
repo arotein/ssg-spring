@@ -37,7 +37,7 @@ public class MyDeliveryAddressServiceImpl implements MyDeliveryAddressService {
                         .linkToRecipientAddress(Address.builder()
                                 .city(deliveryAddress.getRecipientAddress().getCity())
                                 .street(deliveryAddress.getRecipientAddress().getStreet())
-                                .street(deliveryAddress.getRecipientAddress().getStreet())
+                                .detail(deliveryAddress.getRecipientAddress().getDetail())
                                 .postalCode(deliveryAddress.getRecipientAddress().getPostalCode())
                                 .build())
                         .linkToUser(userRepository.findUserById(clientInfoLoader.getUserId())));
@@ -47,7 +47,7 @@ public class MyDeliveryAddressServiceImpl implements MyDeliveryAddressService {
     @Transactional(readOnly = true)
     @Override
     public MyDeliveryAddressResDto getMyMainDeliveryAddress() {
-        return new MyDeliveryAddressResDto(myDeliveryAddressRepository.findMainMyDeliveryAddressById(clientInfoLoader.getUserId()));
+        return new MyDeliveryAddressResDto(myDeliveryAddressRepository.findMainMyDeliveryAddressByUserId(clientInfoLoader.getUserId()));
     }
 
     @Transactional(readOnly = true)
@@ -76,7 +76,7 @@ public class MyDeliveryAddressServiceImpl implements MyDeliveryAddressService {
 
     @Override
     public Boolean switchingMainDeliveryAddress(DeliveryAddressIdReqDto deliveryAddressDto) {
-        MyDeliveryAddress mainDA = myDeliveryAddressRepository.findMainMyDeliveryAddressById(clientInfoLoader.getUserId());
+        MyDeliveryAddress mainDA = myDeliveryAddressRepository.findMainMyDeliveryAddressByUserId(clientInfoLoader.getUserId());
 
         if (mainDA.getId() != deliveryAddressDto.getDeliveryAddrId()) {
             mainDA.setNotMain();

@@ -47,7 +47,7 @@ public class MyDeliveryAddressRepositoryImpl implements MyDeliveryAddressReposit
     }
 
     @Override
-    public MyDeliveryAddress findMainMyDeliveryAddressById(Long userId) {
+    public MyDeliveryAddress findMainMyDeliveryAddressByUserId(Long userId) {
         return queryFactory.selectFrom(myDeliveryAddress)
                 .join(myDeliveryAddress.user, user).on(user.id.eq(userId))
                 .where(myDeliveryAddress.isMain.isTrue())

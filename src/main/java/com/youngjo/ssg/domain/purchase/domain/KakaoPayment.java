@@ -29,8 +29,8 @@ public class KakaoPayment {
     private String item_name;
     private String item_code;
     private Integer quantity;
-    private Timestamp created_at; // Json 직렬화
-    private Timestamp approved_at; // Json 직렬화
+    private Timestamp created_at;
+    private Timestamp approved_at;
     private String payload;
     // amount
     private Integer total;
@@ -107,16 +107,15 @@ public class KakaoPayment {
         this.aid = dto.getAid();
         this.tid = dto.getTid();
         this.cid = dto.getCid();
-        this.sid = dto.getSid();
         this.partner_order_id = dto.getPartner_order_id();
         this.partner_user_id = dto.getPartner_user_id();
         this.payment_method_type = dto.getPayment_method_type();
         this.item_name = dto.getItem_name();
-        this.item_code = dto.getItem_code();
+//        this.item_code = dto.getItem_code();
         this.quantity = dto.getQuantity();
-        this.created_at = dto.getCreated_at();
-        this.approved_at = dto.getApproved_at();
-        this.payload = dto.getPayload();
+        this.created_at = Timestamp.valueOf(dto.getCreated_at().replace("T", " "));
+        this.approved_at = Timestamp.valueOf(dto.getApproved_at().replace("T", " "));
+//        this.payload = dto.getPayload();
         // amount
         this.total = dto.getAmount().getTotal();
         this.tax_free = dto.getAmount().getTax_free();
@@ -139,7 +138,7 @@ public class KakaoPayment {
         this.approved_id = dto.getCard_info().getApproved_id();
         this.card_mid = dto.getCard_info().getCard_mid();
         this.interest_free_install = dto.getCard_info().getInterest_free_install();
-        this.card_item_code = dto.getCard_info().getCard_item_code();
+//        this.card_item_code = dto.getCard_info().getCard_item_code();
         return this;
     }
 }

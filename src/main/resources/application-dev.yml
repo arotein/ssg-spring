@@ -6,13 +6,9 @@ server:
       charset: UTF-8
       enable: true
       force: true
-  tomcat:
-    threads:
-      max: 200
-      min-spare: 50
-    accept-count: 50 # 작업 큐
 
 spring:
+  profiles.include: devConsole
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://121.145.206.143:3306/ssgbuild?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
@@ -34,11 +30,15 @@ spring:
 #        scope: email, profile
 
 #===================================================
-logging:
-  level:
-    root: info
-    org.hibernate:
-        SQL: debug
+#logging:
+#  charset:
+#    console: UTF-8
+#    file: UTF-8
+#  level:
+#    root: info
+#    org.hibernate.SQL: debug
+#  pattern:
+#    console: "%d{yyyy-MM-dd HH:mm:ss, Asia/Seoul} %clr(%-5level)- [%11.11thread] %clr(%-40.40logger{40}){cyan} %clr(:%-4line){magenta} | %msg%n"
 
 global:
   jwt-token:
