@@ -35,10 +35,10 @@ public class MyDeliveryAddressServiceImpl implements MyDeliveryAddressService {
                         .isMain(false)
                         .build()
                         .linkToRecipientAddress(Address.builder()
-                                .city(deliveryAddress.getRecipientAddressReqDto().getCity())
-                                .street(deliveryAddress.getRecipientAddressReqDto().getStreet())
-                                .street(deliveryAddress.getRecipientAddressReqDto().getStreet())
-                                .postalCode(deliveryAddress.getRecipientAddressReqDto().getPostalCode())
+                                .city(deliveryAddress.getRecipientAddress().getCity())
+                                .street(deliveryAddress.getRecipientAddress().getStreet())
+                                .street(deliveryAddress.getRecipientAddress().getStreet())
+                                .postalCode(deliveryAddress.getRecipientAddress().getPostalCode())
                                 .build())
                         .linkToUser(userRepository.findUserById(clientInfoLoader.getUserId())));
         return true;

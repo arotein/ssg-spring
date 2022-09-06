@@ -16,5 +16,5 @@ public class AddDeliveryAddressReqDto {
     @NotBlank
     private String phoneNumber;
     private String secondContactNumber;
-    private UserStaticDto.AddressReqDto recipientAddressReqDto;
+    private UserStaticDto.AddressReqDto recipientAddress;
 }

@@ -27,7 +27,7 @@ public class JwtAuthenticationSuccessHandler implements AuthenticationSuccessHan
         JwtAuthenticationToken token = (JwtAuthenticationToken) authentication;
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setHeader("Authentication", token.getJwt());
-        objectMapper.writeValue(response.getWriter(), CommonResponse.builder().data("로그인이 완료되었습니다.").build());
+        objectMapper.writeValue(response.getWriter(), CommonResponse.builder().data(true).build());
 
         // 로그인 시간 갱신
         UserDetailsImpl userDetails = (UserDetailsImpl) token.getPrincipal();
