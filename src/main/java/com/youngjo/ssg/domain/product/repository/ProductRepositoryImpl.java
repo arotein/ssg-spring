@@ -128,7 +128,8 @@ public class ProductRepositoryImpl implements ProductRepository {
         return queryFactory.selectFrom(productBoardLike)
                 .join(productBoardLike.productBoard).fetchJoin()
                 .join(productBoardLike.user, user)
-                .where(user.id.eq(userId))
+                .where(user.id.eq(userId),
+                        productBoardLike.value.isTrue())
                 .orderBy(productBoardLike.updatedAt.desc(),
                         productBoardLike.createdAt.desc())
                 .offset(offset)
@@ -142,7 +143,8 @@ public class ProductRepositoryImpl implements ProductRepository {
         return queryFactory.select(productBoardLike.count())
                 .from(productBoardLike)
                 .join(productBoardLike.user, user)
-                .where(user.id.eq(userId))
+                .where(user.id.eq(userId),
+                        productBoardLike.value.isTrue())
                 .distinct()
                 .fetchOne();
     }
