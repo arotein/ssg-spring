@@ -120,8 +120,8 @@ public class ProductServiceImpl implements ProductService {
         ProductBoard board = productRepository.findBoardById(boardId);
         return new PdtBoardDetailResDto(board)
                 .addOption1Set(board.getMainProductList().stream().map(MainProduct::getOptionValue1).collect(Collectors.toSet()))
-                .boardLike(productRepository.findBoardLikeByBoardIdAndUserId(boardId, clientInfoLoader.getUserId()) != null
-                        && productRepository.findBoardLikeByBoardIdAndUserId(boardId, clientInfoLoader.getUserId()).getValue());
+                .boardLike(clientInfoLoader.getUserId() != null ? productRepository.findBoardLikeByBoardIdAndUserId(boardId, clientInfoLoader.getUserId()) != null
+                        && productRepository.findBoardLikeByBoardIdAndUserId(boardId, clientInfoLoader.getUserId()).getValue() : false);
     }
 
     @Transactional(readOnly = true)
