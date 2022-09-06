@@ -24,5 +24,7 @@ public interface ProductService {
 
     BoardListResDto getBoardListByL4Id(Long id, BoardSortFilterReqDto queryDto);
 
+    BoardListResDto getAllBoardPressedLike(BoardSortFilterReqDto queryDto);
+
     Boolean pressBoardLike(Long id);
 }

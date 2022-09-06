@@ -18,7 +18,7 @@
 6. 장바구니(domain.user)
 7. 상품 검색(domain.search)
 8. 배송지 관리(domain.user)
-9. 상품 주문(domain.purchase) -> 진행중
+9. 상품 주문(domain.purchase)
 
 ## 🍜 사용된 환경변수
 1. ${SSG_DB_USERNAME}

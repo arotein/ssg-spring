@@ -1,5 +1,7 @@
 package com.youngjo.ssg.domain.user.controller;
 
+import com.youngjo.ssg.domain.product.dto.request.BoardSortFilterReqDto;
+import com.youngjo.ssg.domain.product.service.ProductService;
 import com.youngjo.ssg.domain.user.dto.request.CheckEmailDuplicateReqDto;
 import com.youngjo.ssg.domain.user.dto.request.CheckLoginIdDuplicateReqDto;
 import com.youngjo.ssg.domain.user.dto.request.SignUpReqDto;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final ProductService productService;
 
     @PreAuthorize("isAnonymous()")
     @PostMapping("/signUp")
@@ -39,10 +42,20 @@ public class UserController {
                 .build();
     }
 
+
     @GetMapping("/my/myPage")
     public CommonResponse myPageInfo() {
         return CommonResponse.builder()
                 .data(userService.myPageInfo())
+                .build();
+    }
+
+    // page, limit값만 받을 수 있음.
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/my/like")
+    public CommonResponse myLikePdtList(@Validated BoardSortFilterReqDto reqDto) {
+        return CommonResponse.builder()
+                .data(productService.getAllBoardPressedLike(reqDto.setDefault()))
                 .build();
     }
 

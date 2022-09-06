@@ -28,6 +28,10 @@ public interface ProductRepository {
 
     Map<Long, Boolean> findBoardLikeMapByBoardIdAndUserId(List<Long> boardIds, Long userId);
 
+    List<ProductBoardLike> findAllBoardLikeByUserId(Long userId, Integer offset, Integer limit);
+
+    Long countAllBoardLike(Long userId);
+
     List<ProductBoard> findBoardListByL1Id(Long id, Integer offset, Integer limit, String sort, Long minPrice, Long maxPrice);
 
     List<ProductBoard> findBoardListByL2Id(Long id, Integer offset, Integer limit, String sort, Long minPrice, Long maxPrice);

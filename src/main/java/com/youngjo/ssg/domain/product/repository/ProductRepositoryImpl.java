@@ -120,7 +120,31 @@ public class ProductRepositoryImpl implements ProductRepository {
                 .join(productBoardLike.user, user).on(user.id.eq(userId))
                 .distinct()
                 .transform(groupBy(productBoard.id).as(productBoardLike.value));
+    }
 
+    // 유저의 모든 좋아요 상품들
+    @Override
+    public List<ProductBoardLike> findAllBoardLikeByUserId(Long userId, Integer offset, Integer limit) {
+        return queryFactory.selectFrom(productBoardLike)
+                .join(productBoardLike.productBoard).fetchJoin()
+                .join(productBoardLike.user, user)
+                .where(user.id.eq(userId))
+                .orderBy(productBoardLike.updatedAt.desc(),
+                        productBoardLike.createdAt.desc())
+                .offset(offset)
+                .limit(limit)
+                .distinct()
+                .fetch();
+    }
+
+    @Override
+    public Long countAllBoardLike(Long userId) {
+        return queryFactory.select(productBoardLike.count())
+                .from(productBoardLike)
+                .join(productBoardLike.user, user)
+                .where(user.id.eq(userId))
+                .distinct()
+                .fetchOne();
     }
 
     // offset(index)은 0부터 시작

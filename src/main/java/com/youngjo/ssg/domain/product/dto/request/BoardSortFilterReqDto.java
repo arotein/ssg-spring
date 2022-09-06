@@ -1,13 +1,13 @@
 package com.youngjo.ssg.domain.product.dto.request;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 
 /***
+ * Query String으로 받기때문에 null값이 있어도 괜찮음.
  * = sort 값 =
  * 추천순 (default) -> 평점순
  * 판매순 int
@@ -20,8 +20,7 @@ import javax.validation.constraints.PositiveOrZero;
  * offset = queryDto.getLimit() * (queryDto.getPage() - 1)
  */
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class BoardSortFilterReqDto {
     @Positive

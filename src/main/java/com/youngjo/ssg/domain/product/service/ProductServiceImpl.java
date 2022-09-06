@@ -270,6 +270,18 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public BoardListResDto getAllBoardPressedLike(BoardSortFilterReqDto queryDto) {
+        List<ProductBoardLike> boardLikeList = productRepository.findAllBoardLikeByUserId(clientInfoLoader.getUserId(),
+                queryDto.getLimit() * (queryDto.getPage() - 1),
+                queryDto.getLimit());
+        Long count = productRepository.countAllBoardLike(clientInfoLoader.getUserId());
+        return new BoardListResDto(count,
+                boardLikeList.stream()
+                        .map(like -> new BoardResDto(like.getProductBoard(), true))
+                        .collect(Collectors.toList()));
+    }
+
+    @Override
     public Boolean pressBoardLike(Long boardId) {
         ProductBoardLike boardLike = productRepository.findBoardLikeByBoardIdAndUserId(boardId, clientInfoLoader.getUserId());
         if (boardLike != null) {
