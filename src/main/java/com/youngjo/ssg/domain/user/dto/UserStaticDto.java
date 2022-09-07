@@ -11,5 +11,12 @@ public class UserStaticDto {
         private String street;
         private String detail;
         private String postalCode;
+
+        public AddressReqDto streetDataFix() {
+            if (city.equals(street.split(" ")[0])) {
+                street = street.replaceFirst(String.format("%s ", city), "");
+            }
+            return this;
+        }
     }
 }

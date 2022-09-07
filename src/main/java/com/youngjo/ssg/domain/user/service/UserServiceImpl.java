@@ -31,6 +31,8 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("Mismatched passwords");
         }
 
+        dto.getAddress().streetDataFix();
+
         User user = User.builder()
                 .loginId(dto.getLoginId())
                 .password(passwordEncoder.encode(dto.getPassword()))
