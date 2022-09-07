@@ -21,6 +21,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,6 +35,14 @@ public class UserPurchaseServiceImpl implements UserPurchaseService {
     private final ProductRepository productRepository;
     private final UserPurchaseRepository userPurchaseRepository;
     private final ApplicationEventPublisher eventPublisher;
+
+    @Transactional(readOnly = true)
+    @Override
+    public PurchaseProceedResDto getProceedToPayment(Long pdtId) {
+        return new PurchaseProceedResDto(null,
+                userRepository.findUserById(clientInfoLoader.getUserId()),
+                productRepository.findAllMainPdtByIds(Arrays.asList(pdtId)));
+    }
 
     @Transactional(readOnly = true)
     @Override

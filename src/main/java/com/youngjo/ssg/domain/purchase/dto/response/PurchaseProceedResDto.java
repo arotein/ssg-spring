@@ -1,5 +1,6 @@
 package com.youngjo.ssg.domain.purchase.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.youngjo.ssg.domain.product.domain.MainProduct;
 import com.youngjo.ssg.domain.purchase.dto.PurchaseStaticDto;
 import com.youngjo.ssg.domain.user.domain.MyDeliveryAddress;
@@ -22,6 +23,7 @@ import java.util.List;
 @NoArgsConstructor
 public class PurchaseProceedResDto {
     // == Delivery Address ==
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private PurchaseStaticDto.MyDeliAddrDto myDeliAddr;
 
     // == Buyer Info ==
@@ -35,12 +37,16 @@ public class PurchaseProceedResDto {
     private List<PurchaseStaticDto.BoardResDto> pdtList = new ArrayList<>();
 
     public PurchaseProceedResDto(MyDeliveryAddress myDeliAddr, User user, List<MainProduct> pdtListWithBoard) {
-        this.myDeliAddr = new PurchaseStaticDto.MyDeliAddrDto(
-                myDeliAddr.getId(),
-                myDeliAddr.getAlias(),
-                myDeliAddr.getRecipientName(),
-                myDeliAddr.getPhoneNumber(),
-                AddressConverter.convertToString(myDeliAddr.getRecipientAddress()));
+        if (myDeliAddr == null) {
+            this.myDeliAddr = null;
+        } else {
+            this.myDeliAddr = new PurchaseStaticDto.MyDeliAddrDto(
+                    myDeliAddr.getId(),
+                    myDeliAddr.getAlias(),
+                    myDeliAddr.getRecipientName(),
+                    myDeliAddr.getPhoneNumber(),
+                    AddressConverter.convertToString(myDeliAddr.getRecipientAddress()));
+        }
         this.buyerName = user.getName();
         this.buyerPhoneNumber = user.getPhoneNumber();
         this.buyerEmail = user.getEmail();

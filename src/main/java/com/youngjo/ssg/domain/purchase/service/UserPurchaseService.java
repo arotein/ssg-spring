@@ -6,6 +6,8 @@ import com.youngjo.ssg.domain.purchase.dto.response.PurchaseCompletedResDto;
 import com.youngjo.ssg.domain.purchase.dto.response.PurchaseProceedResDto;
 
 public interface UserPurchaseService {
+    PurchaseProceedResDto getProceedToPayment(Long pdtId);
+
     PurchaseProceedResDto proceedToPayment(PurchaseProceedReqDto reqDto);
 
     PurchaseCompletedResDto completedToPayment(PurchaseCompletedReqDto reqDto);

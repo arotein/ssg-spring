@@ -20,6 +20,15 @@ public class UserPurchaseController {
     // 결제 진행창 -> 장바구니로 접속 or 바로구매로 접속
     // response dto 최적화 생략
     @PreAuthorize("isAuthenticated()")
+    @GetMapping("/proceed/{pdtId}")
+    public CommonResponse getProceedToPayment(@PathVariable Long pdtId) {
+        return CommonResponse.builder()
+                .data(userPurchaseService.getProceedToPayment(pdtId))
+                .build();
+    }
+
+    // Deprecated
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/proceed")
     public CommonResponse proceedToPayment(@Validated @RequestBody PurchaseProceedReqDto reqDto) {
         if (reqDto.getMyDeliAddrId() == -1L) {
