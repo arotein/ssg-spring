@@ -3,6 +3,7 @@
 ## 🍜 프로젝트 설명
 - ssg.com 클론코딩 백엔드 서버입니다.
 - 프로젝트 기간 : 2022-08-01 ~ 2022-09-08
+- 인원 : FrontEnd 3명, BackEnd 1명
 - Java 11
 - Spring Boot 2.6.8
 - Gradle 7.5.1 
